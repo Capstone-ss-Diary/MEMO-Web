@@ -2,5 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def index(request):
-    return HttpResponse("Account index.")
+def home(request):
+    return HttpResponse("Account home index.(first page)")
+
+
+def login(request):
+    return HttpResponse("Login page")
+
+
+def signup(request):
+    return HttpResponse("Signup page")
