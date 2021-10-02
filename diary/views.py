@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def calender(request):
-    return HttpResponse("Calender index.")
+    return render(request, 'diary/calender.html')
 
 
 def search(request):
