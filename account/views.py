@@ -1,15 +1,25 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+# from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from account.form import UserForm
 
 
 def home(request):
-    return HttpResponse("Account home index.(first page)")
-
-
-def login(request):
-    return render(request, 'account/login.html')
-    # return HttpResponse("Login page")
-
+    return render(request, 'account/home.html')
 
 def signup(request):
-    return HttpResponse("Signup page")
+    """
+    계정생성
+    """
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)  # 사용자 인증
+            login(request, user)  # 로그인
+            return redirect('index')
+    else:
+        form = UserForm()
+    return render(request, 'account/signup.html', {'form': form})

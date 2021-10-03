@@ -1,0 +1,9 @@
+<div class="home">
+  <!-- 후에 만들어진 home page 상단에 아래 조건문 넣을 것 -->
+  <!-- 로그인 상태에서는 home에 로그아웃, 로그인 전 상태면 로그인 글자 -->
+  {% if user.is_authenticated %}
+  <a class="home-link" href="{% url 'account:logout' %}">{{ user.username }} (로그아웃)</a>
+  {% else %}
+  <a class="home-link" href="{% url 'account:login' %}">로그인</a>
+  {% endif %}
+</div>
