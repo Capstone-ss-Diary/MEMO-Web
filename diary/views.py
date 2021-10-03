@@ -10,8 +10,8 @@ def search(request):
     return HttpResponse("Search index.")
 
 
-def create(request):
-    return HttpResponse("Create index.")
+def add(request):
+    return render(request, 'diary/add_diary.html')
 
 
 def detail(request, diary_id):

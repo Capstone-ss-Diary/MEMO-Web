@@ -1,3 +1,4 @@
+{% extends "diary/base.html" %}
 {% load static %}
 {% block script %}
 <script language="javascript">
@@ -90,31 +91,30 @@
 </script>
 {% endblock %}
 
-{% block main%}
-<body class="main_footer_wrap">
-    <main>
-        <div class="main_wrap">
-            <div class="calendar">
-                <table class = "main_calendar" id = "tab">
-                    <tr>
-                        <td class="calendar_prev" id="prev"><label class="calendar_label" onclick="prevmonth()"><</td>
-                        <td class="calendar_year_month" id="Ymd"colspan="5"></td>
-                        <td class="calendar_next" id="next"><label class="calendar_label" onclick="nextmonth()">></td>
-                    </tr>
-                    <tr class="calendar_weekday">
-                        <td class="week_sun">일</td>
-                        <td class="week_mon">월</td>
-                        <td class="week_tue">화</td>
-                        <td class="week_wed">수</td>
-                        <td class="week_thu">목</td>
-                        <td class="week_fri">금</td>
-                        <td class="week_sat">토</td> 
-                    </tr>
-                </table>
-                <script type="text/javascript">
-                    present();
-                </script>
-            </div>
+{% block content %}
+<div class="main_footer_wrap">
+    <div class="main_wrap">
+        <div class="calendar">
+            <table class = "main_calendar" id = "tab">
+                <tr>
+                    <td class="calendar_prev" id="prev"><label class="calendar_label" onclick="prevmonth()"><</td>
+                    <td class="calendar_year_month" id="Ymd"colspan="5"></td>
+                    <td class="calendar_next" id="next"><label class="calendar_label" onclick="nextmonth()">></td>
+                </tr>
+                <tr class="calendar_weekday">
+                    <td class="week_sun">일</td>
+                    <td class="week_mon">월</td>
+                    <td class="week_tue">화</td>
+                    <td class="week_wed">수</td>
+                    <td class="week_thu">목</td>
+                    <td class="week_fri">금</td>
+                    <td class="week_sat">토</td> 
+                </tr>
+            </table>
+            <script type="text/javascript">
+                present();
+            </script>
         </div>
-    </main>
+    </div>
+</div>
 {% endblock %}
