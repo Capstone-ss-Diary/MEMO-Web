@@ -1,0 +1,13 @@
+{% extends "diary/base.html" %}
+
+{% block content %}
+<div class="content-container">
+    <div class="list">
+        <br>
+        {% for diary in diary_list %}
+            <button class="item" onclick="location.href='{% url 'detail' diary_id=diary.id %}'">
+            {{ diary.title }}<br><span class="subitem">{{ diary.created_date }}</span></button><br><br>
+        {% endfor %}
+    </div>            
+</div>
+{% endblock %}
