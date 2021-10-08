@@ -1,0 +1,42 @@
+{% load static %}
+
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+
+</head>
+
+<body>
+  <div class="sidenav">
+    <div class="login-main-text">
+      <p style="font-size: 20px;">매일 쓰는 모든 나의 이야기 </p>
+      <p style="font-size: 60px;">MEMO 로그인</p><br><br>
+      <img src="{%static 'images/sheepLogin.png' %}" alt="">
+    </div>
+  </div>
+  <div class="main">
+    <div class="col-md-6 col-sm-12">
+      <div class="login-form">
+        <a style="color: tomato;">{{error}}</a>
+        <form method="post" action=".">
+          {% csrf_token %}
+          <div class="form-group">
+            <label style="font-size: 20px;" for="username">아이디</label>
+            <input type="text" class="form-control" style="width: 350px;" name="username" id="username">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 20px;" for="password">비밀번호</label>
+            <input type="password" class="form-control" style="width: 350px;" name="password" id="password">
+          </div>
+          <button type="submit" class="btn btn-black">로그인</button>
+          <button type="button" class="btn btn-black" onclick="location.href='/accounts/signup/'">회원가입</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,54 @@
+{% load static %}
+
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+
+</head>
+
+<body>
+  <div class="sidenav">
+    <div class="login-main-text">
+      <p style="font-size: 20px;">매일 쓰는 모든 나의 이야기 </p>
+      <p style="font-size: 50px;">MEMO 회원가입</p><br>
+      <img src="{%static 'images/sheepSignup.png' %}" alt="">
+    </div>
+  </div>
+  <div class="main">
+    <div class="col-md-6 col-sm-12">
+      <div class="signup-form">
+        <a style="color: tomato;">{{error}}</a>
+        <form method="post" action=".">
+          {% csrf_token %}
+          <div class="form-group">
+            <label style="font-size: 20px;" for="username">아이디</label>
+            <input type="text" class="form-control" style="width: 350px;" name="username" id="username">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 20px;" for="password1">비밀번호</label>
+            <input type="password" class="form-control" style="width: 350px;" name="password1" id="password1">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 20px;" for="password2">비밀번호 확인</label>
+            <input type="password" class="form-control" style="width: 350px;" name="password2" id="password2">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 20px;" for="name">이름</label>
+            <input type="text" class="form-control" style="width: 350px;" name="name" id="name">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 20px;" for="email">이메일</label>
+            <input type="textd" class="form-control" style="width: 350px;" name="email" id="email">
+          </div>
+          <button type="submit" class="btn btn-black">회원가입</button>
+          <button type="button" class="btn btn-black" onclick="location.href='/accounts/login/'">로그인</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

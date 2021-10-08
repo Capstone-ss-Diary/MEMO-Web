@@ -1,0 +1,42 @@
+<!-- 1. 한 번 canvas에 텍스트 적으면 안 지워진다 방도를 찾아야해 (실시간으로 text box에 변화가 있으면 컨버스 지우고 value 넣어줘야 함.)
+2. 그래서 지우는 방법을 아직 못 찾았다. 찾아봐야겠다.
+3. 마우스 커서는 시도도 못해봤다 ㅠㅠ
+4. DB에 글이랑 저장해야한다. -->
+
+
+<html>
+
+<body>
+  <!-- style="border:1px solid rgb(236, 236, 182)" rgb(245,245,220) -->
+  <canvas id="paper" width="500" height="500"></canvas>
+  <input type="text" id="UserInput">
+  <button onclick="inputText()">입력</button>
+  <button onclick="deleteText()">지우기</button>
+</body>
+
+</html>
+
+<script>
+  var canvas = document.getElementById("paper");
+  var context = canvas.getContext("2d");
+
+  var UserInput = document.getElementById("UserInput");
+
+  convas.fillStyle = "rgb(236, 236, 182)"; // fillStyle 안 먹히네 canvas는
+  convas.fillRect(0, 0, canvas.width, canvas.height); // (x,y,width, height)
+
+  function inputText() {
+    context.font = "30px Arial";
+    context.fillText(UserInput.value, 100, 100);
+  }
+
+  function deleteText() {
+    context.clearRect(0, 500, 500);
+  }
+  // UserInput.oninput = function () {
+  //   context.font = "30px Arial";
+  //   context.fillText(UserInput.value, 100, 100);
+  // };
+
+
+</script>
