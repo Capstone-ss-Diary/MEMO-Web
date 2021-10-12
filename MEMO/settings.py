@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "diary",
     "accounts",
-    "main",
     "font",
     "django.contrib.admin",
     "django.contrib.auth",
