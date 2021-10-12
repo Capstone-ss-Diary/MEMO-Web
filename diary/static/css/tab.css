@@ -1,0 +1,76 @@
+body{
+  margin: 0;
+}
+
+.tab_menu{
+  position:relative;
+  top: 10px;
+}
+
+.tab_menu .list{
+  overflow:hidden;
+  list-style:none;
+  padding-left:0px;
+}
+
+.tab_menu .list li{
+  float:left; 
+  /* margin-right:10px; */
+}
+
+.tab_menu .list li.is_on .btn{
+  background-color: #F5F5DC;
+}
+
+.tab_menu .list .btn{
+  width: 121.8px;
+  height: 37.2px;
+  font-size:25px;
+  background-color: white;
+  color: #000;
+  border: 0;
+  font-family: 'Jua', sans-serif;
+}
+
+.tab_menu .list .btn:hover{
+  background-color: #F5F5DC;
+}
+
+.tab_menu .cont_area .cont{
+  margin: 0;
+  position:absolute; 
+  top:35px; 
+  left:60%; 
+  background:#F5F5DC; 
+  color: black;
+  width:40%; 
+  height:685px; 
+  line-height:100px;
+}
+
+.diary_paper{
+  margin: 0;
+  position: absolute;
+  top:35px;
+  left:0;
+  background-color: #F5F5DC;
+  width:60%; 
+  height:685px; 
+  line-height:100px;
+}
+
+.select button{
+  color: #000;
+  border: 0;
+  font-size: 30px;
+  font-family: 'Jua', sans-serif;
+  background-color: #F5F5DC;
+  position: relative;
+  left: 10;
+  bottom:25;
+  margin-right: 10;
+}
+
+.select button:hover{
+  background-color: #E5D0AD;
+}

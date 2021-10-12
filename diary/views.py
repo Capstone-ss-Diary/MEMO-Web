@@ -6,6 +6,10 @@ from .forms import DiaryForm
 from django.utils import timezone
 
 
+def tab(request):
+    return render(request, "diary/tab.html")
+
+
 def write(request):
     return render(request, "diary/write.html", {})
 

@@ -13,4 +13,5 @@ urlpatterns = [
     path("list/", views.diary_list, name="diary_list"),
     path("write/", views.write, name="write"),
     path("calendar/", views.calender, name="calendar"),
+    path("tab/", views.tab, name="tab"),
 ]
