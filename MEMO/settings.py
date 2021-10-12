@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "diary",
     "accounts",
+    "main",
     "font",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -59,7 +60,7 @@ ROOT_URLCONF = "MEMO.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
