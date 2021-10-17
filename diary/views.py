@@ -1,12 +1,28 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Diary
+from .models import Diary, Content
 from .forms import DiaryForm
 
 from django.utils import timezone
 
 
-def tab(request):
+def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
+    if request.method == "GET":  # select 값
+        return render(request, "diary/tab.html")
+
+    elif request.method == "POST":  # text 값
+        txt = request.POST.get("txt")
+        coordinateX = request.POST.get("coordinateX")
+        coordinateY = request.POST.get("coordinateY")
+        if txt:
+            content = Content(
+                txt=txt,
+                coordinateX = coordinateX,
+                coordinateY = coordinateY,
+            )
+            content.save()
+            return redirect("calendar")
+
     return render(request, "diary/tab.html")
 
 

@@ -1,10 +1,9 @@
-
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 var UserInput = document.getElementById("UserInput");
 
-let x = ctx.canvas.offsetLeft;
-let y = ctx.canvas.offsetTop + 10;
+var x = ctx.canvas.offsetLeft;
+var y = ctx.canvas.offsetTop + 10;
 
 canvas.onclick = function (event) {
   x = event.clientX - ctx.canvas.offsetLeft - 10;
@@ -14,7 +13,8 @@ canvas.onclick = function (event) {
 UserInput.oninput = function () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  ctx.font = "18px Arial";
+  font = "돋움"
+  ctx.font = "18px " + font;
 
   var text = UserInput.value
 
@@ -38,3 +38,6 @@ UserInput.oninput = function () {
   }
   ctx.fillText(line, x, currentY);
 }
+
+document.getElementById("coordinateX").value = "test";
+document.getElementById("coordinateY").value = parseInt(y);

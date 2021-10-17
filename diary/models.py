@@ -16,3 +16,13 @@ class Diary(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Content(models.Model):
+    txt = models.TextField() # 일기 본문
+    coordinateX = models.IntegerField(null=True) # 마우스 x 위치
+    coordinateY = models.IntegerField(null=True) # 마우스 y 위치
+    # 폰트, 크기, 색(linked-list????)
+
+    class Meta:
+        db_table = "content"

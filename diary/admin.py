@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Diary
+from .models import Diary, Content
 
 admin.site.register(Diary)
-
+admin.site.register(Content)
 
 # 검색 기능
 # class DiaryAdmin(admin.ModelAdmin):

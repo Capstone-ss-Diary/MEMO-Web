@@ -4,7 +4,7 @@ body{
 
 .tab_menu{
   position:relative;
-  top: 10px;
+  top: 15px;
 }
 
 .tab_menu .list{
@@ -15,7 +15,6 @@ body{
 
 .tab_menu .list li{
   float:left; 
-  /* margin-right:10px; */
 }
 
 .tab_menu .list li.is_on .btn{
@@ -36,18 +35,6 @@ body{
   background-color: #F5F5DC;
 }
 
-.tab_menu .cont_area .cont{
-  margin: 0;
-  position:absolute; 
-  top:35px; 
-  left:60%; 
-  background:#F5F5DC; 
-  color: black;
-  width:40%; 
-  height:685px; 
-  line-height:100px;
-}
-
 .diary_paper{
   margin: 0;
   position: absolute;
@@ -57,6 +44,28 @@ body{
   width:60%; 
   height:685px; 
   line-height:100px;
+}
+
+.tab_menu .cont_area .cont{
+  margin: 0;
+  position:absolute; 
+  top:35px; 
+  left:60%; 
+  background:#F5F5DC; 
+  color: black;
+  width:40%; 
+  height:685px; 
+  line-height:45px;
+}
+
+.tab_menu .cont_area .cont select{
+  position: relative;
+  top: 10px;
+  width: 100px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
 }
 
 .select button{

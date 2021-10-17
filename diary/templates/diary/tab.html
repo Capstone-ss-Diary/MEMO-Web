@@ -30,31 +30,56 @@
       </li>
     </ul>
 
-    <div class="diary_paper">
-      <canvas id="paper" width="900" height="600" style="background-color: white; border: #F5F5DC 10px solid;"></canvas>
-      <div class="select">
-        <button>저장</button>
-        <button>취소</button>
+    <form method="post" name="edit_form" action=".">
+      {% csrf_token %}
+      <div class="diary_paper">
+        <canvas id="paper" width="880" height="600"
+          style="background-color: white; border: #F5F5DC 10px solid;"></canvas>
+        <div class="select">
+          <button type="submit">저장</button>
+          <button type="button">취소</button>
+        </div>
       </div>
-    </div>
-
-    <div class="cont_area">
-      <div id="write" class="cont">
-        <textarea type="text" id="UserInput" cols="50" rows="10"></textarea>
+      <!-- 폰트, 크기, 색 저장 해야함 -->
+      <div class="cont_area">
+        <div id="write" class="cont">
+          <select>
+            <option selected>돋움</option>
+            <option>option 1</option>
+            <option>option 2</option>
+            <option>option 3</option>
+          </select>
+          <select>
+            <option selected>크기</option>
+            <option>option 1</option>
+            <option>option 2</option>
+            <option>option 3</option>
+          </select>
+          <select>
+            <option selected>색</option>
+            <option>option 1</option>
+            <option>option 2</option>
+            <option>option 3</option>
+          </select><br>
+          <span style="font-family: 'Jua', sans-serif; font-size: 22px;">다이어리에서 원하는 위치를 클릭하고 일기를 작성해보세요!</span>
+          <textarea type="text" id="UserInput" name="txt" cols="80" rows="35"></textarea>
+          <input name="coordinateX" id="coordinateX" value="">
+          <input name="coordinateY" id="coordinateY" value="">
+        </div>
+        <div id="tab2" class="cont">
+          Tab Content2
+        </div>
+        <div id="tab3" class="cont">
+          Tab Content3
+        </div>
+        <div id="tab4" class="cont">
+          Tab Content4
+        </div>
+        <div id="tab5" class="cont">
+          Tab Content5
+        </div>
       </div>
-      <div id="tab2" class="cont">
-        Tab Content2
-      </div>
-      <div id="tab3" class="cont">
-        Tab Content3
-      </div>
-      <div id="tab4" class="cont">
-        Tab Content4
-      </div>
-      <div id="tab5" class="cont">
-        Tab Content5
-      </div>
-    </div>
+    </form>
   </div>
 
 </body>
