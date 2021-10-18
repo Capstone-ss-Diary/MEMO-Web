@@ -40,14 +40,14 @@
           <button type="button">취소</button>
         </div>
       </div>
-      <!-- 폰트, 크기, 색 저장 해야함 -->
       <div class="cont_area">
         <div id="write" class="cont">
-          <select>
-            <option selected>돋움</option>
-            <option>option 1</option>
-            <option>option 2</option>
-            <option>option 3</option>
+          <select id="fontSelect">
+            <option selected value="GowunDodum-Regular" style="font-family: 'GowunDodum-Regular';">고운돋움</option>
+            <option value="EliceDigitalBaeum_Regular" style="font-family: 'EliceDigitalBaeum_Regular';">엘리스</option>
+            <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
+            <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
+            <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
           </select>
           <select>
             <option selected>크기</option>
@@ -65,6 +65,7 @@
           <textarea type="text" id="UserInput" name="txt" cols="80" rows="35"></textarea>
           <input type="hidden" name="coordinateX" id="coordinateX" value="">
           <input type="hidden" name="coordinateY" id="coordinateY" value="">
+          <input type="hidden" name="font" id="font" value="">
         </div>
         <div id="tab2" class="cont">
           Tab Content2

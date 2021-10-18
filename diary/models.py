@@ -19,9 +19,10 @@ class Diary(models.Model):
 
 
 class Content(models.Model):
-    txt = models.TextField() # 일기 본문
-    coordinateX = models.IntegerField(null=True) # 마우스 x 위치
-    coordinateY = models.IntegerField(null=True) # 마우스 y 위치
+    txt = models.TextField()  # 일기 본문
+    coordinateX = models.IntegerField(null=True)  # 마우스 x 위치
+    coordinateY = models.IntegerField(null=True)  # 마우스 y 위치
+    font = models.CharField(max_length=100, null=True)  # 폰트
     # 폰트, 크기, 색(linked-list????)
 
     class Meta:

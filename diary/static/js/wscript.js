@@ -1,9 +1,13 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
+
 var UserInput = document.getElementById("UserInput");
 
 var x = ctx.canvas.offsetLeft;
 var y = ctx.canvas.offsetTop + 10;
+
+var selected_Font = document.getElementById("fontSelect");
+var font = selected_Font.options[selected_Font.selectedIndex].value;
 
 document.getElementById("coordinateX").value = parseInt(x);
 document.getElementById("coordinateY").value = parseInt(y);
@@ -19,7 +23,10 @@ canvas.onclick = function (event) {
 UserInput.oninput = function () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  font = "돋움"
+
+  font = selected_Font.options[selected_Font.selectedIndex].value;
+  document.getElementById("font").value = font;
+
   ctx.font = "18px " + font;
 
   var text = UserInput.value
