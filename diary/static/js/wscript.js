@@ -5,9 +5,15 @@ var UserInput = document.getElementById("UserInput");
 var x = ctx.canvas.offsetLeft;
 var y = ctx.canvas.offsetTop + 10;
 
+document.getElementById("coordinateX").value = parseInt(x);
+document.getElementById("coordinateY").value = parseInt(y);
+
 canvas.onclick = function (event) {
   x = event.clientX - ctx.canvas.offsetLeft - 10;
   y = event.clientY - ctx.canvas.offsetTop - 45;
+
+  document.getElementById("coordinateX").value = parseInt(x);
+  document.getElementById("coordinateY").value = parseInt(y);
 }
 
 UserInput.oninput = function () {
@@ -38,6 +44,3 @@ UserInput.oninput = function () {
   }
   ctx.fillText(line, x, currentY);
 }
-
-document.getElementById("coordinateX").value = "test";
-document.getElementById("coordinateY").value = parseInt(y);
