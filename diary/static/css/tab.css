@@ -103,6 +103,17 @@ body{
   font-size: 18px;
 }
 
+.tab_menu .cont_area .cont input{
+  position: relative;
+  top: 10px;
+  width: 100px;
+  height: 36.4px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+}
+
 .select button{
   color: #000;
   border: 0;

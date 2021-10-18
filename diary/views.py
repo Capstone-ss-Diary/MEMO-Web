@@ -15,12 +15,14 @@ def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
         coordinateX = request.POST.get("coordinateX")
         coordinateY = request.POST.get("coordinateY")
         font = request.POST.get("font")
+        fontSize = request.POST.get("fontSize")
         if txt:
             content = Content(
                 txt=txt,
                 coordinateX=coordinateX,
                 coordinateY=coordinateY,
                 font=font,
+                fontSize=int(fontSize),
             )
             content.save()
             return redirect("calendar")
