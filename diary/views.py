@@ -6,9 +6,9 @@ from .forms import DiaryForm
 from django.utils import timezone
 
 
-def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
+def decorate(request):
     if request.method == "GET":  # select 값
-        return render(request, "diary/tab.html")
+        return render(request, "diary/decorate.html")
 
     elif request.method == "POST":  # text 값
         txt = request.POST.get("txt")
@@ -29,11 +29,7 @@ def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
             content.save()
             return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 
-    return render(request, "diary/tab.html")
-
-
-def write(request):
-    return render(request, "diary/write.html", {})
+    return render(request, "diary/decorate.html")
 
 
 def calender(request):
