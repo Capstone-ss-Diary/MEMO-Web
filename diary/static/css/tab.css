@@ -1,5 +1,6 @@
 body{
   margin: 0;
+  overflow: hidden;
 }
 
 @font-face {
@@ -77,41 +78,8 @@ body{
   left:0;
   background-color: #F5F5DC;
   width:60%; 
-  height:685px; 
+  height:680px; 
   line-height:100px;
-}
-
-.tab_menu .cont_area .cont{
-  margin: 0;
-  position:absolute; 
-  top:35px; 
-  left:60%; 
-  background:#F5F5DC; 
-  color: black;
-  width:40%; 
-  height:685px; 
-  line-height:45px;
-}
-
-.tab_menu .cont_area .cont select{
-  position: relative;
-  top: 10px;
-  width: 100px;
-  padding: .4em .5em; 
-  font-family: 'Jua', sans-serif; 
-  border: 1px solid #999; 
-  font-size: 18px;
-}
-
-.tab_menu .cont_area .cont input{
-  position: relative;
-  top: 10px;
-  width: 100px;
-  height: 36.4px;
-  padding: .4em .5em; 
-  font-family: 'Jua', sans-serif; 
-  border: 1px solid #999; 
-  font-size: 18px;
 }
 
 .select button{
@@ -128,4 +96,50 @@ body{
 
 .select button:hover{
   background-color: #E5D0AD;
+}
+
+.tab_menu .cont_area .cont{
+  margin: 0;
+  position:absolute; 
+  top:35px; 
+  left:60%; 
+  background:#F5F5DC; 
+  color: black;
+  width:40%; 
+  height:680px; 
+  line-height:45px;
+}
+
+#write select{
+  position: relative;
+  top: 10px;
+  width: 100px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+}
+
+#write input{
+  position: relative;
+  top: 10px;
+  width: 100px;
+  /* height: 36.4px; */
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+}
+
+#write button{
+  position: relative;
+  top: 10px;
+  width: 50px;
+  height: 36.4px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+  background-color: #E5D0AD;
+  border: 0;
 }

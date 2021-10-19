@@ -54,17 +54,27 @@
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
           </select>
           <input id="fontSize" name="fontSize" type="text" value="18">
-          <select>
-            <option selected>색</option>
-            <option>option 1</option>
-            <option>option 2</option>
-            <option>option 3</option>
-          </select><br>
+          <select id="fontColorSelect" onchange="settingRGB(this);">
+            <option selected value="rgb(0,0,0)" style="color: rgb(0,0,0);">검정</option>
+            <option value="rgb(255,0,0)" style="color: rgb(255,0,0);">빨강</option>
+            <option value="rgb(0,255,0)" style="color: rgb(0,255,0);">초록</option>
+            <option value="rgb(0,0,255)" style="color: rgb(0,0,255);">파랑</option>
+            <option value="rgb(235,211,176)" style="color: rgb(235,211,176);">베이지</option>
+            <option id=setRGB value="">RGB입력</option>
+          </select> &nbsp;&nbsp;
+          <a id="rgb1" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">R</a>
+          <input type="text" name="R" id="R" style="width: 50px; visibility: hidden;" value="0">
+          <a id="rgb2" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">G</a>
+          <input type="text" name="G" id="G" style="width: 50px; visibility: hidden;" value="0">
+          <a id="rgb3" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">B</a>
+          <input type="text" name="B" id="B" style="width: 50px; visibility: hidden;" value="0">
+          <br>
           <span style="font-family: 'Jua', sans-serif; font-size: 22px;">다이어리에서 원하는 위치를 클릭하고 일기를 작성해보세요!</span>
           <textarea type="text" id="UserInput" name="txt" cols="80" rows="35"></textarea>
           <input type="hidden" name="coordinateX" id="coordinateX" value="">
           <input type="hidden" name="coordinateY" id="coordinateY" value="">
           <input type="hidden" name="font" id="font" value="">
+          <input type="hidden" name="fontColor" id="fontColor" value="">
         </div>
 
         <div id="tab2" class="cont">

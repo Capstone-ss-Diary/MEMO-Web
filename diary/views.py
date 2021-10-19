@@ -16,6 +16,7 @@ def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
         coordinateY = request.POST.get("coordinateY")
         font = request.POST.get("font")
         fontSize = request.POST.get("fontSize")
+        fontColor = request.POST.get("fontColor")
         if txt:
             content = Content(
                 txt=txt,
@@ -23,9 +24,10 @@ def tab(request):  # tab에서 edit으로 이름 바꿔야 할 듯
                 coordinateY=coordinateY,
                 font=font,
                 fontSize=int(fontSize),
+                fontColor=str(fontColor),
             )
             content.save()
-            return redirect("calendar")
+            return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 
     return render(request, "diary/tab.html")
 

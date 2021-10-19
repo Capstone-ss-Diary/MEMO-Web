@@ -24,7 +24,7 @@ class Content(models.Model):
     coordinateY = models.IntegerField(null=True)  # 마우스 y 위치
     font = models.CharField(max_length=100, null=True)  # 폰트
     fontSize = models.IntegerField(null=True)  # 폰트 크기 (DB 들어가는 거 확인 전)
-    # 폰트, 크기, 색(linked-list????)
+    fontColor = models.CharField(max_length=100, null=True)  # 폰트 색상
 
     class Meta:
         db_table = "content"
