@@ -99,6 +99,7 @@ body{
 }
 
 .tab_menu .cont_area .cont{
+  display:none;
   margin: 0;
   position:absolute; 
   top:35px; 
@@ -142,4 +143,124 @@ body{
   font-size: 18px;
   background-color: #E5D0AD;
   border: 0;
+}
+
+.image-upload {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 20px;
+}
+
+.fileBox {
+  position: relative;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.fileBox label {
+  display: inline-block; 
+  padding: .5em .75em; 
+  font-size: 18px; 
+  font-family: 'Jua', sans-serif; 
+  line-height: normal; 
+  vertical-align: middle; 
+  cursor: pointer;
+  border-bottom-color: #e2e2e2; 
+  border-radius: .25em;
+}
+
+.fileBox label:hover {
+  background-color: #E5D0AD;
+}
+
+#chooseFile {
+  position: absolute; 
+  width: 1px; 
+  height: 1px; 
+  padding: 0; 
+  margin: -1px; 
+  overflow: hidden; 
+  clip:rect(0,0,0,0); 
+  border: 0;
+}
+
+#fileName {
+  margin-left: 5px;
+}
+
+.fileInput {
+  display: flex;
+  align-items: center;
+  border-bottom: solid 2px #E5D0AD;
+  width: 70%;
+  height: 38px;
+  margin-left: 15px;
+}
+
+.imgSubmit {
+  width: 85%;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: #E5D0AD;
+  border-radius: 15px;
+  padding: 10px;
+  font-family: 'Jua', sans-serif; 
+  font-size: 18px;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+}
+
+.editBox button{
+  background-color: #E5D0AD;
+  border: 0;
+  font-size: 20px;
+  font-family: 'Jua', sans-serif;
+  border-radius: 13px;
+  height:33px;
+  cursor: pointer;
+}
+
+#photo select{
+  width: 55%;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 0; 
+  font-size: 18px;
+  left: 10px;
+}
+
+#photo input{
+  width: 13%;
+  height: 35px;
+}
+
+#photo span{
+  font-family: 'Jua', sans-serif; 
+  font-size: 22px;
+}
+
+.image-show {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 84%;
+  height: 50.5%;
+  margin-left: 55px;
+  background-color: white;
+  border: 0;
+}
+
+.image {
+  width: auto;
+  height: auto;
+  max-width: 500px;
+  max-height: 330px;
+  visibility: hidden;
 }

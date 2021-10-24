@@ -87,3 +87,7 @@ def diary_list(request):
     }
 
     return render(request, "diary/diary_list.html", context)
+
+
+def photo(request):
+    return render(request, "diary/photo.html")

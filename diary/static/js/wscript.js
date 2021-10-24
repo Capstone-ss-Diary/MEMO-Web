@@ -1,7 +1,28 @@
+
+function writeClick() {
+  document.getElementById("selectEdit").value = "write";
+}
+
+function backgroundClick() {
+  document.getElementById("selectEdit").value = "background";
+}
+
+function photoClick() {
+  document.getElementById("selectEdit").value = "photo";
+}
+
+function hashClick() {
+  document.getElementById("selectEdit").value = "hashtag";
+}
+
+function stickerClick() {
+  document.getElementById("selectEdit").value = "sticker";
+}
+
+
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
-// 텍스트 내용
 var UserInput = document.getElementById("UserInput");
 
 // canvas 글 위치 초기값
@@ -68,15 +89,17 @@ function writingText() {
 
 // canvas 클릭 위치 받아오기
 canvas.onclick = function (event) {
-  x = event.clientX - ctx.canvas.offsetLeft - 10;
-  y = event.clientY - ctx.canvas.offsetTop - 45;
+  if (document.getElementById("selectEdit").value == "write") {
+    x = event.clientX - ctx.canvas.offsetLeft - 10;
+    y = event.clientY - ctx.canvas.offsetTop - 45;
 
-  // html에 value 전달
-  document.getElementById("coordinateX").value = parseInt(x);
-  document.getElementById("coordinateY").value = parseInt(y);
+    // html에 value 전달
+    document.getElementById("coordinateX").value = parseInt(x);
+    document.getElementById("coordinateY").value = parseInt(y);
 
-  // 위치 새로 지정하면 새로 출력
-  writingText();
+    // 위치 새로 지정하면 새로 출력
+    writingText();
+  }
 }
 
 // 텍스트 내용 변하면 출력

@@ -13,20 +13,20 @@
 <body>
   <div class="tab_menu">
     <ul class="list">
-      <li>
-        <button href="#write" class="btn">일기작성</button>
+      <li class="is_on">
+        <button href="#write" class="btn" onclick="writeClick()">일기작성</button>
       </li>
       <li>
-        <button href="#tab2" class="btn">배경선택</button>
+        <button href="#tab2" class="btn" onclick="backgroundClick()">배경선택</button>
       </li>
       <li>
-        <button href="#tab3" class="btn">사진업로드</button>
+        <button href="#photo" class="btn" onclick="photoClick()">사진업로드</button>
       </li>
       <li>
-        <button href="#tab4" class="btn">해시태그</button>
+        <button href="#tab4" class="btn" onclick="hashClick()">해시태그</button>
       </li>
       <li>
-        <button href="#tab5" class="btn">스티커</button>
+        <button href="#tab5" class="btn" onclick="stickerClick()">스티커</button>
       </li>
     </ul>
 
@@ -40,12 +40,13 @@
         <div class="select">
           <button type="submit">저장</button>
           <button type="button">취소</button>
+          <input type="hidden" name="selectEdit" id="selectEdit" value="write">
         </div>
       </div>
 
       <div class="cont_area">
 
-        <div id="write" class="cont">
+        <div id="write" class="cont" style="display:block;">
           <select id="fontSelect">
             <option selected value="GowunDodum-Regular" style="font-family: 'GowunDodum-Regular';">고운돋움</option>
             <option value="EliceDigitalBaeum_Regular" style="font-family: 'EliceDigitalBaeum_Regular';">엘리스</option>
@@ -80,15 +81,69 @@
         <div id="tab2" class="cont">
           Tab Content2
         </div>
-        <div id="tab3" class="cont">
-          Tab Content3
+
+        <div id="photo" class="cont">
+
+          <div class="image-upload" id="image-upload">
+            <form method="post" enctype="multipart/form-data">
+              <div class="fileBox">
+                <label for="chooseFile"> 불러오기 </label>
+
+
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/jpeg, image/jpg, image/png" multiple
+                  onchange="loadFile(this)" />
+
+
+                <div class="fileInput">
+                  <p>FILE NAME: </p>
+                  <p id="fileName"></p>
+                </div>
+              </div>
+            </form>
+            <br>
+            <div style="position: relative; display: flex; justify-content: center;">
+              <button type="button" class="imgSubmit" id="imgSubmit" disabled onclick="showImage()">업로드</button>
+            </div>
+          </div>
+          <div class="editBox">
+            <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+              <button type="button" style="margin-right: .5%; width: 40%;">배경 제거</button>
+              <button type="button" style="margin-left: .5%; width: 43%; left: 10px;">텍스트 추출</button>
+            </div>
+
+            <div style="position: relative; display: flex; justify-content: center; top:30px">
+              <span>높이</span>&nbsp;<input>&nbsp;&nbsp;
+              <span>넓이</span>&nbsp;<input>&nbsp;&nbsp;
+              <span>기울기</span>&nbsp;<input>
+            </div>
+
+            <div style="position: relative; display: flex; justify-content: center; top:25px">
+              <span>티켓폼</span>&nbsp;&nbsp;
+              <select>
+                <option selected>선택안함</option>
+                <option>티켓폼1</option>
+                <option>티켓폼2</option>
+                <option>티켓폼3</option>
+                <option>티켓폼4</option>
+              </select>
+            </div><br>
+            <div class="image-show" id="image-show">
+              <img src="" class="image" />
+            </div>
+            <a href="javascript:void(0);" class="dellink" style="display: none;" onclick="deleteImg()">썸네일삭제</a>
+            <!-- 사진 추가 버튼 넣을 것 -->
+          </div>
+
+
         </div>
+
         <div id="tab4" class="cont">
           Tab Content4
         </div>
         <div id="tab5" class="cont">
           Tab Content5
         </div>
+
       </div>
     </form>
   </div>
@@ -97,3 +152,4 @@
 
 <script type="text/javascript" src="/static/js/tabscript.js"></script>
 <script type="text/javascript" src="/static/js/wscript.js"></script>
+<script type="text/javascript" src="/static/js/pscript.js"></script>

@@ -1,10 +1,11 @@
 
 const tabList = document.querySelectorAll('.tab_menu .list li');
 const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
-let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)
+let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#write 활성화)
 
 for (var i = 0; i < tabList.length; i++) {
   tabList[i].querySelector('.btn').addEventListener('click', function (e) {
+
     e.preventDefault();
     for (var j = 0; j < tabList.length; j++) {
       // 나머지 버튼 클래스 제거
