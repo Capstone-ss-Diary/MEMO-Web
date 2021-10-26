@@ -171,6 +171,11 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
   imgY.style.display = "none"; // 태그 숨기기
   document.getElementById("canvasImgY").appendChild(imgY); // 생성한 img y 좌표 태그 추가
 
+  var imgR = document.createElement("input"); // img 기울기 태그 생성
+  imgR.setAttribute("id", "img" + String(imgNum) + "R"); // id 속성 추가
+  imgR.setAttribute("value", 0); // 이미지 기울기 초기값 0
+  document.getElementById("canvasImgR").appendChild(imgR); // 생성한 기울기 태그 추가
+
   var opt = document.createElement("option"); // option 태그 생성
   opt.setAttribute("id", "img" + String(imgNum) + "O"); // id 속성 추가
   opt.setAttribute("selected", true); // selected 속성 추가
@@ -275,6 +280,35 @@ document.getElementById("delImg").onclick = function () {
   imgY.parentNode.removeChild(imgY); // 이미지 y 좌표 삭제
 }
 
+
+// 회전 다시 봐야댐
+document.getElementById("leftRotate").onclick = function () {
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var img = document.getElementById("canvasImg").childNodes.item(slt);
+  var imgR = document.getElementById("canvasImgR").childNodes.item(slt);
+
+  imgR = imgR + 5;
+  img.style.transform = "rotate(" + String(imgR) + "deg)"; // 기울기 적용
+
+  imgR.value = imgR;
+
+  totalCanvas();
+}
+document.getElementById("rightRotate").onclick = function () {
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var img = document.getElementById("canvasImg").childNodes.item(slt);
+  var imgR = document.getElementById("canvasImgR").childNodes.item(slt);
+
+  // img.style
+
+  var scope = parseInt(imgR.value) + 5;
+  // img.style.transform = "rotate(90deg)";
+
+  imgR.value = String(scope);
+
+  totalCanvas();
+  alert(scope);
+}
 
 // canvas 클릭 이벤트
 canvas.onclick = function (event) {
