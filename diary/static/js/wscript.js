@@ -91,13 +91,12 @@ function totalCanvas() {
 }
 
 
-// input 작성하면 canvas에 텍스트 출력
-document.getElementById("UserInput").oninput = function () {
+// ========== write ========== //
+document.getElementById("UserInput").oninput = function () { // input 작성하면 canvas에 텍스트 출력
   totalCanvas();
 }
 
-// RGB입력 : rgb input 나타나게
-function settingRGB(opt) {
+function settingRGB(opt) { // RGB입력 : rgb input 나타나게
   if (opt.selectedIndex == 5) {
     document.getElementById("rgb1").style.visibility = "visible";
     document.getElementById("rgb2").style.visibility = "visible";
@@ -109,11 +108,8 @@ function settingRGB(opt) {
 }
 
 
-
 // ========== photo ========== //
-
-// 파일이름으로 확장자 체크하는 함수
-function validateName(fname) {
+function validateName(fname) { // 파일이름으로 확장자 체크하는 함수
   var extensions = ['jpeg', 'jpg', 'png']; // 허용되는 확장자
   var fparts = fname.split('.');
   var fext = '';
@@ -134,8 +130,7 @@ function validateName(fname) {
   return validated; // 허용되는 확장자이면 true, 아니면 false
 }
 
-// 이미지 불러오면 미리보기 이미지 업로드
-function loadFile(input) {
+function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
 
   if (validateName(file.name)) { // 허용된 확장자명이면
@@ -152,8 +147,7 @@ function loadFile(input) {
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
 }
 
-// canvas에 이미지 올리기
-document.getElementById("imgSubmit").onclick = function () {
+document.getElementById("imgSubmit").onclick = function () { // canvas에 이미지 올리기
   var pre_img = document.querySelector(".image"); // 미리보기 이미지 불러오기
   imgNum = imgNum + 1; // 업로드한 이미지 개수
 
@@ -196,8 +190,7 @@ document.getElementById("imgSubmit").onclick = function () {
 
 }
 
-// 이미지 크기 확대
-document.getElementById("plus").onclick = function () {
+document.getElementById("plus").onclick = function () { // 이미지 크기 확대
 
   var slt = document.getElementById("selectImg").selectedIndex;
   var img = document.getElementById("canvasImg").childNodes.item(slt);
@@ -222,8 +215,7 @@ document.getElementById("plus").onclick = function () {
   totalCanvas();
 }
 
-// 이미지 크기 축소
-document.getElementById("minus").onclick = function () {
+document.getElementById("minus").onclick = function () { // 이미지 크기 축소
 
   var slt = document.getElementById("selectImg").selectedIndex;
   var img = document.getElementById("canvasImg").childNodes.item(slt);
@@ -248,8 +240,7 @@ document.getElementById("minus").onclick = function () {
   totalCanvas();
 }
 
-// "텍스트 추출" 누르면 티켓폼 span, select 나타내기
-document.getElementById("textExtract").onclick = function () {
+document.getElementById("textExtract").onclick = function () { // "텍스트 추출" 누르면 티켓폼 선택 나타내기
   var ticket1 = document.querySelector(".ticketForm1");
   var ticket2 = document.querySelector(".ticketForm2");
 
@@ -263,6 +254,25 @@ document.getElementById("textExtract").onclick = function () {
   }
 
   // openCV 연결 기능 추가
+}
+
+document.getElementById("delImg").onclick = function () {
+
+  var slt = document.getElementById("selectImg").selectedIndex;
+
+  var opt = document.getElementById("selectImg").childNodes.item(slt);
+  opt.parentNode.removeChild(opt); // 옵션 삭제
+
+  var img = document.getElementById("canvasImg").childNodes.item(slt);
+  img.parentNode.removeChild(img); // 이미지 삭제
+
+  totalCanvas(); // canvas 다시 그리기 (밑으로 보내면 동작 안되서 여기 끼워넣은 거 바꾸지마!~!)
+
+  var imgX = document.getElementById("canvasImgX").childNodes.item(slt);
+  imgX.parentNode.removeChild(imgX); // 이미지 x 좌표 삭제
+
+  var imgY = document.getElementById("canvasY").childNodes.item(slt);
+  imgY.parentNode.removeChild(imgY); // 이미지 y 좌표 삭제
 }
 
 
@@ -281,14 +291,14 @@ canvas.onclick = function (event) {
   // 사진 업로드
   else if (document.getElementById("selectEdit").value == "photo") {
 
-    // 클릭 위치 정중앙에 가져오고 싶은데 지맘대로 자리잡음
-
     var slt = document.getElementById("selectImg").selectedIndex;
+
+    var pimg = document.getElementById("canvasImg").childNodes.item(slt);
     var px = document.getElementById("canvasImgX").childNodes.item(slt);
     var py = document.getElementById("canvasImgY").childNodes.item(slt);
 
-    var photo_x = event.clientX - ctx.canvas.offsetLeft - (px.value / 2); // 이미지 x 좌표 변경
-    var photo_y = event.clientY - ctx.canvas.offsetTop - (py.value / 2); // 이미지 y 좌표 변경
+    var photo_x = event.clientX - ctx.canvas.offsetLeft - (pimg.width / 2); // 이미지 x 좌표 변경
+    var photo_y = event.clientY - ctx.canvas.offsetTop - (pimg.height / 2); // 이미지 y 좌표 변경
 
     px.value = photo_x;
     py.value = photo_y;

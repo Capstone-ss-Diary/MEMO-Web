@@ -236,13 +236,13 @@ body{
 }
 
 #selectImg{
-  width: 36%;
+  width: 30%;
   height: 35px;
   padding: .4em .5em; 
   font-family: 'Jua', sans-serif; 
   border: 0; 
   font-size: 18px;
-  left: 10px;
+  margin-left: 15px;
 }
 
 #photo input{
@@ -283,4 +283,5 @@ body{
   font-family: 'Jua', sans-serif; 
   border: 0; 
   font-size: 18px;
+  cursor: pointer;
 }

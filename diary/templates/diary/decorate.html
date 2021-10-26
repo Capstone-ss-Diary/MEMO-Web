@@ -83,17 +83,12 @@
         </div>
 
         <div id="photo" class="cont">
-
           <div class="image-upload" id="image-upload">
             <form method="post" enctype="multipart/form-data">
               <div class="fileBox">
                 <label for="chooseFile"> 불러오기 </label>
-
-
                 <input type="file" id="chooseFile" name="chooseFile" accept="image/jpeg, image/jpg, image/png" multiple
                   onchange="loadFile(this)" />
-
-
                 <div class="fileInput">
                   <p>FILE NAME: </p>
                   <p id="fileName"></p>
@@ -107,18 +102,18 @@
               <button type="button" style="margin-right: .5%; width: 40%;">배경 제거</button>
               <button type="button" id="textExtract" style="margin-left: .5%; width: 43%; left: 10px;">텍스트 추출</button>
             </div>
-
             <div class="imgSetting" style="position: relative; display: flex; justify-content: center; top:30px">
-              <select id="selectImg">
-
-              </select>&nbsp;&nbsp;
+              <select id="selectImg"></select>&nbsp;&nbsp;
               <span>크기</span>&nbsp;
               <button type="button" id="plus" style="margin-right: 2.5px;">+</button>
               <button type="button" id="minus" style="margin-left: 2.5px;">-</button>
               &nbsp;&nbsp;
-              <span>기울기</span>&nbsp;<input id="imgSlope" value="">
+              <span>기울기</span>&nbsp;
+              <button type="button" id="leftRotate" style="margin-right: 5px;">↺</button>
+              <button type="button" id="leftRotate" style="margin-right: 5px;">↻</button>
+              &nbsp;&nbsp;
+              <button type="button" id="delImg" style="margin-right: 5px;">X</button>
             </div>
-
             <div style="position: relative; display: flex; justify-content: center; top:25px;">
               <span class="ticketForm1" style="visibility: hidden;">티켓폼</span>&nbsp;&nbsp;
               <select class="ticketForm2" style="visibility: hidden;">
@@ -136,12 +131,9 @@
               <button type="button" class="imgSubmit" id="imgSubmit" disabled>업로드</button>
             </div>
           </div>
-
           <div id="canvasImg" style="display: none;"></div> <!-- img 태그 추가 -->
           <div id="canvasImgX" style="display: none;"></div> <!-- img x 좌표 -->
           <div id="canvasImgY" style="display: none;"></div> <!-- img y 좌표 -->
-
-          <!-- <img src="" id="imgP1" width="" height="" style="display: none;"> -->
         </div>
 
         <div id="tab4" class="cont">
