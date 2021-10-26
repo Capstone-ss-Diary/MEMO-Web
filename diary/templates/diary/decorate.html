@@ -109,6 +109,9 @@
             </div>
 
             <div class="imgSetting" style="position: relative; display: flex; justify-content: center; top:30px">
+              <select id="selectImg">
+
+              </select>&nbsp;&nbsp;
               <span>크기</span>&nbsp;
               <button type="button" id="plus" style="margin-right: 2.5px;">+</button>
               <button type="button" id="minus" style="margin-left: 2.5px;">-</button>
@@ -130,12 +133,15 @@
               <img src="" class="image" id="image" />
             </div>
             <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
-              <button type="button" class="imgSubmit" id="imgSubmit" disabled onclick="showImage()">업로드</button>
+              <button type="button" class="imgSubmit" id="imgSubmit" disabled>업로드</button>
             </div>
-            <a href="javascript:void(0);" class="dellink" style="display: none;" onclick="deleteImg()">썸네일삭제</a>
           </div>
 
-          <img src="" id="imgP1" width="" height="" style="display: none;">
+          <div id="canvasImg" style="display: none;"></div> <!-- img 태그 추가 -->
+          <div id="canvasImgX" style="display: none;"></div> <!-- img x 좌표 -->
+          <div id="canvasImgY" style="display: none;"></div> <!-- img y 좌표 -->
+
+          <!-- <img src="" id="imgP1" width="" height="" style="display: none;"> -->
         </div>
 
         <div id="tab4" class="cont">

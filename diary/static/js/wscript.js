@@ -1,12 +1,14 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
-// ========== write ========== //
 var x = ctx.canvas.offsetLeft; // 텍스트 x 좌표 초기
 var y = ctx.canvas.offsetTop + 10; // 텍스트 y 좌표 초기
+var imgNum = 0; // 업로드한 이미지 누적 개수 (삭제 포함)
+
 document.getElementById("coordinateX").value = parseInt(x); // 텍스트 x 좌표 input 저장
 document.getElementById("coordinateY").value = parseInt(y); // 텍스트 y 좌표 input 저장
 
+// canvas 텍스트 출력
 function writingText() {
 
   // 폰트
@@ -35,7 +37,7 @@ function writingText() {
   var text = UserInput.value
   var line = "";
   var fontSize = parseFloat(ctx.font);
-  var currentY = y;
+  var currentY = document.getElementById("coordinateY").value;
 
   ctx.textBaseline = "top"
 
@@ -55,21 +57,28 @@ function writingText() {
       currentY += fontSize * (1.2);
     }
   }
-  ctx.fillText(line, x, currentY);
+  ctx.fillText(line, document.getElementById("coordinateX").value, currentY);
 }
 
-// ========== photo ========== //
-var photo_x = ctx.canvas.offsetLeft;
-var photo_y = ctx.canvas.offsetTop + 10;
-
-// cavnas에 image 값 출력하는 함수
+// cavnas 이미지 출력
 function drawingImg() {
 
-  var img = document.getElementById("imgP1");
-  var width = document.getElementById("imgP1").width;
-  var height = document.getElementById("imgP1").height;
+  var canvasImg = document.getElementById("canvasImg");
+  var canvasImgX = document.getElementById("canvasImgX");
+  var canvasImgY = document.getElementById("canvasImgY");
 
-  ctx.drawImage(img, photo_x, photo_y, width, height);
+  // 업로드 한 이미지기 1개 이상이면 출력
+  if (canvasImg.childElementCount > 0) {
+    var images = canvasImg.childNodes; // 업로드한 이미지 모두 불러오기
+    var imagesX = canvasImgX.childNodes; // 이미지 x좌표 모두 불러오기
+    var imagesY = canvasImgY.childNodes; // 이미지 y좌표 모두 불러오기
+
+    for (var i = 0; i < images.length; i++) {
+      var img = images.item(i);
+      ctx.drawImage(img, imagesX.item(i).value, imagesY.item(i).value, img.width, img.height);
+    }
+
+  }
 
 }
 
@@ -98,9 +107,6 @@ function settingRGB(opt) {
     document.getElementById("B").style.visibility = "visible";
   }
 }
-
-
-// ========== background ========== //
 
 
 
@@ -140,47 +146,61 @@ function loadFile(input) {
     photo.style.visibility = "visible"; // div에 이미지 미리 보여주기
 
 
-    document.getElementById("imgP1").src = URL.createObjectURL(file);
-
-
     document.getElementById("imgSubmit").disabled = false; // 업로드 버튼 활성화
-
-    document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
-
-    photo.onload = function () {
-      URL.revokeObjectURL(photo.src); // URL 객체 해제
-    }
 
   }
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
 }
 
 // canvas에 이미지 올리기
-function showImage() {
+document.getElementById("imgSubmit").onclick = function () {
+  var pre_img = document.querySelector(".image"); // 미리보기 이미지 불러오기
+  imgNum = imgNum + 1; // 업로드한 이미지 개수
 
-  document.getElementById("imgP1").width = document.getElementById("image").clientWidth;
-  document.getElementById("imgP1").height = document.getElementById("image").clientHeight;
+  var img = document.createElement("img"); // img 태그 생성
+  img.setAttribute("id", "img" + String(imgNum)); // id 속성 추가
+  img.setAttribute("src", pre_img.src); // src 속성 추가 (미리보기 이미지 src)
+  img.setAttribute("width", pre_img.clientWidth); // width 속성 추가 (미리보기 이미지 width)
+  img.setAttribute("height", pre_img.clientHeight); // height 속성 추가 (미리보기 이미지 height)
+  img.style.display = "none"; // 태그 숨기기
+  document.getElementById("canvasImg").appendChild(img); // 생성한 img 태그 추가
+
+  var imgX = document.createElement("input"); // img x 좌표 태그 생성
+  imgX.setAttribute("id", "img" + String(imgNum) + "X"); // id 속성 추가
+  imgX.setAttribute("value", x); // 이미지 x 좌표 초기값 추가
+  imgX.style.display = "none"; // 태그 숨기기
+  document.getElementById("canvasImgX").appendChild(imgX); // 생성한 img x 좌표 태그 추가
+
+  var imgY = document.createElement("input"); // img y 좌표 태그 생성
+  imgY.setAttribute("id", "img" + String(imgNum) + "Y"); // id 속성 추가
+  imgY.setAttribute("value", y); // 이미지 y 좌표 초기값 추가
+  imgY.style.display = "none"; // 태그 숨기기
+  document.getElementById("canvasImgY").appendChild(imgY); // 생성한 img y 좌표 태그 추가
+
+  var opt = document.createElement("option"); // option 태그 생성
+  opt.setAttribute("id", "img" + String(imgNum) + "O"); // id 속성 추가
+  opt.setAttribute("selected", true); // selected 속성 추가
+  opt.innerText = document.getElementById("fileName").textContent; // 파일 이름 추가
+  document.getElementById("selectImg").appendChild(opt); // 생성한 옵션 태그 추가
 
   totalCanvas()
 
-  document.getElementById('fileName').textContent = null; //기존 파일 이름 지우기
+  photo.onload = function () {
+    URL.revokeObjectURL(pre_img.src); // URL 객체 해제
+  }
+  document.getElementById("fileName").textContent = null; //기존 파일 이름 지우기
+  pre_img.src = ""; // 이미지 src 데이터 해제
+  pre_img.style.visibility = "hidden"; // 미리보기 이미지 숨기기
 
-  deleteImg();
-
-}
-
-function deleteImg() {
-  var photo = document.querySelector(".image");
-  photo.src = ""; // 이미지 src 데이터 해제
-  photo.style.visibility = "hidden"; // div 이미지 숨기기
-
-  document.querySelector(".dellink").style.display = "none";
+  document.getElementById("imgSubmit").disabled = true; // 업로드 버튼 비활성화
 
 }
 
 // 이미지 크기 확대
 document.getElementById("plus").onclick = function () {
-  var img = document.getElementById("imgP1");
+
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var img = document.getElementById("canvasImg").childNodes.item(slt);
   var width = img.width;
   var height = img.height;
 
@@ -204,7 +224,9 @@ document.getElementById("plus").onclick = function () {
 
 // 이미지 크기 축소
 document.getElementById("minus").onclick = function () {
-  var img = document.getElementById("imgP1");
+
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var img = document.getElementById("canvasImg").childNodes.item(slt);
   var width = img.width;
   var height = img.height;
 
@@ -250,13 +272,27 @@ canvas.onclick = function (event) {
   if (document.getElementById("selectEdit").value == "write") {
     x = event.clientX - ctx.canvas.offsetLeft - 10; // 텍스트 x 좌표 변경
     y = event.clientY - ctx.canvas.offsetTop - 45; // 텍스트 y 좌표 변경
-    document.getElementById("coordinateX").value = parseInt(x); // 텍스트 x 좌표 전달
-    document.getElementById("coordinateY").value = parseInt(y); // 텍스트 y 좌표 전달
+
+    document.getElementById("coordinateX").value = x; // 텍스트 x 좌표 전달
+    document.getElementById("coordinateY").value = y; // 텍스트 y 좌표 전달
+
   }
 
+  // 사진 업로드
   else if (document.getElementById("selectEdit").value == "photo") {
-    photo_x = event.clientX - ctx.canvas.offsetLeft - 25; // 사진 y 좌표 변경
-    photo_y = event.clientY - ctx.canvas.offsetTop - 100; // 이미지 y 좌표 변경
+
+    // 클릭 위치 정중앙에 가져오고 싶은데 지맘대로 자리잡음
+
+    var slt = document.getElementById("selectImg").selectedIndex;
+    var px = document.getElementById("canvasImgX").childNodes.item(slt);
+    var py = document.getElementById("canvasImgY").childNodes.item(slt);
+
+    var photo_x = event.clientX - ctx.canvas.offsetLeft - (px.value / 2); // 이미지 x 좌표 변경
+    var photo_y = event.clientY - ctx.canvas.offsetTop - (py.value / 2); // 이미지 y 좌표 변경
+
+    px.value = photo_x;
+    py.value = photo_y;
+
   }
 
   totalCanvas(); // 다시 canvas 그리기

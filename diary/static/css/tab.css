@@ -226,8 +226,18 @@ body{
   cursor: pointer;
 }
 
-#photo select{
+.ticketForm2{
   width: 55%;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 0; 
+  font-size: 18px;
+  left: 10px;
+}
+
+#selectImg{
+  width: 36%;
+  height: 35px;
   padding: .4em .5em; 
   font-family: 'Jua', sans-serif; 
   border: 0; 
