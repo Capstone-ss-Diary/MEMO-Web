@@ -1,4 +1,3 @@
-
 const tabList = document.querySelectorAll('.tab_menu .list li');
 const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
 let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#write 활성화)
@@ -22,4 +21,24 @@ for (var i = 0; i < tabList.length; i++) {
     activeCont = this.getAttribute('href');
     document.querySelector(activeCont).style.display = 'block';
   });
+}
+
+function writeClick() {
+  document.getElementById("selectEdit").value = "write";
+}
+
+function backgroundClick() {
+  document.getElementById("selectEdit").value = "background";
+}
+
+function photoClick() {
+  document.getElementById("selectEdit").value = "photo";
+}
+
+function hashClick() {
+  document.getElementById("selectEdit").value = "hashtag";
+}
+
+function stickerClick() {
+  document.getElementById("selectEdit").value = "sticker";
 }

@@ -216,7 +216,7 @@ body{
   outline: 0;
 }
 
-.editBox button{
+.editBox .editBoxM button{
   background-color: #E5D0AD;
   border: 0;
   font-size: 20px;
@@ -264,4 +264,13 @@ body{
   max-width: 500px;
   max-height: 330px;
   visibility: hidden;
+}
+
+.imgSetting button{
+  height: 35px;
+  width: 35px;
+  background-color: #E5D0AD;
+  font-family: 'Jua', sans-serif; 
+  border: 0; 
+  font-size: 18px;
 }

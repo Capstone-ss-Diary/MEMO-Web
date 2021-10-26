@@ -24,14 +24,23 @@ function loadFile(input) {
 
   var file = input.files[0]; // 파일 가져오기
 
-  document.querySelector(".dellink").style.display = "none"; // 삭제 링크 숨기기
-  document.querySelector(".image").style.visibility = "hidden"; // 이미지 숨기기
-
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
 
     var photo = document.querySelector(".image");
     photo.src = URL.createObjectURL(file); // 파일 객체에서 이미지 데이터 가져오기
+    photo.style.visibility = "visible"; // div에 이미지 미리 보여주기
+
+    document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
+
+    photo.onload = function () {
+      URL.revokeObjectURL(photo.src); // URL 객체 해제
+    }
+
+    var img = document.getElementById("image");
+
+    document.getElementById("imgHeight").value = img.clientHeight;
+    document.getElementById("imgWidth").value = img.clientWidth;
 
     document.getElementById("imgSubmit").disabled = false; // 업로드 버튼 활성화
   }
@@ -40,18 +49,15 @@ function loadFile(input) {
 }
 
 function showImage() {
-  var photo = document.querySelector(".image");
-  photo.style.visibility = "visible"; // div에 이미지 미리 보여주기
 
-  document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
+  document.getElementById("imgH1").value = document.getElementById("image").clientHeight;
+  document.getElementById("imgW1").value = document.getElementById("image").clientWidth;
 
-  photo.onload = function () {
-    URL.revokeObjectURL(photo.src); // URL 객체 해제
-  }
+
+
 
   document.getElementById('fileName').textContent = null; //기존 파일 이름 지우기
 
-  document.getElementById("imgSubmit").disabled = true; // 업로드 버튼 비활성화
 }
 
 function deleteImg() {
@@ -61,4 +67,22 @@ function deleteImg() {
 
   document.querySelector(".dellink").style.display = "none";
 
+}
+
+// "텍스트 추출" 버튼
+document.getElementById("textExtract").onclick = function () {
+
+  var ticket1 = document.querySelector(".ticketForm1");
+  var ticket2 = document.querySelector(".ticketForm2");
+
+  if (ticket1.style.visibility == "hidden" && ticket2.style.visibility == "hidden") {
+    document.querySelector(".ticketForm1").style.visibility = "visible";
+    document.querySelector(".ticketForm2").style.visibility = "visible";
+  }
+  else {
+    document.querySelector(".ticketForm1").style.visibility = "hidden";
+    document.querySelector(".ticketForm2").style.visibility = "hidden";
+  }
+
+  // openCV 연결 기능 추가
 }

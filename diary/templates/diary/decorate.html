@@ -47,15 +47,15 @@
       <div class="cont_area">
 
         <div id="write" class="cont" style="display:block;">
-          <select id="fontSelect">
+          <select id="fontSelect" onchange="totalCanvas()">
             <option selected value="GowunDodum-Regular" style="font-family: 'GowunDodum-Regular';">고운돋움</option>
             <option value="EliceDigitalBaeum_Regular" style="font-family: 'EliceDigitalBaeum_Regular';">엘리스</option>
             <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
           </select>
-          <input id="fontSize" name="fontSize" type="text" value="18">
-          <select id="fontColorSelect" onchange="settingRGB(this);">
+          <input id="fontSize" name="fontSize" type="text" value="18" oninput="totalCanvas()">
+          <select id="fontColorSelect" onchange="settingRGB(this); totalCanvas();">
             <option selected value="rgb(0,0,0)" style="color: rgb(0,0,0);">검정</option>
             <option value="rgb(255,0,0)" style="color: rgb(255,0,0);">빨강</option>
             <option value="rgb(0,255,0)" style="color: rgb(0,255,0);">초록</option>
@@ -100,26 +100,25 @@
                 </div>
               </div>
             </form>
-            <br>
-            <div style="position: relative; display: flex; justify-content: center;">
-              <button type="button" class="imgSubmit" id="imgSubmit" disabled onclick="showImage()">업로드</button>
-            </div>
           </div>
           <div class="editBox">
-            <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+            <div class="editBoxM"
+              style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
               <button type="button" style="margin-right: .5%; width: 40%;">배경 제거</button>
-              <button type="button" style="margin-left: .5%; width: 43%; left: 10px;">텍스트 추출</button>
+              <button type="button" id="textExtract" style="margin-left: .5%; width: 43%; left: 10px;">텍스트 추출</button>
             </div>
 
-            <div style="position: relative; display: flex; justify-content: center; top:30px">
-              <span>높이</span>&nbsp;<input>&nbsp;&nbsp;
-              <span>넓이</span>&nbsp;<input>&nbsp;&nbsp;
-              <span>기울기</span>&nbsp;<input>
+            <div class="imgSetting" style="position: relative; display: flex; justify-content: center; top:30px">
+              <span>크기</span>&nbsp;
+              <button type="button" id="plus" style="margin-right: 2.5px;">+</button>
+              <button type="button" id="minus" style="margin-left: 2.5px;">-</button>
+              &nbsp;&nbsp;
+              <span>기울기</span>&nbsp;<input id="imgSlope" value="">
             </div>
 
-            <div style="position: relative; display: flex; justify-content: center; top:25px">
-              <span>티켓폼</span>&nbsp;&nbsp;
-              <select>
+            <div style="position: relative; display: flex; justify-content: center; top:25px;">
+              <span class="ticketForm1" style="visibility: hidden;">티켓폼</span>&nbsp;&nbsp;
+              <select class="ticketForm2" style="visibility: hidden;">
                 <option selected>선택안함</option>
                 <option>티켓폼1</option>
                 <option>티켓폼2</option>
@@ -128,13 +127,15 @@
               </select>
             </div>
             <div class="image-show" id="image-show">
-              <img src="" class="image" />
+              <img src="" class="image" id="image" />
+            </div>
+            <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+              <button type="button" class="imgSubmit" id="imgSubmit" disabled onclick="showImage()">업로드</button>
             </div>
             <a href="javascript:void(0);" class="dellink" style="display: none;" onclick="deleteImg()">썸네일삭제</a>
-            <!-- 사진 추가 버튼 넣을 것 -->
           </div>
 
-
+          <img src="" id="imgP1" width="" height="" style="display: none;">
         </div>
 
         <div id="tab4" class="cont">
@@ -152,4 +153,4 @@
 
 <script type="text/javascript" src="/static/js/tabscript.js"></script>
 <script type="text/javascript" src="/static/js/wscript.js"></script>
-<script type="text/javascript" src="/static/js/pscript.js"></script>
+<!-- <script type="text/javascript" src="/static/js/pscript.js"></script> -->
