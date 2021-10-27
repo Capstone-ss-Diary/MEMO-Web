@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Diary, Content
+from .models import Diary, DiaryText
 from .forms import DiaryForm
 
 from django.utils import timezone
@@ -11,22 +11,22 @@ def decorate(request):
         return render(request, "diary/decorate.html")
 
     elif request.method == "POST":  # text 값
-        txt = request.POST.get("txt")
+        content = request.POST.get("UserInput")
         coordinateX = request.POST.get("coordinateX")
         coordinateY = request.POST.get("coordinateY")
         font = request.POST.get("font")
-        fontSize = request.POST.get("fontSize")
-        fontColor = request.POST.get("fontColor")
-        if txt:
-            content = Content(
-                txt=txt,
+        font_size = request.POST.get("fontSize")
+        font_color = request.POST.get("fontColor")
+        if content:
+            diary_text = DiaryText(
+                content=content,
                 coordinateX=coordinateX,
                 coordinateY=coordinateY,
                 font=font,
-                fontSize=int(fontSize),
-                fontColor=str(fontColor),
+                font_size=int(font_size),
+                font_color=str(font_color),
             )
-            content.save()
+            diary_text.save()
             return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 
     return render(request, "diary/decorate.html")
