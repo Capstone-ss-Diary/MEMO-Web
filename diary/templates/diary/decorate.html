@@ -84,7 +84,7 @@
 
         <div id="photo" class="cont">
           <div class="image-upload" id="image-upload">
-            <form method="post" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
               <div class="fileBox">
                 <label for="chooseFile"> 불러오기 </label>
                 <input type="file" id="chooseFile" name="chooseFile" accept="image/jpeg, image/jpg, image/png" multiple
@@ -94,6 +94,9 @@
                   <p id="fileName"></p>
                 </div>
               </div>
+              <div id="canvasImg" style="display: none;"></div> <!-- img 태그 추가 -->
+              <div id="canvasImgX" style="display: none;"></div> <!-- img x 좌표 -->
+              <div id="canvasImgY" style="display: none;"></div> <!-- img y 좌표 -->
             </form>
           </div>
           <div class="editBox">
@@ -131,9 +134,6 @@
               <button type="button" class="imgSubmit" id="imgSubmit" disabled>업로드</button>
             </div>
           </div>
-          <div id="canvasImg" style="display: none;"></div> <!-- img 태그 추가 -->
-          <div id="canvasImgX" style="display: none;"></div> <!-- img x 좌표 -->
-          <div id="canvasImgY" style="display: none;"></div> <!-- img y 좌표 -->
         </div>
 
         <div id="tab4" class="cont">
