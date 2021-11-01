@@ -41,4 +41,7 @@ class DiaryText(models.Model):
 class DiaryImage(models.Model):
     diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="images/", blank=True, null=True)
-    attributes = models.TextField(null=True)
+    width = models.IntegerField(null=True)
+    height = models.IntegerField(null=True)
+    imageX = models.IntegerField(null=True)
+    imageY = models.IntegerField(null=True)

@@ -197,8 +197,9 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
   imgY.style.display = "none";
   document.getElementById("canvasImgY").appendChild(imgY);
 
-  // 파일 업로드한 label 숨기기
+  // 다음 label 
   document.getElementById("label" + String(imgNum)).style.display = "none";
+  document.getElementById("label" + String(imgNum + 1)).style.display = "block";
 
 
   // form 동적 태그 생성

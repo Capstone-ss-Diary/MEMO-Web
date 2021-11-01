@@ -27,27 +27,18 @@ def decorate(request):
             text.font_color = request.POST["fontColor"]
             text.save()  # DiaryText DB 저장
 
-        # diaryImage1 = DiaryImage(diary=diary, image=request.FILES["img0"])
-        # diaryImage1.save()
-
-        # diaryImage2 = DiaryImage(diary=diary, image=request.FILES["img2"])
-        # diaryImage2.save()
-
         img_cnt = request.POST["img_count"]
         for i in range(int(img_cnt)):
             name = "img" + str(i + 1)
-            diaryImage = DiaryImage(diary=diary, image=request.FILES[name])
+            diaryImage = DiaryImage(
+                diary=diary,
+                image=request.FILES[name],
+                width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+            )
             diaryImage.save()
-
-        # img_cnt = request.POST["img_count"]
-        # for i in range(int(img_cnt)):
-        #     name = "img" + str(i + 1)
-        #     diaryImage = DiaryImage(
-        #         diary=diary,
-        #         image=request.FILES.get(name),
-        #         attributes=request.POST.getlist("attr" + str(i + 1) + "[]"),
-        #     )
-        #     diaryImage.save()
 
         return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 

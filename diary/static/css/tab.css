@@ -160,7 +160,7 @@ body{
 }
 
 #forms label {
-  display: inline-block; 
+  display: none;
   padding: .5em .75em; 
   font-size: 18px; 
   font-family: 'Jua', sans-serif; 
