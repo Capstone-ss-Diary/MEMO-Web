@@ -85,11 +85,34 @@
         <div id="photo" class="cont">
           <div class="image-upload" id="image-upload">
             <div class="fileBox">
-              <div id=forms>
+              <input type="hidden" id="img_count" name="img_count" value="">
+
+              <!-- <label for="chooseFile">테스트</label>
+              <input type="file" id="chooseFile" name="img0" accept="image/*" onchange="loadFile(this)"> -->
+              <!-- <input type="file" id="chooseFile1" name="img01" accept="image/*" onchange="loadFile(this)"> -->
+
+              <div id="forms">
+                <script language="javascript">
+
+                  for (i = 1; i < 101; i++) {
+                    document.write('<label id="label' + String(i) + '" for="chooseFile' + String(i) + '"> 불러오기</label>');
+                  }
+
+                </script>
+
+
+
+
                 <label id="label1" for="chooseFile1"> 불러오기</label>
-                <input type="file" id="chooseFile1" name="img" accept="image/jpeg, image/jpg, image/png"
-                  onchange="loadFile(this)">
+                <input type="file" id="chooseFile1" name="img1" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label1" for="chooseFile2"> 불러오기</label>
+                <input type="file" id="chooseFile2" name="img2" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label1" for="chooseFile3"> 불러오기</label>
+                <input type="file" id="chooseFile3" name="img3" accept="image/*" onchange="loadFile(this)">
               </div>
+
               <div class="fileInput">
                 <p>FILE NAME: </p>
                 <p id="fileName"></p>

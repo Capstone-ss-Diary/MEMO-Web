@@ -5,6 +5,7 @@ var ctx = canvas.getContext("2d");
 var x = ctx.canvas.offsetLeft;
 var y = ctx.canvas.offsetTop + 10;
 var imgNum = 0;
+var img_cnt = 0; // 업로드한 이미지 개수
 
 document.getElementById("coordinateX").value = parseInt(x); // 텍스트 x 좌표 input 저장
 document.getElementById("coordinateY").value = parseInt(y); // 텍스트 y 좌표 input 저장
@@ -139,6 +140,9 @@ function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업�
     photo.src = URL.createObjectURL(file); // 파일 객체에서 이미지 데이터 가져오기
     photo.style.visibility = "visible"; // div에 이미지 미리 보여주기
 
+    img_cnt += 1; // 이미지 수
+    document.getElementById("img_count").value = img_cnt;
+
     document.getElementById("imgSubmit").disabled = false; // 업로드 버튼 활성화
   }
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
@@ -198,9 +202,9 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
 
 
   // form 동적 태그 생성
-  var fileForm = document.getElementById("forms");
-  fileForm.innerHTML += '<label id="label' + String(imgNum + 1) + '" for="chooseFile' + String(imgNum + 1) + '">불러오기</label><input type ="file" id="chooseFile'
-    + String(imgNum + 1) + '" name="img" accept="imgage/jpeg, image/jpg, image/png" onchange="loadFile(this)"/>';
+  // var fileForm = document.getElementById("forms");
+  // fileForm.innerHTML += '<label id="label' + String(imgNum + 1) + '" for="chooseFile' + String(imgNum + 1) + '">불러오기</label><input type ="file" id="chooseFile'
+  //   + String(imgNum + 1) + '" name="img' + String(img_cnt + 1) + '" accept="image/*" onchange="loadFile(this)"/>';
 
   totalCanvas()
 

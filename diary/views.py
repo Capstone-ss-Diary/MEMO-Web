@@ -1,24 +1,10 @@
-from django.forms.widgets import MultipleHiddenInput
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.views.decorators import csrf
 from .models import Diary, DiaryImage, DiaryText
 from .forms import DiaryForm
-
 from django.utils import timezone
 
 
-import os
-from django.core.files.storage import FileSystemStorage
-
-from django.utils.decorators import method_decorator
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import calendar
-import time
-
-
-@method_decorator(csrf_exempt)
 def decorate(request):
     if request.method == "GET":  # select 값
         return render(request, "diary/decorate.html")
@@ -41,15 +27,27 @@ def decorate(request):
             text.font_color = request.POST["fontColor"]
             text.save()  # DiaryText DB 저장
 
-        print(len(request.FILES.getlist("img")))
+        # diaryImage1 = DiaryImage(diary=diary, image=request.FILES["img0"])
+        # diaryImage1.save()
 
-        for i in range(len(request.FILES.getlist("img"))):
-            diaryImage = DiaryImage(
-                diary=diary,
-                image=request.FILES.getlist("img")[i],
-                attributes=request.POST.getlist("attr" + str(i) + "[]"),
-            )
+        # diaryImage2 = DiaryImage(diary=diary, image=request.FILES["img2"])
+        # diaryImage2.save()
+
+        img_cnt = request.POST["img_count"]
+        for i in range(int(img_cnt)):
+            name = "img" + str(i + 1)
+            diaryImage = DiaryImage(diary=diary, image=request.FILES[name])
             diaryImage.save()
+
+        # img_cnt = request.POST["img_count"]
+        # for i in range(int(img_cnt)):
+        #     name = "img" + str(i + 1)
+        #     diaryImage = DiaryImage(
+        #         diary=diary,
+        #         image=request.FILES.get(name),
+        #         attributes=request.POST.getlist("attr" + str(i + 1) + "[]"),
+        #     )
+        #     diaryImage.save()
 
         return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 
