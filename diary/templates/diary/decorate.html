@@ -30,7 +30,7 @@
       </li>
     </ul>
 
-    <form method="post" name="edit_form" action=".">
+    <form method="POST" name="edit_form" action="{% url 'diary:decorate' %}" enctype="multipart/form-data">
 
       {% csrf_token %}
 
@@ -84,20 +84,17 @@
 
         <div id="photo" class="cont">
           <div class="image-upload" id="image-upload">
-            <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
-              <div class="fileBox">
-                <label for="chooseFile"> 불러오기 </label>
-                <input type="file" id="chooseFile" name="chooseFile" accept="image/jpeg, image/jpg, image/png" multiple
-                  onchange="loadFile(this)" />
-                <div class="fileInput">
-                  <p>FILE NAME: </p>
-                  <p id="fileName"></p>
-                </div>
+            <div class="fileBox">
+              <div id=forms>
+                <label id="label1" for="chooseFile1"> 불러오기</label>
+                <input type="file" id="chooseFile1" name="img" accept="image/jpeg, image/jpg, image/png"
+                  onchange="loadFile(this)">
               </div>
-              <div id="canvasImg" style="display: none;"></div> <!-- img 태그 추가 -->
-              <div id="canvasImgX" style="display: none;"></div> <!-- img x 좌표 -->
-              <div id="canvasImgY" style="display: none;"></div> <!-- img y 좌표 -->
-            </form>
+              <div class="fileInput">
+                <p>FILE NAME: </p>
+                <p id="fileName"></p>
+              </div>
+            </div>
           </div>
           <div class="editBox">
             <div class="editBoxM"
@@ -131,8 +128,19 @@
               <img src="" class="image" id="image" />
             </div>
             <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
-              <button type="button" class="imgSubmit" id="imgSubmit" disabled>업로드</button>
+              <button type="button" class="imgSubmit" id="imgSubmit" disabled style="margin-right: 1%;">업로드</button>
             </div>
+          </div>
+
+
+          <div id="canvasImg" style="display: none;"></div>
+          <div id="canvasImgW" style="display: none;"></div>
+          <div id="canvasImgH" style="display: none;"></div>
+          <div id="canvasImgX" style="display: none;"></div>
+          <div id="canvasImgY" style="display: none;"></div>
+          <input id="imgNum" name="imgNum" style="display: none;" />
+          <div id="checkImg" style="display: none;">
+            <input id="checking1" name="checking1" value="" style="display: none;" />
           </div>
         </div>
 

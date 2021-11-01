@@ -159,7 +159,7 @@ body{
   justify-content: center;
 }
 
-.fileBox label {
+#forms label {
   display: inline-block; 
   padding: .5em .75em; 
   font-size: 18px; 
@@ -171,19 +171,12 @@ body{
   border-radius: .25em;
 }
 
-.fileBox label:hover {
-  background-color: #E5D0AD;
+#forms input{
+  display: none;
 }
 
-#chooseFile {
-  position: absolute; 
-  width: 1px; 
-  height: 1px; 
-  padding: 0; 
-  margin: -1px; 
-  overflow: hidden; 
-  clip:rect(0,0,0,0); 
-  border: 0;
+.fileBox label:hover {
+  background-color: #E5D0AD;
 }
 
 #fileName {
@@ -200,12 +193,12 @@ body{
 }
 
 .imgSubmit {
-  width: 85%;
+  width: 84%;
   height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  margin-left: 15px;
   background-color: #E5D0AD;
   border-radius: 15px;
   padding: 10px;

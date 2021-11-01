@@ -1,91 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
 <style>
-  .dellink {
+  .filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: red;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid gold;
+    border-radius: 5px;
+  }
 
-    display: none;
-
+  /* named upload */
+  .filebox .upload-name {
+    display: inline-block;
+    height: 35px;
+    font-size: 18px;
+    padding: 0 10px;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
   }
 </style>
 
+<body>
 
-
-<input type="file" class="hidden_input" id="imageSelector" name="imageSelector"
-  accept="image/jpeg, image/jpg, image/png" multiple />
-
-<img src="" class="thumb" />
-
-<a href="javascript:void(0);" class="dellink">썸네일삭제</a>
-
+  <form>
+    <div class="filebox">
+      <label>업로드
+        <input type="file" name="file" style="display:none">
+      </label>
+      <input type="text" class="upload-name" value="파일을 선택해주세요.">
+    </div>
+  </form>
+  <form>
+    <div class="filebox">
+      <label>업로드
+        <input type="file" name="file" style="display:none">
+      </label>
+      <input type="text" class="upload-name" value="파일을 선택해주세요.">
+    </div>
+  </form>
+  <form>
+    <div class="filebox">
+      <label>업로드
+        <input type="file" name="file" style="display:none">
+      </label>
+      <input type="text" class="upload-name" value="파일을 선택해주세요.">
+    </div>
+  </form>
+  <form>
+    <div class="filebox">
+      <label>업로드
+        <input type="file" name="file" style="display:none">
+      </label>
+      <input type="text" class="upload-name" value="파일을 선택해주세요.">
+    </div>
+  </form>
+  <br><br>
+  <button id="test">파일전송 버튼</button>
+</body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-  // 파일 객체를 parameter로 넘겨서 파일 타입을 비교
-  var validateType = function (img) {
-    return (['image/jpeg', 'image/jpg', 'image/png'].indexOf(img.type) > -1);
-  }
 
-  // 파일 이름을 기준으로 확장자 비교
-  var validateName = function (fname) {
+  // 파일 업로드 감지 -> input textbox에 경로를 넣어준다.
+  $("input[name=file]").on('change', function () {
+    var fileName = $(this).val();
+    alert($(this).parent().parent('div').children('.upload-name').val(fileName));
+  });
 
-    let extensions = ['jpeg', 'jpg', 'png'];
-    let fparts = fname.split('.');
-    let fext = '';
+  // 파일 전송버튼 클릭 시  
+  $("#test").on('click', function () {
+    alert($("input[name=file]").length);
+    let len = $("input[name=file]").length; // file type 개수
+    var form_data = new FormData(); // form 생성
 
-    if (fparts.length > 1) {
-      fext = fparts[fparts.length - 1];
-    }
+    for (var x = 0; x < len; x++) {  // file type 만큼 for문이 돌아요.
 
-    let validated = false;
-
-    if (fext != '') {
-      extensions.forEach(function (ext) {
-        if (ext == fext) {
-          validated = true;
-        }
-      });
-    }
-    return validated;
-  }
-
-
-  // 파일 선택 필드에 이벤트 리스너 등록
-
-  document.getElementById('imageSelector').addEventListener('change', function (e) {
-
-    let elem = e.target;
-
-    if (validateType(elem.files[0])) {
-
-      let preview = document.querySelector('.thumb');
-
-      preview.src = URL.createObjectURL(elem.files[0]); //파일 객체에서 이미지 데이터 가져옴.
-
-
-      //  (submit 버튼 선택하면)
-      document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
-
-      preview.onload = function () {
-
-        URL.revokeObjectURL(preview.src); //URL 객체 해제
-
+      // 파일이 들어있다면 파일 정보를 삽입
+      if ($("input[name=file]")[x].files[0] != null) {
+        form_data.append("file[]", $("input[name=file]")[x].files[0]);
+        form_data.append("size[]", $("input[name=file]")[x].files[0].size);
+        form_data.append("file_org[]", $("input[name=file]")[x].files[0].name);
+      } else {
+        form_data.append("file[]", '');
+        form_data.append("size[]", 0);
+        form_data.append("file_org[]", '');
       }
-
-    } else {
-
-      console.log('이미지 파일이 아닙니다.');
-
     }
 
+    // ajax 부분 : url은 urls.py에 적용하는 도메인name을 쓰시면 됩니다.
+    $.ajax({
+      url: 'test/',
+      dataType: 'json',
+      enctype: 'multipart/form-data',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: form_data,   // 파일업로드가 저장된 form 데이터 전송
+      type: 'post',
+      success: function (data) {
+
+        alert(data.proc);
+
+      },
+    });
   });
-
-  document.querySelector('.dellink').addEventListener('click', function (e) {
-
-    let dellink = e.target;
-
-    let preview = dellink.previousElementSibling;
-
-    preview.src = ''; // 썸네일 이미지 src 데이터 해제
-
-    document.querySelector('.dellink').style.display = 'none';
-
-  });
-
-
 </script>
+
+</html>

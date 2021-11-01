@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from accounts.models import User
+from django.contrib.postgres.fields import ArrayField
 
 
 class Diary(models.Model):
@@ -40,8 +41,4 @@ class DiaryText(models.Model):
 class DiaryImage(models.Model):
     diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="images/", blank=True, null=True)
-    name = models.CharField(max_length=100, null=True)
-    width = models.IntegerField(null=True)
-    height = models.IntegerField(null=True)
-    x = models.IntegerField(null=True)
-    y = models.IntegerField(null=True)
+    attributes = models.TextField(null=True)
