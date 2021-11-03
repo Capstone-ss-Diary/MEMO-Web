@@ -30,15 +30,16 @@ def decorate(request):
         img_cnt = request.POST["img_count"]
         for i in range(int(img_cnt)):
             name = "img" + str(i + 1)
-            diaryImage = DiaryImage(
-                diary=diary,
-                image=request.FILES[name],
-                width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-            )
-            diaryImage.save()
+            if request.FILES[name] is not None:
+                diaryImage = DiaryImage(
+                    diary=diary,
+                    image=request.FILES[name],
+                    width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                    height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                    imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                    imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                )
+                diaryImage.save()
 
         return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
 

@@ -291,6 +291,10 @@ document.getElementById("textExtract").onclick = function () { // "텍스트 추
 
 document.getElementById("delImg").onclick = function () { // 이미지 삭제
 
+
+
+  // 이미지 변경으로 기능 변경! - 선택안함 or 사진 다른 거 가져오기 ok?
+
   var slt = document.getElementById("selectImg").selectedIndex;
 
   var opt = document.getElementById("selectImg").childNodes.item(slt);
@@ -311,8 +315,7 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제
   var imgH = document.getElementById("canvasImgH").childNodes.item(slt);
   imgH.parentNode.removeChild(imgH);
 
-  var imgFile = document.getElementById("fileImg").childNodes.item(slt);
-  imgFile.parentNode.removeChild(imgFile); // 수정 해야해
+  // input type=file img(slt+1) 태그 삭제
 
   totalCanvas();
 
