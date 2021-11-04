@@ -1,121 +1,209 @@
-{% extends "diary/base.html" %}
 {% load static %}
-{% block script %}
-<script language="javascript">
-  var date = new Date();
-  var today = new Date();
-  var year = today.getFullYear();
-  var month = today.getMonth();
-  var day = today.getDay();
-  month += 1;
-  function days(year, month) {
-    switch (month) {
-      case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-        return 31;
 
-      case 4: case 6: case 9: case 11:
-        return 30;
+<head>
 
-      case 2:
-        if (((year % 400) == 0 || (year % 4) == 0 && (year % 100) != 0)) {
-          return 29;
-        }
-        else {
-          return 28;
-        }
-    }
-  }
-  function prevmonth() {
-    var ymda = document.getElementById("prev");
-    var yg = document.getElementById("Ymd");
-    month--;
-    if (month < 1) {
-      month = 12;
-      year -= 1;
-    }
-    if (year < 1970) {
-      alert("기원전");
-      for (var i = 1; i < 100; i--) {
-        window.top.moveTo(i, i *= -1);
-      }
-    }
-    var ymda = year + "년 " + month + "월";
-    present();
-  }
-  function nextmonth() {
-    var ymda = document.getElementById("next");
-    var yg = document.getElementById("Ymd");
-    month++;
-    if (month > 12) {
-      month = 1;
-      year += 1;
-    }
-    var ymda = year + "년" + " " + month + "월";
-    present();
-  }
-  function present() {
-    var start = new Date(year, month - 1, 1);
-    var ymda = document.getElementById("Ymd");
-    var Tab = document.getElementById("tab");
-    var row = null;
-    var cnt = 0;
-    var row_count = 1;
-    var ym = year + "년 " + month + "월";
-    ymda.innerHTML = ym;
-    while (tab.rows.length > 2) {   // 테이블의 행의 길이가 2보다 크면 행 제거
-      tab.deleteRow(tab.rows.length - 1);
-    }
-    row = Tab.insertRow();
-    for (var j = 0; j < start.getDay(); j++) {   // 달력의 시작일
-      cell = row.insertCell();
-      cnt += 1;
-    }
-    for (var i = 1; i <= days(year, month); i++) { // 달력 일수
-      var cell = row.insertCell();
-      if (year == date.getFullYear() && month - 1 == date.getMonth() && i == date.getDate()) {
-        cell.innerHTML = "<div class='calendar_cell'>" + i + "</div>" + "<a class='calendar_a_tag_example'>" + "today" + "</a>";
-      }
-      else {
-        cell.innerHTML = "<div>" + i + "</div>";
-      }
-      cnt += 1;
-      if (cnt % 7 == 0) {
-        row = tab.insertRow();
-        row_count += 1;
-      }
-    }
-    for (var k = 0; k < row_count * 7 - cnt; k++) {
-      cell = row.insertCell();
-    }
-  }
-</script>
-{% endblock %}
+  <!-- Custom Theme files -->
+  <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+  <!-- Custom Theme files -->
 
-{% block content %}
-<a href="accounts/logout/">로그아웃</a>
-<div class="main_footer_wrap">
-  <div class="main_wrap">
-    <div class="calendar">
-      <table class="main_calendar" id="tab">
-        <tr>
-          <td class="calendar_prev" id="prev"><label class="calendar_label" onclick="prevmonth()">이전</td>
-          <td class="calendar_year_month" id="Ymd" colspan="5"></td>
-          <td class="calendar_next" id="next"><label class="calendar_label" onclick="nextmonth()">다음</td>
-        </tr>
-        <tr class="calendar_weekday">
-          <td class="week_sun">일</td>
-          <td class="week_mon">월</td>
-          <td class="week_tue">화</td>
-          <td class="week_wed">수</td>
-          <td class="week_thu">목</td>
-          <td class="week_fri">금</td>
-          <td class="week_sat">토</td>
-        </tr>
-      </table>
-      <script type="text/javascript">
-        present();
-      </script>
+  <!--//theme-style-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="application/x-javascript">
+    addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); 
+    function hideURLbar(){ window.scrollTo(0,1); }
+  </script>
+
+  <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <!--//theme-style-->
+
+
+  <!--Calender-->
+  <link rel="stylesheet" href="{% static 'css/clndr.css' %}" type="text/css" />
+  <script src="{% static 'js/underscore-min.js' %}"></script>
+  <script src="{% static 'js/moment-2.2.1.js' %}"></script>
+  <script src="{% static 'js/clndr.js' %}"></script>
+  <script src="{% static 'js/site.js' %}"></script>
+  <!--End Calender-->
+
+  <!---Google Analytics Designmaz.net-->
+  <script>(function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-35751449-15', 'auto'); ga('send', 'pageview');</script>
+
+
+</head>
+
+<body>
+
+  <div class="mini-cal">
+    <div class="calender">
+      <div class="column_right_grid calender">
+        <div class="cal1">
+          <div class="clndr">
+            <div class="clndr-controls">
+              <div class="clndr-control-button">
+                <p class="clndr-previous-button">previous</p>
+              </div>
+              <div class="month">September 2015</div>
+              <div class="clndr-control-button rightalign">
+                <p class="clndr-next-button">next</p>
+              </div>
+            </div>
+            <table class="clndr-table" style="border: 0;" cellspacing="0" cellpadding="0">
+              <thead>
+                <tr class="header-days">
+                  <td class="header-day">S</td>
+                  <td class="header-day">M</td>
+                  <td class="header-day">T</td>
+                  <td class="header-day">W</td>
+                  <td class="header-day">T</td>
+                  <td class="header-day">F</td>
+                  <td class="header-day">S</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="day past adjacent-month last-month calendar-day-2015-08-30">
+                    <div class="day-contents">30</div>
+                  </td>
+                  <td class="day past adjacent-month last-month calendar-day-2015-08-31">
+                    <div class="day-contents">31</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-01">
+                    <div class="day-contents">1</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-02">
+                    <div class="day-contents">2</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-03">
+                    <div class="day-contents">3</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-04">
+                    <div class="day-contents">4</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-05">
+                    <div class="day-contents">5</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="day past calendar-day-2015-09-06">
+                    <div class="day-contents">6</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-07">
+                    <div class="day-contents">7</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-08">
+                    <div class="day-contents">8</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-09">
+                    <div class="day-contents">9</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-10">
+                    <div class="day-contents">10</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-11">
+                    <div class="day-contents">11</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-12">
+                    <div class="day-contents">12</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="day past event calendar-day-2015-09-13">
+                    <div class="day-contents">13</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-14">
+                    <div class="day-contents">14</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-15">
+                    <div class="day-contents">15</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-16">
+                    <div class="day-contents">16</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-17">
+                    <div class="day-contents">17</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-18">
+                    <div class="day-contents">18</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-19">
+                    <div class="day-contents">19</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="day past calendar-day-2015-09-20">
+                    <div class="day-contents">20</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-21">
+                    <div class="day-contents">21</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-22">
+                    <div class="day-contents">22</div>
+                  </td>
+                  <td class="day past event calendar-day-2015-09-23">
+                    <div class="day-contents">23</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-24">
+                    <div class="day-contents">24</div>
+                  </td>
+                  <td class="day past calendar-day-2015-09-25">
+                    <div class="day-contents">25</div>
+                  </td>
+                  <td class="day today calendar-day-2015-09-26">
+                    <div class="day-contents">26</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="day calendar-day-2015-09-27">
+                    <div class="day-contents">27</div>
+                  </td>
+                  <td class="day calendar-day-2015-09-28">
+                    <div class="day-contents">28</div>
+                  </td>
+                  <td class="day calendar-day-2015-09-29">
+                    <div class="day-contents">29</div>
+                  </td>
+                  <td class="day calendar-day-2015-09-30">
+                    <div class="day-contents">30</div>
+                  </td>
+                  <td class="day adjacent-month next-month calendar-day-2015-10-01">
+                    <div class="day-contents">1</div>
+                  </td>
+                  <td class="day adjacent-month next-month calendar-day-2015-10-02">
+                    <div class="day-contents">2</div>
+                  </td>
+                  <td class="day adjacent-month next-month calendar-day-2015-10-03">
+                    <div class="day-contents">3</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="cal-pos a">
+        <ul>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="cal-pos">
+        <ul>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-{% endblock %}
+
+</body>

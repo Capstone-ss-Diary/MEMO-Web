@@ -104,4 +104,4 @@ def diary_list(request):
 
 
 def photo(request):
-    return render(request, "diary/photo.html")
+    return render(request, "diary/sidebar.html")
