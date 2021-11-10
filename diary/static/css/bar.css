@@ -6,11 +6,11 @@
     --nav--width: 92px;
 
     /* Colores */
-    --first-color: #0c5df4;
-    --bg-color: #12192c;
+    --first-color: #E5D0AD;
+    --bg-color: #F5F5DC;
     --sub-color: #b6cefc;
-    --white-color: #fff;
-
+    --white-color: black;
+  
     /* Fuente y tipografia */
     --body-font: 'Poppins', sans-serif;
     --normal-font-size: 1rem;
