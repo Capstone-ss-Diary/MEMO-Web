@@ -46,7 +46,8 @@ def decorate(request):
     return render(request, "diary/decorate.html")
 
 
-def calender(request):
+def calender(request, user_id):
+
     return render(request, "diary/calender.html")
 
 

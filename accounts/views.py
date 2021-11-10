@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
+
+import diary
 from .models import User
 from django.utils import timezone
 
@@ -9,7 +11,7 @@ def home(request):
     if not request.session.get("user", False):
         return render(request, "accounts/home.html")
     else:
-        return render(request, "diary/calender.html")
+        return redirect("diary:calender", user_id=request.session.get("user"))
 
 
 def login(request):

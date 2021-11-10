@@ -118,11 +118,7 @@ html, body{
 .cal1 .clndr .clndr-table tr .day.today:hover {
   	color:#000;
 }
-.cal1 .clndr .clndr-table tr .day.today.event {
-     background: #3e3e3e;
-	 color: #FFF;
-	 padding:0;
-}
+
 .day.today.event:hover{
 	color:#FFF;
 }
