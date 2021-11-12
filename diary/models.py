@@ -7,10 +7,11 @@ from django.contrib.postgres.fields import ArrayField
 
 class Diary(models.Model):
     id = models.BigAutoField(primary_key=True)  # 식별자: 다이어리 id
+    user_id = models.IntegerField(null=True)
     # user_id = models.ForeignKey(
     #     User, related_name="user", on_delete=models.CASCADE, db_column="username"
     # )  # 외래키: username (사용자ID)
-    title = models.CharField(max_length=200)  # 제목
+    # title = models.CharField(max_length=200)  # 제목
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     # hashtag
@@ -19,8 +20,8 @@ class Diary(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title
 
 
 # 일기 작성

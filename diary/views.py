@@ -11,9 +11,10 @@ def decorate(request):
 
     elif request.method == "POST":  # text 값
         diary = Diary()
-        diary.title = "title"  # title input 추후 추가
+        diary.user_id = request.session.get("user")
+        # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
-        # user_id
+        print(timezone.datetime.now())
         diary.save()  # Diary DB 저장
 
         if request.POST["UserInput"]:
@@ -41,7 +42,9 @@ def decorate(request):
                 )
                 diaryImage.save()
 
-        return redirect("calendar")  # 나중에 일기 확인 창으로 redirect 넘길 것
+        return redirect(
+            "diary:calender", user_id=request.session.get("user")
+        )  # 나중에 일기 확인 창으로 redirect 넘길 것
 
     return render(request, "diary/decorate.html")
 
@@ -70,7 +73,7 @@ def new(request):
     return render(request, "diary/new_diary.html", {"form": form})
 
 
-def detail(request, diary_id):
+def detail(request, user_id, diary_id):
     diary = Diary.objects.get(id=diary_id)
     context = {
         "diary": diary,
