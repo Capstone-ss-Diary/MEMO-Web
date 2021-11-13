@@ -29,22 +29,23 @@ def decorate(request):
             text.save()  # DiaryText DB 저장
 
         img_cnt = request.POST["img_count"]
-        for i in range(int(img_cnt)):
-            name = "img" + str(i + 1)
-            if request.FILES[name] is not None:
-                diaryImage = DiaryImage(
-                    diary=diary,
-                    image=request.FILES[name],
-                    width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                    height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                    imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                    imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-                )
-                diaryImage.save()
+        if img_cnt:
+            for i in range(int(img_cnt)):
+                name = "img" + str(i + 1)
+                if request.FILES[name] is not None:
+                    diaryImage = DiaryImage(
+                        diary=diary,
+                        image=request.FILES[name],
+                        width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                        height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                        imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                        imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                    )
+                    diaryImage.save()
 
         return redirect(
-            "diary:calender", user_id=request.session.get("user")
-        )  # 나중에 일기 확인 창으로 redirect 넘길 것
+            "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
+        )
 
     return render(request, "diary/decorate.html")
 
@@ -75,9 +76,18 @@ def new(request):
 
 def detail(request, user_id, diary_id):
     diary = Diary.objects.get(id=diary_id)
+    text = DiaryText.objects.get(diary=diary)
+    images = DiaryImage.objects.filter(diary=diary)
+    # images = DiaryImage.objects.get(diary=diary)
     context = {
         "diary": diary,
+        "text": text,
     }
+
+    for i in range(len(images)):
+        context["image" + str(i)] = images[i]
+
+    print(context)
 
     return render(request, "diary/diary_detail.html", context)
 
