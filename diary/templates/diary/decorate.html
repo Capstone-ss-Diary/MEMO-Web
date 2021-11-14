@@ -23,7 +23,7 @@
         <button href="#photo" class="btn" onclick="photoClick()">사진업로드</button>
       </li>
       <li>
-        <button href="#tab4" class="btn" onclick="hashClick()">해시태그</button>
+        <button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button>
       </li>
       <li>
         <button href="#tab5" class="btn" onclick="stickerClick()">스티커</button>
@@ -235,8 +235,30 @@
           </div>
         </div>
 
-        <div id="tab4" class="cont">
-          Tab Content4
+        <div id="hashtag" class="cont">
+
+          <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+            <button id="hashtaging" type="button" style="margin-left: .5%; width: 43%; left: 10px;"
+              onclick="hashtagingClick()">해시태그 만들기</button>
+            <button id="hashtaging" type="button">해시태그 생성하기</button>
+          </div>
+
+          <div id="hashtagingDiv" style="display: none;">
+            <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+              <input type="text" id="hashtagInput" placeholder="해시태그를 입력하세요">
+              <button type="button" id="hashtagInput_check" onclick="hashtagingOk()"> 확인 </button>
+            </div>
+          </div>
+
+          <div id="hashtagForm">
+
+          </div>
+
+          <p>위에 버튼 누르면 밑에</p>
+          <p>[해시태그 달기 버튼] [생성한 해시태그1] [해시태그 취소 버튼 (해시태그 달면 나타나게)]</p>
+          <p>[해시태그 달기 버튼] [생성한 해시태그2] [해시태그 취소 버튼]</p>
+          <p>일단 요런 식으로 목록을 뜨게 한다는 생각이긴 한데 (해시태그 달기 버튼 누르면 canvas에 해시태그 생성) 다른 생각 있었으면 말해주세용 꼭 요런식으로 안대두 됨!~! </p>
+
         </div>
         <div id="tab5" class="cont">
           Tab Content5

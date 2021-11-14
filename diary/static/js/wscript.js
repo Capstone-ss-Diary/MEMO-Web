@@ -324,6 +324,26 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제
 
 
 
+// hashtag - 해시태그 입력칸 나타내기
+function hashtagingClick() {
+  var div = document.getElementById("hashtagingDiv");
+
+  if (div.style.display == 'none') { div.style.display = 'block'; }
+  else { div.style.display = 'none'; }
+}
+
+// hashtag - 해시태그를 입력하세요 확인 버튼 클릭
+function hashtagingOk() {
+  var input = document.getElementById("hashtagInput").value;
+  if (input) {
+    var tag = document.getElementById("hashtagForm")
+    tag.innerHTML += `<p>#${input}</p>`;
+    // innerHTML 하고 input 값 비우기
+    // input에서 엔터하면 submit으로 넘어가는 거 막기
+  }
+}
+
+
 // canvas 클릭 이벤트
 canvas.onclick = function (event) {
   // 일기 작성
