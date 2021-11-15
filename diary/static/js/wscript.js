@@ -375,3 +375,42 @@ canvas.onclick = function (event) {
 
   totalCanvas(); // 다시 canvas 그리기
 }
+
+
+
+
+/////////////////////////////////////////////////////////
+function saveCanvasImg() {
+  var imgBase64 = canvas.toDataURL(`diary/jpeg`, 'image/octet-stream');
+  var decodImg = atob(imgBase64.split(',')[1]);
+
+  let array = [];
+  for (let i = 0; i < decodImg.length; i++) {
+    array.push(decodImg.charCodeAt(i));
+  }
+
+  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.jpg';
+  let formData = new FormData();
+  formData.append('file', canvasFile, canvasFileName);
+
+  alert("ajax 전 성공");
+
+  $.ajax({
+    type: 'post',
+    url: '/upload/',
+    cache: false,
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      alert('Upload Success');
+    },
+    error: function () {
+      alert("fail");
+    }
+  });
+
+  alert("ajax 후");
+}
+//////////////////////////////////////////////////////////

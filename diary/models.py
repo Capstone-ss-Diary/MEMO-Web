@@ -2,11 +2,10 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from accounts.models import User
-from django.contrib.postgres.fields import ArrayField
 
 
 class Diary(models.Model):
-    id = models.BigAutoField(primary_key=True)  # 식별자: 다이어리 id
+    id = models.BigAutoField(primary_key=True, null=False)  # 식별자: 다이어리 id
     user_id = models.IntegerField(null=True)
     # user_id = models.ForeignKey(
     #     User, related_name="user", on_delete=models.CASCADE, db_column="username"

@@ -32,7 +32,7 @@ def login(request):
         else:
             user = User.objects.get(username=username)
 
-            if check_password(password, user.password):
+            if password == user.password:
                 request.session["user"] = user.id
                 return redirect("/")
             else:
@@ -80,7 +80,7 @@ def signup(request):
         else:
             user = User(
                 username=username,
-                password=make_password(password1),
+                password=password1,
                 name=name,
                 email=email,
                 registered_dttm=timezone.now(),
