@@ -6,7 +6,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/tab.css' %}">
-  <script src="{% static 'js/write.js' %}"></script>
+  <!-- <script src="{% static 'js/write.js' %}"></script> -->
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 </head>
 
@@ -262,6 +266,10 @@
         </div>
         <div id="tab5" class="cont">
           Tab Content5
+          <button type="button" onclick="testCanvas(this);">캔버스 확인</button>
+          <div id="canvasImg">
+            <img src="" id="test" alt="Alternative text" />
+          </div>
         </div>
 
       </div>

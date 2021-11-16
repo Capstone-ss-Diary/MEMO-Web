@@ -376,12 +376,11 @@ canvas.onclick = function (event) {
   totalCanvas(); // 다시 canvas 그리기
 }
 
+function testCanvas() {
 
+  var imgBase64 = canvas.toDataURL(`image/png`);
 
-
-/////////////////////////////////////////////////////////
-function saveCanvasImg() {
-  var imgBase64 = canvas.toDataURL(`diary/jpeg`, 'image/octet-stream');
+  // console.log(imgBase64);
   var decodImg = atob(imgBase64.split(',')[1]);
 
   let array = [];
@@ -389,16 +388,66 @@ function saveCanvasImg() {
     array.push(decodImg.charCodeAt(i));
   }
 
-  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.jpg';
-  let formData = new FormData();
-  formData.append('file', canvasFile, canvasFileName);
+  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
+  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
 
-  alert("ajax 전 성공");
+  console.log(canvasFile);
+
+  const url = window.URL.createObjectURL(canvasFile);
+  document.getElementById("test").src = url;
+
+  // window.URL.revokeObjectURL(url); // 할당 해제
+
+  let formData = new FormData();
+  formData['canvas_file'] = canvasFile;
+  formData['canvas_name'] = canvasFileName;
+
+  console.log(formData);
 
   $.ajax({
     type: 'post',
-    url: '/upload/',
+    url: '{% url "diary:decorate" %}',
+    cache: false,
+    data: { canvas_file: canvasFile },
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      alert('Upload Success');
+    },
+    error: function () {
+      alert("fail");
+    }
+  });
+
+  alert("ajax 후");
+}
+
+
+/////////////////////////////////////////////////////////
+function saveCanvasImg() {
+
+  var imgBase64 = canvas.toDataURL(`image/png`);
+  // console.log(imgBase64);
+  var decodImg = atob(imgBase64.split(',')[1]);
+
+  let array = [];
+  for (let i = 0; i < decodImg.length; i++) {
+    array.push(decodImg.charCodeAt(i));
+  }
+
+  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
+  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
+  let formData = new FormData();
+  formData.append('canvas_file', canvasFile);
+  formData.append('canvas_name', canvasFileName);
+
+  console.log(formData);
+
+  alert(formData);
+
+  $.ajax({
+    type: 'post',
+    url: '{% url "diary:decorate" %}',
     cache: false,
     data: formData,
     processData: false,

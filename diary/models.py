@@ -13,6 +13,7 @@ class Diary(models.Model):
     # title = models.CharField(max_length=200)  # 제목
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    canvas = models.BinaryField(null=True)
     # hashtag
 
     def publish(self):
