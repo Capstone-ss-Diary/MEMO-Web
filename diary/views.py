@@ -1,19 +1,37 @@
+from django.db.models.fields import json
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Diary, DiaryImage, DiaryText
 from .forms import DiaryForm
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+
+import json
 
 
+@csrf_exempt
+def test(request):
+    jsonObject = json.loads(request.body)
+    print(jsonObject)
+    return JsonResponse(jsonObject)
+
+
+@csrf_exempt
 def decorate(request):
     if request.method == "GET":  # select 값
         return render(request, "diary/decorate.html")
 
     elif request.method == "POST":  # text 값
+        # form_data = json.loads(request.body)
+
+        # print(form_data)
+
         diary = Diary()
         diary.user_id = request.session.get("user")
         # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
+        # diary.canvas = form_data["canvas_file"]
         print(timezone.datetime.now())
         diary.save()  # Diary DB 저장
 

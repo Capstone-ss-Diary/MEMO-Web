@@ -427,7 +427,6 @@ function testCanvas() {
 function saveCanvasImg() {
 
   var imgBase64 = canvas.toDataURL(`image/png`);
-  // console.log(imgBase64);
   var decodImg = atob(imgBase64.split(',')[1]);
 
   let array = [];
@@ -437,19 +436,20 @@ function saveCanvasImg() {
 
   var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
   var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
+
   let formData = new FormData();
-  formData.append('canvas_file', canvasFile);
-  formData.append('canvas_name', canvasFileName);
+  formData['canvas_file'] = canvasFile;
+  formData['canvas_name'] = canvasFileName;
 
   console.log(formData);
 
-  alert(formData);
 
   $.ajax({
     type: 'post',
-    url: '{% url "diary:decorate" %}',
+    url: '/diary/test/',
     cache: false,
     data: formData,
+    dataType: 'json',
     processData: false,
     contentType: false,
     success: function (data) {
