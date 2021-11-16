@@ -6,43 +6,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/tab.css' %}">
-  <!-- <script src="{% static 'js/write.js' %}"></script> -->
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
 </head>
 
 <body>
+
   <div class="tab_menu">
+
     <ul class="list">
-      <li class="is_on">
-        <button href="#write" class="btn" onclick="writeClick()">일기작성</button>
-      </li>
-      <li>
-        <button href="#tab2" class="btn" onclick="backgroundClick()">배경선택</button>
-      </li>
-      <li>
-        <button href="#photo" class="btn" onclick="photoClick()">사진업로드</button>
-      </li>
-      <li>
-        <button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button>
-      </li>
-      <li>
-        <button href="#tab5" class="btn" onclick="stickerClick()">스티커</button>
-      </li>
+      <li class="is_on"><button href="#write" class="btn" onclick="writeClick()">일기작성</button></li>
+      <li><button href="#tab2" class="btn" onclick="backgroundClick()">배경선택</button></li>
+      <li><button href="#photo" class="btn" onclick="photoClick()">사진업로드</button></li>
+      <li><button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button></li>
+      <li><button href="#tab5" class="btn" onclick="stickerClick()">스티커</button></li>
     </ul>
 
     <form method="POST" name="edit_form" action="{% url 'diary:decorate' %}" enctype="multipart/form-data">
-
       {% csrf_token %}
 
       <div class="diary_paper">
-        <canvas id="paper" width="880" height="600"
-          style="background-color: white; border: #F5F5DC 10px solid;"></canvas>
+        <canvas id="paper" width="880" height="600" style="background-color: white; border: #F5F5DC 10px solid;">
+        </canvas>
         <div class="select">
-          <button type="submit" onclick="saveCanvasImg(); alert('제출 전 동작');">저장</button>
+          <button type="submit" onclick="saveCanvasImg()">저장</button>
           <button type="button">취소</button>
           <input type="hidden" name="selectEdit" id="selectEdit" value="write">
         </div>
@@ -58,7 +47,7 @@
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
           </select>
-          <input id="fontSize" name="fontSize" type="text" value="18" oninput="totalCanvas()">
+          <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18" oninput="totalCanvas()">
           <select id="fontColorSelect" onchange="settingRGB(this); totalCanvas();">
             <option selected value="rgb(0,0,0)" style="color: rgb(0,0,0);">검정</option>
             <option value="rgb(255,0,0)" style="color: rgb(255,0,0);">빨강</option>
@@ -67,19 +56,21 @@
             <option value="rgb(235,211,176)" style="color: rgb(235,211,176);">베이지</option>
             <option id=setRGB value="">RGB입력</option>
           </select> &nbsp;&nbsp;
-          <a id="rgb1" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">R</a>
-          <input type="text" name="R" id="R" style="width: 50px; visibility: hidden;" value="0">
-          <a id="rgb2" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">G</a>
-          <input type="text" name="G" id="G" style="width: 50px; visibility: hidden;" value="0">
-          <a id="rgb3" style="font-family: 'Jua', sans-serif; font-size: 18px; visibility: hidden;">B</a>
-          <input type="text" name="B" id="B" style="width: 50px; visibility: hidden;" value="0">
+          <a id="rgb1" style="font-size: 18px; visibility: hidden;">R</a>
+          <input type="text" name="R" id="R" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <a id="rgb2" style="font-size: 18px; visibility: hidden;">G</a>
+          <input type="text" name="G" id="G" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <a id="rgb3" style="font-size: 18px; visibility: hidden;">B</a>
+          <input type="text" name="B" id="B" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
           <br>
-          <span style="font-family: 'Jua', sans-serif; font-size: 22px;">다이어리에서 원하는 위치를 클릭하고 일기를 작성해보세요!</span>
-          <textarea type="text" id="UserInput" name="UserInput" cols="80" rows="35"></textarea>
+          <span style="font-size: 22px;">일기를 작성하고 다이어리에서 원하는 위치를 클릭해보세요!</span>
+          <textarea type="text" id="UserInput" name="UserInput" cols="80" rows="35" oninput="totalCanvas()"></textarea>
+
           <input type="hidden" name="coordinateX" id="coordinateX" value="">
           <input type="hidden" name="coordinateY" id="coordinateY" value="">
           <input type="hidden" name="font" id="font" value="">
           <input type="hidden" name="fontColor" id="fontColor" value="">
+
         </div>
 
         <div id="tab2" class="cont">
