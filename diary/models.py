@@ -28,10 +28,10 @@ class Diary(models.Model):
 class DiaryText(models.Model):
     diary = models.ForeignKey(Diary, on_delete=models.CASCADE)  # 외래키: 다이어리 id
     content = models.TextField()  # 일기작성 UserInput
-    coordinateX = models.IntegerField(null=True)  # 텍스트 x 좌표
-    coordinateY = models.IntegerField(null=True)  # 텍스트 y 좌표
+    coordinateX = models.FloatField(null=True)  # 텍스트 x 좌표
+    coordinateY = models.FloatField(null=True)  # 텍스트 y 좌표
     font = models.CharField(max_length=100, null=True)
-    font_size = models.IntegerField(null=True)
+    font_size = models.FloatField(null=True)
     font_color = models.CharField(max_length=100, null=True)
 
     class Meta:
@@ -42,7 +42,7 @@ class DiaryText(models.Model):
 class DiaryImage(models.Model):
     diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="images/", blank=True, null=True)
-    width = models.IntegerField(null=True)
-    height = models.IntegerField(null=True)
-    imageX = models.IntegerField(null=True)
-    imageY = models.IntegerField(null=True)
+    width = models.FloatField(null=True)
+    height = models.FloatField(null=True)
+    imageX = models.FloatField(null=True)
+    imageY = models.FloatField(null=True)

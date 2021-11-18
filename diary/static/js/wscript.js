@@ -144,7 +144,7 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
   img.id = `img${String(imgNum)}`;
   img.src = pre_img.src;
   img.width = pre_img.clientWidth;
-  img.height = pre_img.clientWidth;
+  img.height = pre_img.clientHeight;
   img.style.display = "none";
   document.getElementById("canvasImg").appendChild(img);
 

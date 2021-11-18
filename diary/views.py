@@ -73,10 +73,13 @@ def detail_via(request, user_id, diary_id):
     content = {
         "diary": diary,
         "diaryText": diary_text,
+        "diaryImage": diary_images,
     }
 
-    for i in range(len(diary_images)):
-        content["image_" + str(i)] = diary_images[i]
+    # for i in range(len(diary_images)):
+    #     content["image_" + str(i)] = diary_images[i]
+
+    print(content)
 
     return render(request, "diary/detail_via.html", content)
 
