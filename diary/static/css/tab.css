@@ -188,11 +188,35 @@ body{
 .ticketForm2{
   width: 55%;
   padding: .4em .5em; 
-  font-family: 'Jua', sans-serif; 
   border: 0; 
   font-size: 18px;
   left: 10px;
 }
+
+.OCR_kor {
+  background-color: #E5D0AD;
+  width: 10%;
+  padding: .4em .5em; 
+  border: 0; 
+  font-size: 18px;
+  left: 10px;
+  font-family: 'Jua', sans-serif;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.OCR_eng {
+  background-color: #E5D0AD;
+  width: 10%;
+  padding: .4em .5em; 
+  border: 0; 
+  font-size: 18px;
+  left: 10px;
+  font-family: 'Jua', sans-serif;
+  cursor: pointer;
+  visibility: hidden;
+}
+
 
 #selectImg{
   width: 30%;

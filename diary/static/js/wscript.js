@@ -261,14 +261,20 @@ document.getElementById("minus").onclick = function () { // 이미지 크기 축
 document.getElementById("textExtract").onclick = function () { // "텍스트 추출" 누르면 티켓폼 선택 나타내기
   var ticket1 = document.querySelector(".ticketForm1");
   var ticket2 = document.querySelector(".ticketForm2");
+  var korea = document.querySelector(".OCR_kor");
+  var english = document.querySelector(".OCR_eng");
 
-  if (ticket1.style.visibility == "hidden" && ticket2.style.visibility == "hidden") {
+  if (ticket1.style.visibility == "hidden" && ticket2.style.visibility == "hidden" && korea.style.visibility == "hidden" && english.style.visibility == "hidden") {
     document.querySelector(".ticketForm1").style.visibility = "visible";
     document.querySelector(".ticketForm2").style.visibility = "visible";
+    document.querySelector(".OCR_kor").style.visibility = "visible";
+    document.querySelector(".OCR_eng").style.visibility = "visible";
   }
   else {
     document.querySelector(".ticketForm1").style.visibility = "hidden";
     document.querySelector(".ticketForm2").style.visibility = "hidden";
+    document.querySelector(".OCR_kor").style.visibility = "hidden";
+    document.querySelector(".OCR_eng").style.visibility = "hidden";
   }
 
   // openCV 연결 기능 추가
