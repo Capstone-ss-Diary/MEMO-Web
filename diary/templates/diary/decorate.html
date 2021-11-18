@@ -5,6 +5,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/font.css' %}">
   <link rel="stylesheet" href="{% static 'css/tab.css' %}">
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -24,7 +26,7 @@
       <li><button href="#tab5" class="btn" onclick="stickerClick()">스티커</button></li>
     </ul>
 
-    <form method="POST" name="edit_form" action="{% url 'diary:decorate' %}" enctype="multipart/form-data">
+    <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="diary_paper">

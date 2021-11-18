@@ -1,5 +1,3 @@
-from django.db.models.fields import json
-from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
 from .models import Diary, DiaryImage, DiaryText
@@ -7,18 +5,13 @@ from .forms import DiaryForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
-import json
-import base64
+
+def calender(request, user_id):
+
+    return render(request, "diary/calender.html")
 
 
-@csrf_exempt
-def test(request):
-    print(request.POST.get("file"))
-    return JsonResponse(None)
-
-
-@csrf_exempt
-def decorate(request):
+def decorate(request, user_id):
     if request.method == "GET":  # select 값
         return render(request, "diary/decorate.html")
 
@@ -59,13 +52,13 @@ def decorate(request):
                     diaryImage.save()
 
         return redirect(
-            "diary:detail_via", user_id=request.session.get("user"), diary_id=diary.id
+            "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
         )
 
     return render(request, "diary/decorate.html")
 
 
-def detail_via(request, user_id, diary_id):
+def detail(request, user_id, diary_id):
     diary = Diary.objects.get(id=diary_id)
     diary_text = DiaryText.objects.get(diary=diary)
     diary_images = DiaryImage.objects.filter(diary=diary)
@@ -76,54 +69,11 @@ def detail_via(request, user_id, diary_id):
         "diaryImage": diary_images,
     }
 
-    # for i in range(len(diary_images)):
-    #     content["image_" + str(i)] = diary_images[i]
-
-    print(content)
-
-    return render(request, "diary/detail_via.html", content)
-
-
-def detail(request, user_id, diary_id):
-    diary = Diary.objects.get(id=diary_id)
-    text = DiaryText.objects.get(diary=diary)
-    images = DiaryImage.objects.filter(diary=diary)
-    # images = DiaryImage.objects.get(diary=diary)
-    context = {
-        "diary": diary,
-        "text": text,
-    }
-
-    for i in range(len(images)):
-        context["image" + str(i)] = images[i]
-
-    # print(context)
-
-    return render(request, "diary/diary_detail.html", context)
-
-
-def calender(request, user_id):
-
-    return render(request, "diary/calender.html")
+    return render(request, "diary/detail.html", content)
 
 
 def search(request):
     return HttpResponse("Search index.")
-
-
-def new(request):
-    if request.method == "POST":
-        form = DiaryForm(request.POST)
-        if form.is_valid():
-            diary = form.save(commit=False)
-            diary.user = request.user
-            diary.created_date = timezone.now()
-            diary.save()
-            return redirect("detail", diary_id=diary.id)
-    else:
-        form = DiaryForm()
-
-    return render(request, "diary/new_diary.html", {"form": form})
 
 
 def edit(request, diary_id):
@@ -149,7 +99,3 @@ def diary_list(request):
     }
 
     return render(request, "diary/diary_list.html", context)
-
-
-def photo(request):
-    return render(request, "diary/sidebar.html")
