@@ -349,9 +349,12 @@ canvas.onclick = function (event) {
 
 function testCanvas() {
 
-  var imgBase64 = canvas.toDataURL(`image/png`);
-  var decodImg = atob(imgBase64.split(',')[1]);
+  var cvs_base64 = canvas.toDataURL(`image/png`);
+  var base64 = cvs_base64.split(',')[1];
 
+  console.log(base64);
+
+  var decodImg = atob(base64);
   let array = [];
   for (let i = 0; i < decodImg.length; i++) {
     array.push(decodImg.charCodeAt(i));
@@ -364,61 +367,55 @@ function testCanvas() {
 
   const url = window.URL.createObjectURL(canvasFile);
   document.getElementById("test").src = url;
-
   // window.URL.revokeObjectURL(url); // 할당 해제
 
-  let formData = new FormData();
-  formData['canvas_file'] = canvasFile;
-  formData['canvas_name'] = canvasFileName;
-
-  console.log(formData);
+  var formData = new FormData();
+  formData['canvas'] = base64
 
   $.ajax({
     type: 'post',
-    url: '{% url "diary:decorate" %}',
-    cache: false,
-    data: { canvas_file: canvasFile },
+    url: '/diary/decorate/',
+    data: {
+      canvas: base64
+    },
+    dataType: 'json',
     processData: false,
-    contentType: false,
+    contentType: 'application/octet-stream',
     success: function (data) {
       alert('Upload Success');
     },
-    error: function () {
-      alert("fail");
+    error: function (err) {
+      alert(err);
     }
   });
 
   alert("ajax 후");
 }
 
+
+/////////////////////////////////////////////////////////
 function saveCanvasImg() {
 
-  var imgBase64 = canvas.toDataURL(`image/png`);
-  var decodImg = atob(imgBase64.split(',')[1]);
+  alert("함수 진입");
+
+  var cvs_base64 = canvas.toDataURL(`image/png`);
+  var base64 = cvs_base64.split(',')[1];
+
+  console.log(base64);
 
   let array = [];
   for (let i = 0; i < decodImg.length; i++) {
     array.push(decodImg.charCodeAt(i));
   }
 
-  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
-  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
-
-  let formData = new FormData();
-  formData['canvas_file'] = canvasFile;
-  formData['canvas_name'] = canvasFileName;
-
-  console.log(formData);
-
 
   $.ajax({
     type: 'post',
-    url: '/diary/test/',
-    cache: false,
-    data: formData,
+    url: '/diary/decorate/',
+    data: {
+      file: base64
+    },
     dataType: 'json',
-    processData: false,
-    contentType: false,
     success: function (data) {
       alert('Upload Success');
     },
@@ -429,3 +426,4 @@ function saveCanvasImg() {
 
   alert("ajax 후");
 }
+//////////////////////////////////////////////////////////
