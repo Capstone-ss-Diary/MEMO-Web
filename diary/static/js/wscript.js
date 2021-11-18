@@ -96,7 +96,7 @@ function settingRGB(opt) { // RGB입력 : rgb input 나타나게
 
 
 function validateName(fname) { // 파일이름으로 확장자 체크하는 함수
-  var extensions = ['jpeg', 'jpg', 'png']; // 허용되는 확장자
+  var extensions = ['jpeg', 'jpg', 'png', 'PNG']; // 허용되는 확장자
   var fparts = fname.split('.');
   var fext = '';
   var validated = false; // 유효성
