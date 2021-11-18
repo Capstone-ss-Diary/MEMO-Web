@@ -433,3 +433,29 @@ function saveCanvasImg() {
   alert("ajax 후");
 }
 //////////////////////////////////////////////////////////
+
+document.getElementById("background_remove").onclick = function () {
+
+  var formData = new FormData();
+  if (document.getElementById("image")) {
+    formData['file'] = document.getElementById("image").src;
+  } else { alert("먼저 사진을 업로드 해주세요."); }
+
+
+
+  $.ajax({
+    type: 'post',
+    url: '/diary/remove/',
+    data: JSON.stringify(formData),
+    dataType: 'json',
+    success: function (data) {
+      alert('Upload Success');
+    },
+    error: function () {
+      alert("fail");
+    }
+  });
+
+
+
+}

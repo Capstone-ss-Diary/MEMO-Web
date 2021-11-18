@@ -100,6 +100,7 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
+
 #######################################################################
 
 import numpy as np
@@ -110,6 +111,7 @@ from keras.applications import vgg16
 from keras.applications.imagenet_utils import decode_predictions
 from keras.preprocessing.image import img_to_array, load_img
 from tensorflow.python.keras.backend import set_session
+
 
 def model(request):
     if request.method == "POST":
@@ -135,24 +137,46 @@ def model(request):
         return render(request, "model.html")
 
 
-# def ocr_upload(request):
-#     context = {}
+def ocr_upload(request):
+    context = {}
 
-#     imgname = ''
-#     resulttext = ''
-#     if 'uploadfile' in request.FILES:
-#         uploadfile = request.FILES.get('uploadfile', '')
+    imgname = ''
+    resulttext = ''
+    if 'uploadfile' in request.FILES:
+        uploadfile = request.FILES.get('uploadfile', '')
 
-#         if uploadfile != '':
-#             name_old = uploadfile.name
-#             name_ext = os.path.splitext(name_old)[1]
+        if uploadfile != '':
+            name_old = uploadfile.name
+            name_ext = os.path.splitext(name_old)[1]
 
-#             fs = FileSystemStorage(location='static/source')
-#             imgname = fs.save(f"src-{name_old}", uploadfile)
+            fs = FileSystemStorage(location='static/source')
+            imgname = fs.save(f"src-{name_old}", uploadfile)
 
-#             imgfile = Image.open(f"./static/source/{imgname}")
-#             resulttext = pytesseract.image_to_string(imgfile, lang='eng')
+            imgfile = Image.open(f"./static/source/{imgname}")
+            resulttext = pytesseract.image_to_string(imgfile, lang='eng')
 
-#     context['imgname'] = imgname
-#     context['resulttext'] = resulttext
-#     return render(request, 'ocr_upload.html', context)
+    context['imgname'] = imgname
+    context['resulttext'] = resulttext
+    return render(request, 'ocr_upload.html', context)
+
+############################################################################################################
+
+## 배경제거
+
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+from rembg.bg import remove
+import numpy as np
+import io
+from PIL import Image
+
+def bgr_rm(request):
+
+  input_path = 'choco.jpg'
+  output_path = 'out.png'
+
+  f = np.fromfile(input_path)
+  result = remove(f)
+  img = Image.open(io.BytesIO(result)).convert("RGBA")
+  img.save(output_path)
