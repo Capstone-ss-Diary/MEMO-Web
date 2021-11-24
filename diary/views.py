@@ -5,6 +5,9 @@ from .forms import DiaryForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
+from django.db.models.fields import json
+from django.http.response import JsonResponse
+
 
 def calender(request, user_id):
 
@@ -136,6 +139,11 @@ def model(request):
     else:
         return render(request, "model.html")
 
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+import os
+from PIL import Image
+import pytesseract
 
 def ocr_upload(request):
     context = {}
@@ -163,20 +171,28 @@ def ocr_upload(request):
 
 ## 배경제거
 
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+# from PIL import ImageFile
+# ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from rembg.bg import remove
-import numpy as np
-import io
-from PIL import Image
+# from rembg.bg import remove
+# import torch
+# import numpy as np
+# import io
+# from PIL import Image
 
-def bgr_rm(request):
+# def bgr_rm(request):
 
-  input_path = 'choco.jpg'
-  output_path = 'out.png'
+#     jsonObject = json.loads(request.body)
+#     print(jsonObject)
 
-  f = np.fromfile(input_path)
-  result = remove(f)
-  img = Image.open(io.BytesIO(result)).convert("RGBA")
-  img.save(output_path)
+#     input_path = jsonObject #'choco.jpg'
+#     # output_path = 'out.png'
+
+#     f = np.fromfile(input_path)
+#     result = remove(f)
+#     img = Image.open(io.BytesIO(result)).convert("RGBA")
+#     # img.save(output_path)
+    
+#     print(img)
+
+#     return JsonResponse(jsonObject)
