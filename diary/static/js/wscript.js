@@ -300,6 +300,7 @@ document.getElementById("rightRotate").onclick = function () {
   totalCanvas();
 }
 
+var img_tag_num = 30;
 document.getElementById("delImg").onclick = function () { // 이미지 삭제 및 변경 기능 (수정 많이 필요)
 
   var slt = document.getElementById("selectImg").selectedIndex;
@@ -321,6 +322,21 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제 �
 
   var imgH = document.getElementById("canvasImgH").childNodes.item(slt);
   imgH.parentNode.removeChild(imgH);
+
+  var degree = document.getElementById("degree").childNodes.item(slt);
+  degree.parentNode.removeChild(degree);
+
+  var file = document.getElementById(`chooseFile${slt + 1}`);
+  var form = document.getElementById("forms");
+  form.removeChild(file);
+
+  img_tag_num += 1
+
+  form.innerHTML += `<label id="label${img_tag_num}" for="chooseFile${img_tag_num}"> 불러오기</label>
+  <input type="file" id="chooseFile${img_tag_num}" name="img${img_tag_num}" accept="image/*" onchange="loadFile(this)">`;
+
+
+  console.log(form);
 
   // input type=file img(slt+1) 태그 삭제
 

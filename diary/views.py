@@ -28,7 +28,7 @@ def decorate(request, user_id):
 
         # print(request.POST.get("file"))
 
-        if request.POST.get("UserInput"):
+        if request.POST.get("UserInput") is not None:
             text = DiaryText()
             text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
             text.content = request.POST["UserInput"]
@@ -43,7 +43,7 @@ def decorate(request, user_id):
         if img_cnt:
             for i in range(int(img_cnt)):
                 name = "img" + str(i + 1)
-                if request.FILES[name] is not None:
+                if request.FILES.get(name) is not None:
                     diaryImage = DiaryImage(
                         diary=diary,
                         image=request.FILES[name],

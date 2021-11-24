@@ -46,6 +46,7 @@ if (image_num > 0) {
   var degree = document.getElementById("degree").childNodes;
 
   for (var i = 0; i < image_num; i++) {
+
     var img = images.item(i);
     var degree = degree.item(i).value;
 
@@ -79,4 +80,4 @@ var url = window.URL.createObjectURL(blob);
 
 setTimeout(function () {
   document.getElementById("diary_canvas").src = url;
-}, 300);
+}, 1000);
