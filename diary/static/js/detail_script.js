@@ -43,10 +43,22 @@ if (image_num > 0) {
   var images = document.getElementById("images").children;
   var image_x = document.getElementById("image_x").childNodes;
   var image_y = document.getElementById("image_y").childNodes;
+  var degree = document.getElementById("degree").childNodes;
 
   for (var i = 0; i < image_num; i++) {
     var img = images.item(i);
+    var degree = degree.item(i).value;
+
+    var x = parseInt(image_x.item(i).value) + (img.width / 2);
+    var y = parseInt(image_y.item(i).value) + (img.height / 2);
+
+    ctx.save();
+    ctx.translate(parseInt(x), parseInt(y));
+    ctx.rotate(degree * Math.PI / 180);
+    ctx.translate((-1) * parseInt(x), (-1) * parseInt(y));
     ctx.drawImage(img, image_x.item(i).value, image_y.item(i).value, img.width, img.height);
+    ctx.restore();
+
   }
 
 }
