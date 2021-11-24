@@ -46,3 +46,4 @@ class DiaryImage(models.Model):
     height = models.FloatField(null=True)
     imageX = models.FloatField(null=True)
     imageY = models.FloatField(null=True)
+    degree = models.FloatField(null=True)

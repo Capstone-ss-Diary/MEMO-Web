@@ -51,6 +51,7 @@ def decorate(request, user_id):
                         height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
                         imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
                         imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                        degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
                     )
                     diaryImage.save()
 
