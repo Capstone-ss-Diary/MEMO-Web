@@ -59,16 +59,29 @@ function drawingImg() {
   var canvasImg = document.getElementById("canvasImg");
   var canvasImgX = document.getElementById("canvasImgX");
   var canvasImgY = document.getElementById("canvasImgY");
+  var canvasDegree = document.getElementById("degree");
 
   // 업로드 한 이미지기 1개 이상이면 출력
   if (canvasImg.childElementCount > 0) {
     var images = canvasImg.childNodes; // 업로드한 이미지 모두 불러오기
     var imagesX = canvasImgX.childNodes; // 이미지 x좌표 모두 불러오기
     var imagesY = canvasImgY.childNodes; // 이미지 y좌표 모두 불러오기
+    var imagesD = canvasDegree.childNodes;
 
     for (var i = 0; i < images.length; i++) {
       var img = images.item(i);
+      var degree = imagesD.item(i).value;
+
+      var x = parseInt(imagesX.item(i).value) + (img.width / 2);
+      var y = parseInt(imagesY.item(i).value) + (img.height / 2);
+
+      ctx.save();
+      ctx.translate(parseInt(x), parseInt(y));
+      ctx.rotate(degree * Math.PI / 180);
+      ctx.translate((-1) * parseInt(x), (-1) * parseInt(y));
       ctx.drawImage(img, imagesX.item(i).value, imagesY.item(i).value, img.width, img.height);
+      ctx.restore();
+
     }
 
   }
@@ -183,6 +196,13 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
   imgY.style.display = "none";
   document.getElementById("canvasImgY").appendChild(imgY);
 
+  // 이미지 기울기
+  var degree = document.createElement("input");
+  degree.name = `attr${String(imgNum)}[]`;
+  degree.value = 0;
+  degree.style.display = "none";
+  document.getElementById("degree").appendChild(degree);
+
   // 다음 label 
   document.getElementById(`label${String(imgNum)}`).style.display = "none";
   document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
@@ -258,26 +278,26 @@ document.getElementById("minus").onclick = function () { // 이미지 크기 축
   totalCanvas();
 }
 
-document.getElementById("textExtract").onclick = function () { // "텍스트 추출" 누르면 티켓폼 선택 나타내기
-  var ticket1 = document.querySelector(".ticketForm1");
-  var ticket2 = document.querySelector(".ticketForm2");
-  var korea = document.querySelector(".OCR_kor");
-  var english = document.querySelector(".OCR_eng");
+document.getElementById("leftRotate").onclick = function () {
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var degree = document.getElementById("degree").childNodes.item(slt).value;
+  degree -= 10;
+  document.getElementById("degree").childNodes.item(slt).value = parseInt(degree);
 
-  if (ticket1.style.visibility == "hidden" && ticket2.style.visibility == "hidden" && korea.style.visibility == "hidden" && english.style.visibility == "hidden") {
-    document.querySelector(".ticketForm1").style.visibility = "visible";
-    document.querySelector(".ticketForm2").style.visibility = "visible";
-    document.querySelector(".OCR_kor").style.visibility = "visible";
-    document.querySelector(".OCR_eng").style.visibility = "visible";
-  }
-  else {
-    document.querySelector(".ticketForm1").style.visibility = "hidden";
-    document.querySelector(".ticketForm2").style.visibility = "hidden";
-    document.querySelector(".OCR_kor").style.visibility = "hidden";
-    document.querySelector(".OCR_eng").style.visibility = "hidden";
-  }
+  console.log(degree);
 
-  // openCV 연결 기능 추가
+  totalCanvas();
+}
+
+document.getElementById("rightRotate").onclick = function () {
+  var slt = document.getElementById("selectImg").selectedIndex;
+  var degree = parseInt(document.getElementById("degree").childNodes.item(slt).value);
+  degree += 10;
+  document.getElementById("degree").childNodes.item(slt).value = parseInt(degree);
+
+  console.log(degree);
+
+  totalCanvas();
 }
 
 document.getElementById("delImg").onclick = function () { // 이미지 삭제 및 변경 기능 (수정 많이 필요)
