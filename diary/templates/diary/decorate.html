@@ -40,17 +40,30 @@
       </div>
 
       <div class="cont_area">
-
         <div id="write" class="cont" style="display:block;">
-          <select id="fontSelect" onchange="totalCanvas()">
+
+          <div style="position: relative; display: flex; top:10px">
+            <span style="font-size: 22px; margin-left: 10px;">글을 작성하고 원하는 폰트 설정과 위치를 정해보세요.</span>
+          </div>
+
+          <div class="text_option">
+            <button type="button" id="text_append" style="cursor:pointer;">텍스트 추가</button>
+            <button type="button" id="text_delete">텍스트 삭제</button>
+            <select id="UserInput_select" style="margin-top: 0;">
+              <option selected value="userInput1">텍스트1</option>
+            </select>
+          </div>
+
+          <select id="fontSelect" onchange="font_selected_change(this);">
             <option selected value="GowunDodum-Regular" style="font-family: 'GowunDodum-Regular';">고운돋움</option>
             <option value="EliceDigitalBaeum_Regular" style="font-family: 'EliceDigitalBaeum_Regular';">엘리스</option>
             <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
           </select>
-          <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18" oninput="totalCanvas()">
-          <select id="fontColorSelect" onchange="settingRGB(this); totalCanvas();">
+          <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18"
+            oninput="font_size_selected_change(this)">
+          <select id="fontColorSelect" onchange="settingRGB(this); font_color_selected_change(this);">
             <option selected value="rgb(0,0,0)" style="color: rgb(0,0,0);">검정</option>
             <option value="rgb(255,0,0)" style="color: rgb(255,0,0);">빨강</option>
             <option value="rgb(0,255,0)" style="color: rgb(0,255,0);">초록</option>
@@ -59,19 +72,71 @@
             <option id=setRGB value="">RGB입력</option>
           </select> &nbsp;&nbsp;
           <a id="rgb1" style="font-size: 18px; visibility: hidden;">R</a>
-          <input type="text" name="R" id="R" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <input type="text" name="R" id="R" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
           <a id="rgb2" style="font-size: 18px; visibility: hidden;">G</a>
-          <input type="text" name="G" id="G" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <input type="text" name="G" id="G" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
           <a id="rgb3" style="font-size: 18px; visibility: hidden;">B</a>
-          <input type="text" name="B" id="B" style="width: 50px; visibility: hidden;" value="0" oninput="totalCanvas()">
-          <br>
-          <span style="font-size: 22px;">일기를 작성하고 다이어리에서 원하는 위치를 클릭해보세요!</span>
-          <textarea type="text" id="UserInput" name="UserInput" cols="80" rows="35" oninput="totalCanvas()"></textarea>
+          <input type="text" name="B" id="B" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
 
-          <input type="hidden" name="coordinateX" id="coordinateX" value="">
-          <input type="hidden" name="coordinateY" id="coordinateY" value="">
-          <input type="hidden" name="font" id="font" value="">
-          <input type="hidden" name="fontColor" id="fontColor" value="">
+          <div style="position: relative; display: flex; top:10px;">
+            <textarea type="text" id="UserInput1" name="UserInput1" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: visible;"></textarea>
+            <input type="hidden" name="input1[]" id="text_x1" value="">
+            <input type="hidden" name="input1[]" id="text_y1" value="">
+            <input type="hidden" name="input1[]" id="font1" value="">
+            <input type="hidden" name="input1[]" id="font_size1" value="">
+            <input type="hidden" name="input1[]" id="font_color1" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:20px;">
+            <textarea type="text" id="UserInput2" name="UserInput2" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input2[]" id="text_x2" value="">
+            <input type="hidden" name="input2[]" id="text_y2" value="">
+            <input type="hidden" name="input2[]" id="font2" value="">
+            <input type="hidden" name="input2[]" id="font_size2" value="">
+            <input type="hidden" name="input2[]" id="font_color2" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:30px; visibility: hidden;">
+            <textarea type="text" id="UserInput3" name="UserInput3" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input3[]" id="text_x3" value="">
+            <input type="hidden" name="input3[]" id="text_y3" value="">
+            <input type="hidden" name="input3[]" id="font3" value="">
+            <input type="hidden" name="input3[]" id="font_size3" value="">
+            <input type="hidden" name="input3[]" id="font_color3" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:40px; visibility: hidden;">
+            <textarea type="text" id="UserInput4" name="UserInput4" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input4[]" id="text_x4" value="">
+            <input type="hidden" name="input4[]" id="text_y4" value="">
+            <input type="hidden" name="input4[]" id="font4" value="">
+            <input type="hidden" name="input4[]" id="font_size4" value="">
+            <input type="hidden" name="input4[]" id="font_color4" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:50px; visibility: hidden;">
+            <textarea type="text" id="UserInput5" name="UserInput5" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input5[]" id="text_x5" value="">
+            <input type="hidden" name="input5[]" id="text_y5" value="">
+            <input type="hidden" name="input5[]" id="font5" value="">
+            <input type="hidden" name="input5[]" id="font_size5" value="">
+            <input type="hidden" name="input5[]" id="font_color5" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:60px; visibility: hidden;">
+            <textarea type="text" id="UserInput6" name="UserInput6" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input6[]" id="text_x6" value="">
+            <input type="hidden" name="input6[]" id="text_y6" value="">
+            <input type="hidden" name="input6[]" id="font6" value="">
+            <input type="hidden" name="input6[]" id="font_size6" value="">
+            <input type="hidden" name="input6[]" id="font_color6" value="">
+          </div>
 
         </div>
 

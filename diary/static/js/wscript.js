@@ -4,54 +4,60 @@ var ctx = canvas.getContext("2d");
 var text_x = ctx.canvas.offsetLeft + 10;
 var text_y = ctx.canvas.offsetTop + 10;
 
-document.getElementById("coordinateX").value = text_x; // 텍스트 x 좌표 input 저장
-document.getElementById("coordinateY").value = text_y; // 텍스트 y 좌표 input 저장
-
 function writingText() {
-  // 폰트
-  var selected_Font = document.getElementById("fontSelect");
-  var font = selected_Font.options[selected_Font.selectedIndex].value;
-  document.getElementById("font").value = font; // DB전달용
+  for (var i = 0; i < 6; i++) {
+    var UserInput = document.getElementById(`UserInput${i + 1}`);
 
-  // 폰트 크기 가져오기
-  var font_size = document.getElementById("fontSize").value;
+    if (UserInput.style.visibility == "visible") {
+      // textarea
+      var input_x = document.getElementById(`text_x${i + 1}`);
+      var input_y = document.getElementById(`text_y${i + 1}`);
+      var font = document.getElementById(`font${i + 1}`);
+      var font_size = document.getElementById(`font_size${i + 1}`);
+      var font_color = document.getElementById(`font_color${i + 1}`);
 
-  // rgb 입력값 세팅
-  var r = document.getElementById("R").value;
-  var g = document.getElementById("G").value;
-  var b = document.getElementById("B").value;
-  document.getElementById("setRGB").value = "rgb(" + r + "," + g + "," + b + ")" // DB전달용
+      // select box
+      var select_font = document.getElementById("fontSelect");
+      var select_font_size = document.getElementById("fontSize");
+      var r = document.getElementById("R").value;
+      var g = document.getElementById("G").value;
+      var b = document.getElementById("B").value;
+      document.getElementById("setRGB").value = "rgb(" + r + "," + g + "," + b + ")";
+      var select_font_color = document.getElementById("fontColorSelect");
 
-  // 폰트 색상 불러오기 및 저장
-  var selected_fontColor = document.getElementById("fontColorSelect");
-  var font_color = selected_fontColor.options[selected_fontColor.selectedIndex].value;
-  document.getElementById("fontColor").value = font_color; // DB전달용
+      if (input_x.value == "") { input_x.value = text_x; }
+      if (input_y.value == "") { input_y.value = text_y; }
+      if (font.value == "") { font.value = select_font.options[select_font.selectedIndex].value; }
+      if (font_size.value == "") { font_size.value = select_font_size.value; }
+      if (font_color.value == "") { select_font_color.options[select_font_color.selectedIndex].value; }
 
-  // 폰트 세팅
-  ctx.font = font_size + "px " + font;
-  ctx.fillStyle = font_color;
+      ctx.font = font_size.value + "px " + font.value;
+      ctx.fillStyle = font_color.value;
 
-  var text = UserInput.value
-  var line = "";
-  var fontSize = parseFloat(ctx.font);
-  var currentY = text_y;
+      var text = UserInput.value;
+      var line = "";
+      var fontSize = parseFloat(ctx.font);
+      var currentY = parseFloat(input_y.value);
 
-  ctx.textBaseline = "top"
+      ctx.textBaseline = "top";
 
-  for (var i = 0; i < text.length; i++) {
-    var tempLine = line + text[i];
-    var tempWidth = text_x + ctx.measureText(tempLine).width;
+      for (var j = 0; j < text.length; j++) {
+        var tempLine = line + text[j];
+        var tempWidth = parseFloat(input_x.value) + ctx.measureText(tempLine).width;
 
-    if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
-    else {
-      ctx.fillText(line, text_x, currentY);
-      if (text[i] != "\n") line = text[i];
-      else line = "";
-      currentY += fontSize * (1.2);
+        if (tempWidth < canvas.width && text[j] != "\n") { line = tempLine; }
+        else {
+          ctx.fillText(line, parseFloat(input_x.value), currentY);
+          if (text[i] != "\n") line = text[j];
+          else line = "";
+          currentY += fontSize * (1.2);
+        }
+      }
+
+      ctx.fillText(line, parseFloat(input_x.value), currentY);
+
     }
   }
-
-  ctx.fillText(line, document.getElementById("coordinateX").value, currentY);
 }
 
 function drawingImg() {
@@ -93,6 +99,57 @@ function totalCanvas() {
 
   writingText(); // 일기작성 상태 불러오기
   drawingImg(); // 사진업로드 상태 불러오기
+}
+
+function font_selected_change(font_selected) {
+  var text_i = document.getElementById("UserInput_select").selectedIndex;
+  var font = document.getElementById(`font${text_i + 1}`);
+  font.value = font_selected.options[font_selected.selectedIndex].value;
+  totalCanvas();
+}
+
+function font_size_selected_change(size_selected) {
+  var text_i = document.getElementById("UserInput_select").selectedIndex;
+  var font_size = document.getElementById(`font_size${text_i + 1}`);
+  font_size.value = size_selected.value;
+  console.log(font_size.value);
+  totalCanvas();
+}
+
+function font_color_selected_change(color_selected) {
+  var text_i = document.getElementById("UserInput_select").selectedIndex;
+  var font_color = document.getElementById(`font_color${text_i + 1}`);
+  font_color.value = color_selected.options[color_selected.selectedIndex].value;
+  totalCanvas();
+}
+
+var text_append_num = 2;
+document.getElementById("text_append").onclick = function () {
+  if (text_append_num > 6) { alert("텍스트 박스는 6개 제한입니다."); }
+  else {
+    var input_id = `UserInput${text_append_num}`;
+    document.getElementById(input_id).style.visibility = "visible";
+
+    var select = document.querySelector("#UserInput_select");
+    var option = document.createElement('option');
+    option.innerText = `텍스트${text_append_num}`;
+    select.append(option);
+    select[text_append_num - 1].selected = true;
+
+    text_append_num += 1;
+  }
+
+}
+
+document.getElementById("text_delete").onclick = function () {
+  var input_id = document.getElementById("UserInput_select").selectedIndex;
+  var input = document.getElementById(`UserInput${input_id + 1}`);
+  input.value = "";
+  var select = document.querySelector("#UserInput_select");
+  select[input_id - 1].selected = true;
+
+  totalCanvas();
+
 }
 
 
@@ -368,10 +425,9 @@ function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 �
 canvas.onclick = function (event) {
   // 일기 작성
   if (document.getElementById("selectEdit").value == "write") {
-    text_x = event.clientX - ctx.canvas.offsetLeft - 10; // 텍스트 x 좌표 변경
-    text_y = event.clientY - ctx.canvas.offsetTop - 45; // 텍스트 y 좌표 변경
-    document.getElementById("coordinateX").value = text_x; // 텍스트 x 좌표 전달
-    document.getElementById("coordinateY").value = text_y; // 텍스트 y 좌표 전달
+    var text_i = document.getElementById("UserInput_select").selectedIndex;
+    document.getElementById(`text_x${text_i + 1}`).value = event.clientX - ctx.canvas.offsetLeft - 10;
+    document.getElementById(`text_y${text_i + 1}`).value = event.clientY - ctx.canvas.offsetTop - 45;
   }
 
   // 사진 업로드

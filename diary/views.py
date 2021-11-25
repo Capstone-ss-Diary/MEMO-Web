@@ -55,6 +55,8 @@ def decorate(request, user_id):
                     )
                     diaryImage.save()
 
+                print(name)
+
         return redirect(
             "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
         )

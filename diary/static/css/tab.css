@@ -91,17 +91,15 @@ body{
   position: relative;
   top: 10px;
   width: 100px;
-  /* height: 36.4px; */
   padding: .4em .5em; 
   font-family: 'Jua', sans-serif; 
   border: 1px solid #999; 
   font-size: 18px;
 }
 
-#write button{
+#write .text_option button{
   position: relative;
-  top: 10px;
-  width: 50px;
+  width: 20%;
   height: 36.4px;
   padding: .4em .5em; 
   font-family: 'Jua', sans-serif; 
@@ -109,7 +107,19 @@ body{
   font-size: 18px;
   background-color: #E5D0AD;
   border: 0;
+  top: 3px;
 }
+
+#write .text_option select{
+  position: relative;
+  width: 100px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+  top: 0px;
+}
+
 
 .image-upload {
   flex: 1;
