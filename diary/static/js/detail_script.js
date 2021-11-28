@@ -1,41 +1,54 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
-var text = document.getElementById("content").value;
-var font = document.getElementById("font").value;
-var font_size = document.getElementById("font_size").value;
-var font_color = document.getElementById("font_color").value;
-var text_x = document.getElementById("text_x").value;
-var text_y = document.getElementById("text_y").value;
+var text_num = document.getElementById("content").childElementCount;
 
-text_x = parseInt(text_x);
-text_y = parseInt(text_y);
+if (text_num > 0) {
+  var content = document.getElementById("content").childNodes;
+  var text_font = document.getElementById("font").childNodes;
+  var text_font_size = document.getElementById("font_size").childNodes;
+  var text_font_color = document.getElementById("font_color").childNodes;
+  var coordinate_x = document.getElementById("text_x").childNodes;
+  var coordinate_y = document.getElementById("text_y").childNodes;
 
-ctx.font = font_size + "px " + font;
-ctx.fillStyle = font_color;
+  for (var j = 0; j < text_num; j++) {
+    var text = content.item(j).value;
+    var font = text_font.item(j).value;
+    var font_size = text_font_size.item(j).value;
+    var font_color = text_font_color.item(j).value;
+    var text_x = coordinate_x.item(j).value;
+    var text_y = coordinate_y.item(j).value;
 
-var line = "";
-var fontSize = parseFloat(ctx.font);
-var currentY = text_y;
+    text_x = parseInt(text_x);
+    text_y = parseInt(text_y);
 
-ctx.textBaseline = "top"
+    ctx.font = font_size + "px " + font;
+    ctx.fillStyle = font_color;
 
-for (var i = 0; i < text.length; i++) {
+    var line = "";
+    var fontSize = parseFloat(ctx.font);
+    var currentY = text_y;
 
-  var tempLine = line + text[i];
-  var tempWidth = text_x + ctx.measureText(tempLine).width;
+    ctx.textBaseline = "top"
 
-  if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
-  else {
+    for (var i = 0; i < text.length; i++) {
+
+      var tempLine = line + text[i];
+      var tempWidth = text_x + ctx.measureText(tempLine).width;
+
+      if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
+      else {
+        ctx.fillText(line, text_x, currentY);
+        if (text[i] != "\n") line = text[i];
+        else line = "";
+        currentY += fontSize * (1.2);
+      }
+
+    }
+
     ctx.fillText(line, text_x, currentY);
-    if (text[i] != "\n") line = text[i];
-    else line = "";
-    currentY += fontSize * (1.2);
   }
-
 }
-
-ctx.fillText(line, text_x, currentY);
 
 var image_num = document.getElementById("images").childElementCount;
 

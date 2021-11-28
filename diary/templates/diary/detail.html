@@ -17,12 +17,13 @@
   </div>
 
   <div style="display: none;">
-    <input id="content" value="{{ diaryText.content }}">
-    <input id="font" value="{{ diaryText.font }}">
-    <input id="font_size" value="{{ diaryText.font_size }}">
-    <input id="font_color" value="{{ diaryText.font_color }}">
-    <input id="text_x" value="{{ diaryText.coordinateX }}">
-    <input id="text_y" value="{{ diaryText.coordinateY }}">
+
+    <div id="content">{% for text in diaryText %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>
+    <div id="font">{% for text in diaryText %}<input value="{{ text.font }}">{% endfor %}</div>
+    <div id="font_size">{% for text in diaryText %}<input value="{{ text.font_size }}">{% endfor %}</div>
+    <div id="font_color">{% for text in diaryText %}<input value="{{ text.font_color }}">{% endfor %}</div>
+    <div id="text_x">{% for text in diaryText %}<input value="{{ text.coordinateX }}">{% endfor %}</div>
+    <div id="text_y">{% for text in diaryText %}<input value="{{ text.coordinateY }}">{% endfor %}</div>
 
     <div id="images">
       {% for image in diaryImage %}

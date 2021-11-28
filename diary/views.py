@@ -27,17 +27,20 @@ def decorate(request, user_id):
         diary.save()  # Diary DB 저장
 
         # print(request.POST.get("file"))
-
-        if request.POST.get("UserInput") is not None:
-            text = DiaryText()
-            text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
-            text.content = request.POST["UserInput"]
-            text.coordinateX = request.POST["coordinateX"]
-            text.coordinateY = request.POST["coordinateY"]
-            text.font = request.POST["font"]
-            text.font_size = request.POST["fontSize"]
-            text.font_color = request.POST["fontColor"]
-            text.save()  # DiaryText DB 저장
+        for j in range(6):
+          if request.POST.get("UserInput"+str(j+1)) is not None: # for문 6번 돌릴 것
+            input = request.POST.get("UserInput"+str(j+1))
+            print(input)
+            if input!="":
+              text = DiaryText()
+              text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
+              text.content = input
+              text.coordinateX = request.POST.getlist("input"+str(j+1)+"[]")[0]
+              text.coordinateY = request.POST.getlist("input"+str(j+1)+"[]")[1]
+              text.font = request.POST.getlist("input"+str(j+1)+"[]")[2]
+              text.font_size = request.POST.getlist("input"+str(j+1)+"[]")[3]
+              text.font_color = request.POST.getlist("input"+str(j+1)+"[]")[4]
+              text.save()  # DiaryText DB 저장
 
         img_cnt = request.POST.get("img_count")
         if img_cnt:
@@ -66,7 +69,7 @@ def decorate(request, user_id):
 
 def detail(request, user_id, diary_id):
     diary = Diary.objects.get(id=diary_id)
-    diary_text = DiaryText.objects.get(diary=diary)
+    diary_text = DiaryText.objects.filter(diary=diary)
     diary_images = DiaryImage.objects.filter(diary=diary)
 
     content = {
