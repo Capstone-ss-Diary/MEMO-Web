@@ -1,0 +1,30 @@
+{% load static %}
+
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/homes.css' %}">
+</head>
+
+<body>
+  <div class="title">
+    <br><br><br>
+    <span style="font-size: 5em;">MEMO</span>
+    <br>
+    <span style="font-size: 2em;">- ‘매’일 쓰는 ‘모’든 나의 이야기 -</span>
+  </div>
+
+  <div class="sheep">
+    <br><br>
+    <img src="{%static 'images/sheepHome.png' %}" alt="">
+  </div>
+
+  <div class="connect">
+    <button class="btn1" onclick="location.href='/accounts/login/'">로그인</button>
+    <button class="btn2" onclick="location.href='/accounts/signup/'">회원가입</button>
+
+  </div>
+</body>

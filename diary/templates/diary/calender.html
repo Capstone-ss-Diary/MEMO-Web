@@ -1,0 +1,224 @@
+{% load static %}
+
+<head>
+
+  <!-- 사이드바 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{% static 'css/bar.css' %}">
+
+  <!-- 캘린더 -->
+  <script src="{% static 'js/calendar/jquery-1.11.1.min.js' %}"></script>
+  <script src="{% static 'js/calendar/underscore-min.js' %}"></script>
+  <script src="{% static 'js/calendar/moment-2.2.1.js' %}"></script>
+  <script src="{% static 'js/calendar/clndr.js' %}"></script>
+  <script src="{% static 'js/calendar/site.js' %}"></script>
+
+  <link rel="stylesheet" href="{% static 'css/clndr.css' %}" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+</head>
+
+<body id="body-pd">
+  <!-- 사이드바 -->
+  <div class="l-navbar" id="navbar">
+    <nav class="nav">
+      <div>
+        <div class="nav__brand">
+          <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+          <a href="#" class="nav__logo">MEMO</a>
+        </div>
+        <div class="nav__list">
+          <a href="/" class="nav__link active">
+            <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">캘린더</span>
+          </a>
+          <a href="/diary/handwriting" class="nav__link">
+            <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">손글씨 등록</span>
+          </a>
+
+          <div href="#" class="nav__link collapse">
+            <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">감정별 모아보기</span>
+
+            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+            <ul class="collapse__menu">
+              <a href="#" class="collapse__sublink">1</a>
+              <a href="#" class="collapse__sublink">2</a>
+              <a href="#" class="collapse__sublink">3</a>
+            </ul>
+          </div>
+
+        </div>
+        <a href="/accounts/logout/" class="nav__link">
+          <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+          <span class="nav_name">Log out</span>
+          <!--href="accounts/logout/"-->
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- 캘린더 -->
+  <div class="calender">
+    <div class="cal1">
+      <div class="clndr">
+        <div class="clndr-controls">
+          <div class="clndr-control-button">
+            <p class="clndr-previous-button">previous</p>
+          </div>
+          <div class="month">September 2015</div>
+          <div class="clndr-control-button rightalign">
+            <p class="clndr-next-button">next</p>
+          </div>
+        </div>
+        <table class="clndr-table" style="border: 0;" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr class="header-days">
+              <td class="header-day">SUN</td>
+              <td class="header-day">MON</td>
+              <td class="header-day">TUE</td>
+              <td class="header-day">WED</td>
+              <td class="header-day">THU</td>
+              <td class="header-day">FRI</td>
+              <td class="header-day">SAT</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="day past adjacent-month last-month calendar-day-2015-08-30">
+                <div class="day-contents">30</div>
+              </td>
+              <td class="day past adjacent-month last-month calendar-day-2015-08-31">
+                <div class="day-contents">31</div>
+              </td>
+              <td class="day past calendar-day-2015-09-01">
+                <div class="day-contents">1</div>
+              </td>
+              <td class="day past calendar-day-2015-09-02">
+                <div class="day-contents">2</div>
+              </td>
+              <td class="day past calendar-day-2015-09-03">
+                <div class="day-contents">3</div>
+              </td>
+              <td class="day past calendar-day-2015-09-04">
+                <div class="day-contents">4</div>
+              </td>
+              <td class="day past calendar-day-2015-09-05">
+                <div class="day-contents">5</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="day past calendar-day-2015-09-06">
+                <div class="day-contents">6</div>
+              </td>
+              <td class="day past calendar-day-2015-09-07">
+                <div class="day-contents">7</div>
+              </td>
+              <td class="day past calendar-day-2015-09-08">
+                <div class="day-contents">8</div>
+              </td>
+              <td class="day past calendar-day-2015-09-09">
+                <div class="day-contents">9</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-10">
+                <div class="day-contents">10</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-11">
+                <div class="day-contents">11</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-12">
+                <div class="day-contents">12</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="day past event calendar-day-2015-09-13">
+                <div class="day-contents">13</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-14">
+                <div class="day-contents">14</div>
+              </td>
+              <td class="day past calendar-day-2015-09-15">
+                <div class="day-contents">15</div>
+              </td>
+              <td class="day past calendar-day-2015-09-16">
+                <div class="day-contents">16</div>
+              </td>
+              <td class="day past calendar-day-2015-09-17">
+                <div class="day-contents">17</div>
+              </td>
+              <td class="day past calendar-day-2015-09-18">
+                <div class="day-contents">18</div>
+              </td>
+              <td class="day past calendar-day-2015-09-19">
+                <div class="day-contents">19</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="day past calendar-day-2015-09-20">
+                <div class="day-contents">20</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-21">
+                <div class="day-contents">21</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-22">
+                <div class="day-contents">22</div>
+              </td>
+              <td class="day past event calendar-day-2015-09-23">
+                <div class="day-contents">23</div>
+              </td>
+              <td class="day past calendar-day-2015-09-24">
+                <div class="day-contents">24</div>
+              </td>
+              <td class="day past calendar-day-2015-09-25">
+                <div class="day-contents">25</div>
+              </td>
+              <td class="day today calendar-day-2015-09-26">
+                <div class="day-contents">26</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="day calendar-day-2015-09-27">
+                <div class="day-contents">27</div>
+              </td>
+              <td class="day calendar-day-2015-09-28">
+                <div class="day-contents">28</div>
+              </td>
+              <td class="day calendar-day-2015-09-29">
+                <div class="day-contents">29</div>
+              </td>
+              <td class="day calendar-day-2015-09-30">
+                <div class="day-contents">30</div>
+              </td>
+              <td class="day adjacent-month next-month calendar-day-2015-10-01">
+                <div class="day-contents">1</div>
+              </td>
+              <td class="day adjacent-month next-month calendar-day-2015-10-02">
+                <div class="day-contents">2</div>
+              </td>
+              <td class="day adjacent-month next-month calendar-day-2015-10-03">
+                <div class="day-contents">3</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<!--사이드바-->
+<!-- IONICONS -->
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<!-- JS -->
+<script type="text/javascript" src="/static/js/barScript.js"></script>
+
+<!--캘린더-->
+<script type="text/javascript" src="/static/js/calscript.js"></script>

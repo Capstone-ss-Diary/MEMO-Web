@@ -1,0 +1,110 @@
+{% load static %}
+
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bar.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/handwriting.css' %}">
+</head>
+
+
+<body bgcolor = '#F5F5DC'>
+
+<div class="l-navbar" id="navbar">
+    <nav class="nav">
+      <div>
+        <div class="nav__brand">
+          <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+          <a href="#" class="nav__logo">MEMO</a>
+        </div>
+
+        <div class="nav__list">
+          <a href="/" class="nav__link active">
+            <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">캘린더</span>
+          </a>
+          <a href="/diary/handwriting" class="nav__link">
+            <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">손글씨 등록</span>
+          </a>
+
+          <div href="#" class="nav__link collapse">
+            <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">감정별 모아보기</span>
+
+            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+            <ul class="collapse__menu">
+              <a href="#" class="collapse__sublink">1</a>
+              <a href="#" class="collapse__sublink">2</a>
+              <a href="#" class="collapse__sublink">3</a>
+            </ul>
+          </div>
+
+        </div>
+        <a href="#" class="nav__link">
+          <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+          <span class="nav_name">Log out</span>
+          <!--href="accounts/logout/"-->
+        </a>
+      </div>
+    </nav>
+  </div>
+
+<div style="text-align:center; padding:50px">
+
+    <img src = {% static 'images/hand.png' %} width="200" height="200">
+    <h2>손글씨 작성 파일 다운받기</h2>
+    <a href="https://github.com/jeina7/GAN-handwriting-styler/raw/master/210_template.pdf" download><button id="pdfdown">👉 DOWNLOAD 👈</button></a>
+
+    <br>
+    <br>
+
+    <h2>손글씨 파일을 업로드해주세요</h2>
+
+   <div class="container">
+        <div class="image-upload" id="image-upload">
+            <form method="post" enctype="multipart/form-data">
+                <div class="button">
+                    <label for="chooseFile">
+                        👉 UPLOAD 👈
+                    </label>
+                </div>
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+            </form>
+
+            <div class="fileContainer">
+                <div class="fileInput">
+                    <p>FILE NAME: </p>
+                    <p id="fileName"></p>
+                </div>
+                <div class="buttonContainer">
+                    <div class="submitButton" id="submitButton">SUBMIT</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-show" id="image-show"></div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
+
+
+<!--사이드바-->
+<!-- IONICONS -->
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<!-- JS -->
+<script type="text/javascript" src="/static/js/barScript.js"></script>
+
+
+<script src="/static/js/hand_script.js"></script>

@@ -1,0 +1,44 @@
+{% load static %}
+
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/font.css' %}">
+
+</head>
+
+<body style="background-color: #F5F5DC;">
+
+  <div style="display: none;">
+    <canvas id="paper" width="880" height="600"></canvas>
+  </div>
+
+  <div style="display: none;">
+
+    <div id="content">{% for text in diaryText %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>
+    <div id="font">{% for text in diaryText %}<input value="{{ text.font }}">{% endfor %}</div>
+    <div id="font_size">{% for text in diaryText %}<input value="{{ text.font_size }}">{% endfor %}</div>
+    <div id="font_color">{% for text in diaryText %}<input value="{{ text.font_color }}">{% endfor %}</div>
+    <div id="text_x">{% for text in diaryText %}<input value="{{ text.coordinateX }}">{% endfor %}</div>
+    <div id="text_y">{% for text in diaryText %}<input value="{{ text.coordinateY }}">{% endfor %}</div>
+
+    <div id="images">
+      {% for image in diaryImage %}
+      <img src="/media/{{image.image}}" width="{{image.width}}" height="{{image.height}}" />
+      {% endfor %}
+    </div>
+    <div id="image_x">{% for image in diaryImage %}<input value="{{image.imageX}}">{% endfor %}</div>
+    <div id="image_y">{% for image in diaryImage %}<input value="{{image.imageY}}">{% endfor %}</div>
+    <div id="degree">{% for image in diaryImage %}<input value="{{image.degree}}">{% endfor %}</div>
+  </div>
+
+  <div style="position: relative; display: flex; justify-content: center; margin-top: 50px;">
+    <img id="diary_canvas" src="" style="background-color: white;" />
+  </div>
+
+</body>
+
+<script type="text/javascript" src="/static/js/detail_script.js"></script>
