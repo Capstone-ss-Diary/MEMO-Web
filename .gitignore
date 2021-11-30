@@ -2,4 +2,4 @@
 venv/
 db.sqlite3
 *.pyc
-handwriting/model/
+diary/handwriting/model/

@@ -5,10 +5,14 @@ from .forms import DiaryForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
+import sys
+
 from django.db.models.fields import json
 from django.http.response import JsonResponse
 
-import handwriting
+sys.path.insert(
+    1, 'diary/')
+import handwriting_function
 
 
 def calender(request, user_id):
@@ -184,8 +188,7 @@ def ocr_upload(request):
 
 def handwriting(request):
 
-    if request.method == "POST":
-        handwriting.create_handwriting_dataset()
+    handwriting_function.create_handwriting_dataset()
 
     return render(request, "diary/handwriting.html")
 
