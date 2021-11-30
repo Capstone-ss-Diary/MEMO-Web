@@ -73,25 +73,26 @@
     <div class="container">
       <div class="image-upload" id="image-upload">
         <form method="post" enctype="multipart/form-data" action=".">
+          {% csrf_token %}
           <div class="button">
             <label for="chooseFile">
               👉 UPLOAD 👈
             </label>
           </div>
           <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+
+
+          <div class="fileContainer">
+            <div class="fileInput">
+              <p>FILE NAME: </p>
+              <p id="fileName"></p>
+            </div>
+            <div class="buttonContainer">
+              <button type="submit" id="submitButton">제출하기</button>
+            </div>
+          </div>
         </form>
-
-        <div class="fileContainer">
-          <div class="fileInput">
-            <p>FILE NAME: </p>
-            <p id="fileName"></p>
-          </div>
-          <div class="buttonContainer">
-            <button type="submit" id="submitButton">제출하기</button>
-          </div>
-        </div>
       </div>
-
       <div class="image-show" id="image-show"></div>
     </div>
   </div>

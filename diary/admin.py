@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Diary, DiaryText, DiaryImage
-
+from .models import Diary, DiaryText, DiaryImage, HandWriting
 
 class DiaryText(admin.TabularInline):
     model = DiaryText
@@ -19,6 +18,7 @@ class DiaryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Diary, DiaryAdmin)
+admin.site.register(HandWriting)
 
 
 # admin.site.register(Diary)
