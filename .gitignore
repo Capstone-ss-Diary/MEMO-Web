@@ -9,3 +9,5 @@ diary/handwriting/experiment/checkpoint/experiment_0_batch_16/unet.model-15500.i
 diary/handwriting/experiment/checkpoint/experiment_0_batch_16/unet.model-15500.meta
 diary/handwriting/samples/*.jpg
 *.obj
+diary/handwriting/experiment/logs/*
+media/hand_writing/*.jpg

@@ -121,70 +121,6 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
-
-#######################################################################
-
-import numpy as np
-from django.conf import settings
-from django.core.files.storage import default_storage
-from django.shortcuts import render
-from keras.applications import vgg16
-from keras.applications.imagenet_utils import decode_predictions
-from keras.preprocessing.image import img_to_array, load_img
-from tensorflow.python.keras.backend import set_session
-
-
-def model(request):
-    if request.method == "POST":
-
-        file = request.FILES["imageFile"]
-        # file_name = default_storage.save(file.name, file)
-        # file_url = default_storage.path(file_name)
-
-        # image = load_img(file_url, target_size=(224, 224))
-        image = load_img(file.files[0].src, target_size=(224, 224))
-        numpy_array = img_to_array(image)
-        image_batch = np.expand_dims(numpy_array, axis=0)
-        processed_image = vgg16.preprocess_input(image_batch.copy())
-
-        with settings.GRAPH1.as_default():
-            set_session(settings.SESS)
-            predictions = settings.IMAGE_MODEL.predict(processed_image)
-
-        label = decode_predictions(predictions, top=3)
-        return render(request, "model.html", {"predictions": label})
-
-    else:
-        return render(request, "model.html")
-
-from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
-import os
-from PIL import Image
-import pytesseract
-
-def ocr_upload(request):
-    context = {}
-
-    imgname = ''
-    resulttext = ''
-    if 'uploadfile' in request.FILES:
-        uploadfile = request.FILES.get('uploadfile', '')
-
-        if uploadfile != '':
-            name_old = uploadfile.name
-            name_ext = os.path.splitext(name_old)[1]
-
-            fs = FileSystemStorage(location='static/source')
-            imgname = fs.save(f"src-{name_old}", uploadfile)
-
-            imgfile = Image.open(f"./static/source/{imgname}")
-            resulttext = pytesseract.image_to_string(imgfile, lang='eng')
-
-    context['imgname'] = imgname
-    context['resulttext'] = resulttext
-    return render(request, 'ocr_upload.html', context)
-
 ############################################################################################################
 
 @csrf_exempt
@@ -196,7 +132,11 @@ def handwriting(request):
       hand_writing.image = request.FILES.get("chooseFile")
       hand_writing.save()
 
-      handwriting_function.create_handwriting_dataset(user_id=request.session.get("user"))
+      data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
+    #   print(data_file[len(data_file)-1].image)
+
+      handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
+
 
     return render(request, "diary/handwriting.html")
 
@@ -205,35 +145,35 @@ def handwriting(request):
 ############################################################################################################
 
 ## 배경제거
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+# from PIL import ImageFile
+# ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from rembg.bg import remove
-import numpy as np
-import io
-from PIL import Image
+# from rembg.bg import remove
+# import numpy as np
+# import io
+# from PIL import Image
 
-from django.db.models.fields import json
-from django.http.response import JsonResponse
-
-
-
-@csrf_exempt
-def bgr_rm(request):
-    jsonObject = json.loads(request.body)
-    print(jsonObject)
+# from django.db.models.fields import json
+# from django.http.response import JsonResponse
 
 
-    input_path = jsonObject
 
-    # output_path = 'out.png'
-
-    f = np.fromfile(input_path)
-    result = remove(f)
-    img = Image.open(io.BytesIO(result)).convert("RGBA")
-    # img.save(output_path)
-
-    print(img)
+# @csrf_exempt
+# def bgr_rm(request):
+#     jsonObject = json.loads(request.body)
+#     print(jsonObject)
 
 
-    return JsonResponse(jsonObject)
+#     input_path = jsonObject
+
+#     # output_path = 'out.png'
+
+#     f = np.fromfile(input_path)
+#     result = remove(f)
+#     img = Image.open(io.BytesIO(result)).convert("RGBA")
+#     # img.save(output_path)
+
+#     print(img)
+
+
+#     return JsonResponse(jsonObject)
