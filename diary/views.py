@@ -87,6 +87,9 @@ def detail(request, user_id, diary_id):
     return render(request, "diary/detail.html", content)
 
 
+def handwriting(request):
+    return render(request, "diary/handwriting.html")
+
 def search(request):
     return HttpResponse("Search index.")
 
@@ -182,34 +185,35 @@ def ocr_upload(request):
 ############################################################################################################
 
 ## 배경제거
-'''
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from rembg.bg import remove
-import torch
 import numpy as np
 import io
 from PIL import Image
 
+from django.db.models.fields import json
+from django.http.response import JsonResponse
+
+
+
 @csrf_exempt
 def bgr_rm(request):
-
     jsonObject = json.loads(request.body)
     print(jsonObject)
 
-    input_path = jsonObject #'choco.jpg'
+
+    input_path = jsonObject
+
     # output_path = 'out.png'
 
     f = np.fromfile(input_path)
     result = remove(f)
     img = Image.open(io.BytesIO(result)).convert("RGBA")
     # img.save(output_path)
-    
+
     print(img)
 
-    return JsonResponse(jsonObject)
-'''
 
-# @csrf_exempt
-# def remove_test(request):
+    return JsonResponse(jsonObject)

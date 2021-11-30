@@ -12,8 +12,6 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
 </head>
 
 <body>
@@ -22,7 +20,7 @@
 
     <ul class="list">
       <li class="is_on"><button href="#write" class="btn" onclick="writeClick()">일기작성</button></li>
-      <li><button href="#tab2" class="btn" onclick="backgroundClick()">배경선택</button></li>
+      <li><button href="#bgchange" class="btn" onclick="backgroundClick()">배경선택</button></li>
       <li><button href="#photo" class="btn" onclick="photoClick()">사진업로드</button></li>
       <li><button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button></li>
       <li><button href="#tab5" class="btn" onclick="stickerClick()">스티커</button></li>
@@ -142,8 +140,34 @@
 
         </div>
 
-        <div id="tab2" class="cont">
-          Tab Content2
+        <div id="bgchange" class="cont">
+          <span style="font-size: 22px;">배경을 선택하세요</span><br>
+          <button type="button" id="bc1" style="padding: 10px; background-color: white;" onclick="backchange('white')"></button>
+          <button type="button" id="bc2" style="padding: 10px; background-color: #DCDCDC;" onclick="backchange('#DCDCDC')"></button>
+          <button type="button" id="bc3" style="padding: 10px; background-color: #C0C0C0;" onclick="backchange('#C0C0C0')"></button>
+          <button type="button" id="bc4" style="padding: 10px; background-color: black;" onclick="backchange('black')"></button>
+          <button type="button" id="bc5" style="padding: 10px; background-color: #FDF5E6;" onclick="backchange('#FDF5E6')"></button>
+          <button type="button" id="bc6" style="padding: 10px; background-color: #FFF8DC;" onclick="backchange('#FFF8DC')"></button>
+          <button type="button" id="bc7" style="padding: 10px; background-color: #EEE8AA;" onclick="backchange('#EEE8AA')"></button>
+          <button type="button" id="bc8" style="padding: 10px; background-color: #FCF16E;" onclick="backchange('#FCF16E')"></button><br>
+          <button type="button" id="bc9" style="padding: 10px; background-color: #E6E6FA" onclick="backchange('#E6E6FA')"></button>
+          <button type="button" id="bc10" style="padding: 10px; background-color: #B0C4DE;" onclick="backchange('#B0C4DE')"></button>
+          <button type="button" id="bc11" style="padding: 10px; background-color: #FFE4E1;" onclick="backchange('#FFE4E1')"></button>
+          <button type="button" id="bc12" style="padding: 10px; background-color: #FFC0CB;" onclick="backchange('#FFC0CB')"></button>
+          <button type="button" id="bc13" style="padding: 10px; background-color: #D8CFD8;" onclick="backchange('#D8CFD8')"></button>
+          <button type="button" id="bc14" style="padding: 10px; background-color: #D8BFD8;" onclick="backchange('#D8BFD8')"></button>
+          <button type="button" id="bc15" style="padding: 10px; background-color: #DA70D6;" onclick="backchange('#DA70D6')"></button>
+          <button type="button" id="bc16" style="padding: 10px; background-color: #9370DB;" onclick="backchange('#9370DB')"></button><br>
+          <button type="button" id="bc17" style="padding: 10px; background-color: #E1FFFF;" onclick="backchange('#E1FFFF')"></button>
+          <button type="button" id="bc18" style="padding: 10px; background-color: #ADD8E6;" onclick="backchange('#ADD8E6')"></button>
+          <button type="button" id="bc19" style="padding: 10px; background-color: #87CEEB;" onclick="backchange('#87CEEB')"></button>
+          <button type="button" id="bc20" style="padding: 10px; background-color: #4682B4;" onclick="backchange('#4682B4')"></button>
+          <button type="button" id="bc21" style="padding: 10px; background-color: #F5FFFA;" onclick="backchange('#F5FFFA')"></button>
+          <button type="button" id="bc22" style="padding: 10px; background-color: #F0FFF0;" onclick="backchange('#F0FFF0')"></button>
+          <button type="button" id="bc23" style="padding: 10px; background-color: #98FB98;" onclick="backchange('#98FB98')"></button>
+          <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;" onclick="backchange('#8FBC8F')"></button>
+
+
         </div>
 
         <div id="photo" class="cont">
