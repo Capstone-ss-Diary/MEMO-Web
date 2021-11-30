@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
-from .models import Diary, DiaryImage, DiaryText, HandWriting
+from .models import Diary, DiaryImage, DiaryText, DiaryHashtag, HandWriting
 from .forms import DiaryForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -35,7 +35,6 @@ def decorate(request, user_id):
         diary.user_id = request.session.get("user")
         # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
-        # diary.canvas = bytes(request.POST.get("canvas"))
         diary.save()  # Diary DB 저장
 
         # print(request.POST.get("file"))
@@ -70,7 +69,16 @@ def decorate(request, user_id):
                     )
                     diaryImage.save()
 
-                print(name)
+        hash_cnt = request.POST.get("hashtag_num")
+        if hash_cnt:
+          for k in range(int(hash_cnt)):
+            hash_name = "hashtag"+str(k+1)
+            if request.POST.get(hash_name) is not None:
+                diaryHashtag = DiaryHashtag(
+                  diary = diary,
+                  hashtag = request.POST.get(hash_name),
+                )
+                diaryHashtag.save()
 
         return redirect(
             "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
@@ -122,7 +130,7 @@ def diary_list(request):
     return render(request, "diary/diary_list.html", context)
 
 ############################################################################################################
-
+'''
 @csrf_exempt
 def handwriting(request):
 
@@ -139,9 +147,7 @@ def handwriting(request):
 
 
     return render(request, "diary/handwriting.html")
-
-
-
+'''
 ############################################################################################################
 
 ## 배경제거

@@ -402,18 +402,18 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제 �
   document.getElementById("checkImg").childNodes.item(slt).value = parseInt(0);
 }
 
-function backchange(back_color){
-    //var canvas = document.getElementById("paper");
-    //const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    // 채울 스타일을 적용
-    ctx.fillStyle = back_color;
-    // 캔버스 크기의 사각형으로 채우기
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    writingText(); // 일기작성 상태 불러오기
-    drawingImg(); // 사진업로드 상태 불러오기
-    console.log(back_color);
+function backchange(back_color) {
+  //var canvas = document.getElementById("paper");
+  //const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  // 채울 스타일을 적용
+  ctx.fillStyle = back_color;
+  // 캔버스 크기의 사각형으로 채우기
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  writingText(); // 일기작성 상태 불러오기
+  drawingImg(); // 사진업로드 상태 불러오기
+  console.log(back_color);
 }
 
 
@@ -423,15 +423,46 @@ function hashtagingClick() { // hashtag - 해시태그 입력칸 나타내기
   else { div.style.display = 'none'; }
 }
 
+var hash_num = 1;
 function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 버튼 클릭
+  if (document.getElementById("hashtagForm").childElementCount >= 40) {
+    alert("해시태그는 10개까지 가능합니다.");
+  }
+
   var input = document.getElementById("hashtagInput").value;
   if (input) {
-    var tag = document.getElementById("hashtagForm")
-    tag.innerHTML += `<p>#${input}</p>`;
-    // innerHTML 하고 input 값 비우기
-    // input에서 엔터하면 submit으로 넘어가는 거 막기
+    var tag = document.getElementById("hashtagForm");
+    tag.innerHTML += `<a id="hash${hash_num}" style="font-size: 22px;">#${input}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`;
+
+    var tag_input = document.getElementById("hash_input");
+    tag_input.innerHTML += `<input value="${input}" id="hashtag${hash_num}" name="hashtag${hash_num}">`;
+
+    document.getElementById("hashtagInput").value = "";
+
+    document.getElementById("hashtag_num").value = hash_num;
+
+    hash_num += 1
   }
+
 }
+
+function hashtag_delete(button) {
+  var num = button.value;
+  var hashtag = document.getElementById(`hash${num}`);
+  var hash_input = document.getElementById(`hashtag${num}`);
+  var hash_br = document.getElementById(`br${num}`);
+  hashtag.parentNode.removeChild(hashtag);
+  hash_input.value = "";
+  hash_br.parentNode.removeChild(hash_br);
+  button.parentNode.removeChild(button);
+}
+
+document.getElementById("hashtagInput").addEventListener("keydown", event => {
+  if (event.code == "Enter") {
+    event.preventDefault();
+    alert("확인 버튼을 클릭하세요.");
+  }
+})
 
 
 // canvas 클릭 이벤트

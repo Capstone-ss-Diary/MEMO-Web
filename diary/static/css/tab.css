@@ -316,3 +316,17 @@ body{
 #hashtag #hashtagInput_check:hover{
   background-color: #E5D0AD;
 }
+
+#hashtagForm button{
+  position: relative;
+  width: 10%;
+  height: 27px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  border-radius: 5%;
+  font-size: 16px;
+  background-color: #E5D0AD;
+  border: 0;
+  top: 3px;
+}
