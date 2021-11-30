@@ -196,7 +196,7 @@ def handwriting(request):
       hand_writing.image = request.FILES.get("chooseFile")
       hand_writing.save()
 
-      handwriting_function.create_handwriting_dataset()
+      handwriting_function.create_handwriting_dataset(user_id=request.session.get("user"))
 
     return render(request, "diary/handwriting.html")
 

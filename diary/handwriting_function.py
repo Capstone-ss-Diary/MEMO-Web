@@ -19,6 +19,8 @@ import argparse
 from unet import UNet
 from utils import compile_frames_to_gif
 
+from .models import HandWriting
+
 # 글씨 있는 부분 좌표 추출
 def crop_image(img):
     image = np.array(img)
@@ -133,7 +135,7 @@ def pickle_tests(paths, test_path):
                 pickle.dump(example, fv)
 
 
-def create_handwriting_dataset():
+def create_handwriting_dataset(user_id):
     src_font = 'diary/handwriting/source_font.ttf'
     f = open("diary/handwriting/chosen_hangul.txt", 'r', encoding='UTF8')
     charset = f.readlines()
@@ -150,7 +152,12 @@ def create_handwriting_dataset():
         os.mkdir(save_dir)
     split_ratio = 0.1
     label = 54
-    full_img = Image.open('diary/handwriting/210_written.jpg')
+
+    data_file = HandWriting.objects.get(user_id=user_id)
+    writing_file = data_file.image
+    print(writing_file)
+    
+    full_img = Image.open('/media/'+writing_file)
 
     print("create handwriting dataset function executing")
 
