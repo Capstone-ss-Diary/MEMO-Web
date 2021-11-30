@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
-from .models import Diary, DiaryImage, DiaryText
+from .models import Diary, DiaryImage, DiaryText, HandWriting
 from .forms import DiaryForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -91,6 +91,7 @@ def detail(request, user_id, diary_id):
     }
 
     return render(request, "diary/detail.html", content)
+
 
 def search(request):
     return HttpResponse("Search index.")
@@ -186,17 +187,18 @@ def ocr_upload(request):
 
 ############################################################################################################
 
+@csrf_exempt
 def handwriting(request):
 
-    handwriting_function.create_handwriting_dataset()
+    if request.method == "POST":
+      hand_writing = HandWriting()
+      hand_writing.user_id = request.session.get("user")
+      hand_writing.image = request.FILES.get("chooseFile")
+      hand_writing.save()
+
+      handwriting_function.create_handwriting_dataset()
 
     return render(request, "diary/handwriting.html")
-
-
-
-
-
-
 
 
 

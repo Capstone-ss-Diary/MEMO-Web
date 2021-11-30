@@ -148,3 +148,19 @@ label {
 .img {
     position: absolute;
 }
+
+#submitButton{
+  color: #000;
+  border: 0;
+  font-size: 20px;
+  font-family: 'Jua', sans-serif;
+  background-color: #F5F5DC;
+  position: relative;
+  left: 10;
+  bottom:25;
+  margin-right: 10;
+}
+
+#submitButton:hover{
+  background-color: #E5D0AD;
+}

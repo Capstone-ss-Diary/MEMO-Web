@@ -2,21 +2,22 @@
 
 <!--<!DOCTYPE html>-->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bar.css' %}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/handwriting.css' %}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bar.css' %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/handwriting.css' %}">
 </head>
 
 
-<body bgcolor = '#F5F5DC'>
+<body bgcolor='#F5F5DC'>
 
-<div class="l-navbar" id="navbar">
+  <div class="l-navbar" id="navbar">
     <nav class="nav">
       <div>
         <div class="nav__brand">
@@ -57,42 +58,44 @@
     </nav>
   </div>
 
-<div style="text-align:center; padding:50px">
+  <div style="text-align:center; padding:50px">
 
-    <img src = {% static 'images/hand.png' %} width="200" height="200">
+    <img src={% static 'images/hand.png' %} width="200" height="200">
     <h2>손글씨 작성 파일 다운받기</h2>
-    <a href="https://github.com/jeina7/GAN-handwriting-styler/raw/master/210_template.pdf" download><button id="pdfdown">👉 DOWNLOAD 👈</button></a>
+    <a href="https://github.com/jeina7/GAN-handwriting-styler/raw/master/210_template.pdf" download><button
+        id="pdfdown">👉 DOWNLOAD 👈</button></a>
 
     <br>
     <br>
 
     <h2>손글씨 파일을 업로드해주세요</h2>
 
-   <div class="container">
-        <div class="image-upload" id="image-upload">
-            <form method="post" enctype="multipart/form-data">
-                <div class="button">
-                    <label for="chooseFile">
-                        👉 UPLOAD 👈
-                    </label>
-                </div>
-                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-            </form>
+    <div class="container">
+      <div class="image-upload" id="image-upload">
+        <form method="post" enctype="multipart/form-data" action=".">
+          {% csrf_token %}
+          <div class="button">
+            <label for="chooseFile">
+              👉 UPLOAD 👈
+            </label>
+          </div>
+          <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 
-            <div class="fileContainer">
-                <div class="fileInput">
-                    <p>FILE NAME: </p>
-                    <p id="fileName"></p>
-                </div>
-                <div class="buttonContainer">
-                    <button type="submit" id="submitButton">제출하기</button>
-                </div>
+
+          <div class="fileContainer">
+            <div class="fileInput">
+              <p>FILE NAME: </p>
+              <p id="fileName"></p>
             </div>
-        </div>
-
-        <div class="image-show" id="image-show"></div>
+            <div class="buttonContainer">
+              <button type="submit" id="submitButton">제출하기</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="image-show" id="image-show"></div>
     </div>
-</div>
+  </div>
 
 
 </body>

@@ -10,21 +10,21 @@ var submit = document.getElementById('submitButton');
 
 
 function loadFile(input) {
-    var file = input.files[0];
+  var file = input.files[0];
 
-    var name = document.getElementById('fileName');
-    name.textContent = file.name;
+  var name = document.getElementById('fileName');
+  name.textContent = file.name;
 
-    var newImage = document.createElement("img");
-    newImage.setAttribute("class", 'img');
-    newImage.src = URL.createObjectURL(file);
-    newImage.style.width = "70%";
-    newImage.style.height = "70%";
-    newImage.style.visibility = "hidden";   //버튼을 누르기 전까지는 이미지 숨기기
-    newImage.style.objectFit = "contain";
+  var newImage = document.createElement("img");
+  newImage.setAttribute("class", 'img');
+  newImage.src = URL.createObjectURL(file);
+  newImage.style.width = "70%";
+  newImage.style.height = "70%";
+  newImage.style.visibility = "hidden";   //버튼을 누르기 전까지는 이미지 숨기기
+  newImage.style.objectFit = "contain";
 
-    var container = document.getElementById('image-show');
-    container.appendChild(newImage);
+  var container = document.getElementById('image-show');
+  container.appendChild(newImage);
 
-    // 사용자가 올린 손글씨 파일 '210_written.jpg' 이름으로 handwriting 폴더에 저장해야함
+  // 사용자가 올린 손글씨 파일 '210_written.jpg' 이름으로 handwriting 폴더에 저장해야함
 };
