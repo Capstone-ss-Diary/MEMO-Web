@@ -1,3 +1,4 @@
+'''
 import tensorflow.compat.v1 as tf
 from keras.applications import vgg16
 from tensorflow.python.keras.backend import set_session
@@ -13,6 +14,7 @@ set_session(SESS)
 IMAGE_MODEL = vgg16.VGG16(weights="imagenet")
 
 #################################################################
+'''
 
 from pathlib import Path
 import os

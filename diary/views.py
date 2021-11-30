@@ -88,6 +88,9 @@ def detail(request, user_id, diary_id):
 
 
 def handwriting(request):
+
+    #머신러닝
+    
     return render(request, "diary/handwriting.html")
 
 def search(request):
@@ -118,7 +121,7 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
-
+'''
 #######################################################################
 
 import numpy as np
@@ -217,3 +220,4 @@ def bgr_rm(request):
 
 
     return JsonResponse(jsonObject)
+'''
