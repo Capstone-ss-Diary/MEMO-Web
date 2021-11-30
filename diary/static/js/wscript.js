@@ -526,28 +526,29 @@ function saveCanvasImg() {
 }
 //////////////////////////////////////////////////////////
 
-// document.getElementById("background_remove").onclick = function () {
+document.getElementById("background_remove").onclick = function () {
+  var img_file = document.getElementById(`chooseFile${imgNum}`);
+  var image = img_file[0].files[0];
 
-//   var formData = new FormData();
-//   if (document.getElementById("image")) {
-//     formData['file'] = document.getElementById("image").src;
-//   } else { alert("먼저 사진을 업로드 해주세요."); }
+  var form = new FormData();
+  form.append("image", image);
 
+  if (document.getElementById("image")) {
+    form.append("image", image);
+  } else { alert("먼저 사진을 업로드 해주세요."); }
 
-
-//   $.ajax({
-//     type: 'post',
-//     url: '/diary/remove/',
-//     data: JSON.stringify(document.getElementById("image").src),
-//     dataType: 'json',
-//     success: function (data) {
-//       alert('Upload Success');
-//     },
-//     error: function () {
-//       alert("fail");
-//     }
-//   });
-
-
-
-// }
+  $.ajax({
+    type: 'post',
+    url: '/diary/remove',
+    data: form,
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      alert('Upload Success');
+    },
+    error: function () {
+      alert("fail");
+    }
+  });
+}

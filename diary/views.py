@@ -11,7 +11,13 @@ from django.http.response import JsonResponse
 
 def calender(request, user_id):
 
-    return render(request, "diary/calender.html")
+    date_list = Diary.objects.filter(user_id=user_id)
+
+    date = {
+        "date_list": date_list,
+    }
+
+    return render(request, "diary/calender.html", date)
 
 
 def decorate(request, user_id):
@@ -176,29 +182,34 @@ def ocr_upload(request):
 ############################################################################################################
 
 ## 배경제거
+'''
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-# from PIL import ImageFile
-# ImageFile.LOAD_TRUNCATED_IMAGES = True
+from rembg.bg import remove
+import torch
+import numpy as np
+import io
+from PIL import Image
 
-# from rembg.bg import remove
-# import torch
-# import numpy as np
-# import io
-# from PIL import Image
+@csrf_exempt
+def bgr_rm(request):
 
-# def bgr_rm(request):
+    jsonObject = json.loads(request.body)
+    print(jsonObject)
 
-#     jsonObject = json.loads(request.body)
-#     print(jsonObject)
+    input_path = jsonObject #'choco.jpg'
+    # output_path = 'out.png'
 
-#     input_path = jsonObject #'choco.jpg'
-#     # output_path = 'out.png'
-
-#     f = np.fromfile(input_path)
-#     result = remove(f)
-#     img = Image.open(io.BytesIO(result)).convert("RGBA")
-#     # img.save(output_path)
+    f = np.fromfile(input_path)
+    result = remove(f)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    # img.save(output_path)
     
-#     print(img)
+    print(img)
 
-#     return JsonResponse(jsonObject)
+    return JsonResponse(jsonObject)
+'''
+
+# @csrf_exempt
+# def remove_test(request):

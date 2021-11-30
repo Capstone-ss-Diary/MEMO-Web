@@ -212,6 +212,10 @@
     </div>
   </div>
 
+  <div style="display: none;">
+    <div id="date">{% for diary in date_list %}<input value="{{ diary.created_date }}">{% endfor %}</div>
+  </div>
+
 </body>
 
 <!--사이드바-->
