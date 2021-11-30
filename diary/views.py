@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models.fields import json
 from django.http.response import JsonResponse
 
+import handwriting
+
 
 def calender(request, user_id):
 
@@ -85,10 +87,6 @@ def detail(request, user_id, diary_id):
     }
 
     return render(request, "diary/detail.html", content)
-
-
-def handwriting(request):
-    return render(request, "diary/handwriting.html")
 
 def search(request):
     return HttpResponse("Search index.")
@@ -181,6 +179,23 @@ def ocr_upload(request):
     context['imgname'] = imgname
     context['resulttext'] = resulttext
     return render(request, 'ocr_upload.html', context)
+
+############################################################################################################
+
+def handwriting(request):
+
+    if request.method == "POST":
+        handwriting.create_handwriting_dataset()
+
+    return render(request, "diary/handwriting.html")
+
+
+
+
+
+
+
+
 
 ############################################################################################################
 

@@ -1,12 +1,12 @@
 var submit = document.getElementById('submitButton');
-submit.onclick = showImage;     //Submit 버튼 클릭시 이미지 보여주기
+// submit.onclick = showImage();     //Submit 버튼 클릭시 이미지 보여주기
 
-function showImage() {
-    var newImage = document.getElementById('image-show').lastElementChild;
-    newImage.style.visibility = "visible";
-    document.getElementById('image-upload').style.visibility = 'hidden';
-    document.getElementById('fileName').textContent = null;     //기존 파일 이름 지우기
-}
+// function showImage() {
+//     var newImage = document.getElementById('image-show').lastElementChild;
+//     newImage.style.visibility = "visible";
+//     document.getElementById('image-upload').style.visibility = 'hidden';
+//     document.getElementById('fileName').textContent = null;     //기존 파일 이름 지우기
+// }
 
 
 function loadFile(input) {
@@ -25,4 +25,6 @@ function loadFile(input) {
 
     var container = document.getElementById('image-show');
     container.appendChild(newImage);
+
+    // 사용자가 올린 손글씨 파일 '210_written.jpg' 이름으로 handwriting 폴더에 저장해야함
 };
