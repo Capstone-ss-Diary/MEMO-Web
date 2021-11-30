@@ -134,23 +134,23 @@ def pickle_tests(paths, test_path):
 
 
 def create_handwriting_dataset():
-    src_font = '/handwriting/source_font.ttf'
-    f = open("/handwriting/chosen_hangul.txt", 'r', encoding='UTF8')
+    src_font = 'diary/handwriting/source_font.ttf'
+    f = open("diary/handwriting/chosen_hangul.txt", 'r', encoding='UTF8')
     charset = f.readlines()
     char_size, canvas_size = 130, 256
     x_offset, y_offset = 20, 20
-    sample_dir = '/handwriting/samples/'
+    sample_dir = 'diary/handwriting/samples/'
     if not os.path.isdir(sample_dir):
         os.mkdir(sample_dir)
-    experiment_dir = '/handwriting/experiment/'
+    experiment_dir = 'diary/handwriting/experiment/'
     if not os.path.isdir(experiment_dir):
         os.mkdir(experiment_dir)
-    save_dir = '/handwriting/experiment/data'
+    save_dir = 'diary/handwriting/experiment/data'
     if not os.path.isdir(save_dir):
         os.mkdir(save_dir)
     split_ratio = 0.1
     label = 54
-    full_img = Image.open('/handwriting/210_written.jpg')
+    full_img = Image.open('diary/handwriting/210_written.jpg')
 
     print("create handwriting dataset function executing")
 
@@ -162,7 +162,7 @@ def create_handwriting_dataset():
 
 
 def train_handwriting():
-    experiment_dir = '/handwriting/experiment/'
+    experiment_dir = 'diary/handwriting/experiment/'
 
     experiment_id = 0
     image_size = 256
