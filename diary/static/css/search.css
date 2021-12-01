@@ -42,16 +42,21 @@ body{
   font-style: normal;
 }
 
-/*form{
+/*.searchcontainer{
     height:40px;
     width:400px;
     border:1px solid #1b5ac;
     background: #ffffff;
+    justify-content:center;
+    align-items: center;
 }*/
 
 #searching {
     padding: 8px;
     width: 20%;
+    justify-content: center;
+    align-items: center;
+    border:0;
 }
 
 #search {
@@ -61,6 +66,7 @@ body{
     border-radius: 0px;
     padding: 8px;
     justify-content: center;
+    align-items: center;
     margin : auto
     font-size: 30px;
     font-family: 'Jua', sans-serif;
