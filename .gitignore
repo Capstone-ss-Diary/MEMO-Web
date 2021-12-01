@@ -11,3 +11,4 @@ diary/handwriting/samples/*.jpg
 *.obj
 diary/handwriting/experiment/logs/*
 media/hand_writing/*.jpg
+media/images/*.jpg
