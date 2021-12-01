@@ -153,6 +153,9 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
+def handwriting(request):
+    return render(request, "diary/handwriting.html")
+
 ############################################################################################################
 '''
 @csrf_exempt
@@ -213,20 +216,38 @@ from hashtag_function import tfidfScorer
 
 @csrf_exempt
 def hashtag(request):
+    data = json.loads(request.body)
+    # text = data['text']
 
-  data = json.loads(request.body)
-  text = data['text']
-  print(text)
 
-  for id, s in enumerate( hashtag_function.tfidfScorer(text) ):
-      s = sorted(s, key=lambda x:x[1], reverse=True)
+    data_text = data['text']
+    text = ''
 
-      keyword = []
-      for i in range(3):
-          keyword.append('#'+s[i][0])
+    for dt in data_text:
+        text += dt + ' '
 
-      print('-original text-\n', text)
-      print('top 3 keyword = ', keyword)
+    print(text)
+    print([text])
 
-  return JsonResponse(keyword, safe=False)
+
+    for id, s in enumerate(hashtag_function.tfidfScorer([text])):
+        s = sorted(s, key=lambda x: x[1], reverse=True)
+        # print(s)
+        # print(type(s))
+        # print(s[0][0], s[1][0], s[2][0])
+        keyword = []
+        for i in range(3):
+            keyword.append('#' + s[i][0])
+            # print(s[i][0])
+        print('-original text-\n', text)
+        print('top 3 keyword = ', keyword)
+        # print('[%d] %s ...' % (id, s[:10]))
+
+        context = []
+        for k in keyword:
+            context.append({"keyword":k})
+        print(context)
+
+    return JsonResponse(context, safe=False)
+
 
