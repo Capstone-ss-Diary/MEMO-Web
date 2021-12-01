@@ -41,3 +41,30 @@ body{
   font-weight: normal;
   font-style: normal;
 }
+
+/*form{
+    height:40px;
+    width:400px;
+    border:1px solid #1b5ac;
+    background: #ffffff;
+}*/
+
+#searching {
+    padding: 8px;
+    width: 20%;
+}
+
+#search {
+    background-color: #E5D0AD;
+    width: 4%;
+    border: 0;
+    border-radius: 0px;
+    padding: 8px;
+    justify-content: center;
+    margin : auto
+    font-size: 30px;
+    font-family: 'Jua', sans-serif;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+}

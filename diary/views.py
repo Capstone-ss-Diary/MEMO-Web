@@ -5,10 +5,12 @@ from django.http import HttpResponse, request
 
 from diary import hashtag_function
 from .models import Diary, DiaryImage, DiaryText, DiaryHashtag, HandWriting
-from .forms import DiaryForm
+from .forms import DiaryForm, PostSearchForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views.generic import FormView
+from django.db.models import Q
+from django.shortcuts import render
 import sys
 
 # from django.db.models.fields import json
@@ -110,6 +112,21 @@ def detail(request, user_id, diary_id):
 def search(request):
     # return HttpResponse("Search index.")
     return render(request, "diary/search.html")
+
+class SearchFormView(FormView):
+    form_class = PostSearchForm
+    template_name = 'diary/search.html'
+
+    def form_valid(self, form):
+        searchWord = form.cleaned_data['search_word']
+        post_list = DiaryText.objects.filter(Q(title__icontains=searchWord) | Q(description__icontains=searchWord) | Q(content__icontains=searchWord)).distinct()
+
+        context = {}
+        context['form'] = form
+        context['search_term'] = searchWord
+        context['object_list'] = post_list
+
+        return render(self.request, self.template_name, context)
 
 
 def edit(request, diary_id):
