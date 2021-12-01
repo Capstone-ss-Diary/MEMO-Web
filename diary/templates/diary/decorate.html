@@ -23,7 +23,7 @@
       <li><button href="#bgchange" class="btn" onclick="backgroundClick()">배경선택</button></li>
       <li><button href="#photo" class="btn" onclick="photoClick()">사진업로드</button></li>
       <li><button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button></li>
-      <li><button href="#sticker" class="btn" onclick="stickerClick()">스티커</button></li>
+      <li><button href="#sticker" class="btn" onclick="stickerClick(); sticker_hashtag();">스티커</button></li>
     </ul>
 
     <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
@@ -366,14 +366,9 @@
 
         </div>
         <div id="sticker" class="cont">
-          <p id="hashtag_none" style="margin-left: 10px; display: block;">해시태그를 생성해주세요!</p>
+          <p id="hashtag_none" style="margin-left: 10px; display: block; font-size: 22px">해시태그를 생성해주세요!</p>
           <select id="hashtag_select" style="display: block;"></select>
-          <br>
-          Tab Content5
-          <button type="button" onclick="testCanvas(this);">캔버스 확인</button>
-          <div id="canvasImg">
-            <img src="" id="test" alt="Alternative text" />
-          </div>
+
         </div>
 
       </div>
