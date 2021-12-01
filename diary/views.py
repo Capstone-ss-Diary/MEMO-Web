@@ -237,7 +237,7 @@ def hashtag(request):
         # print(s[0][0], s[1][0], s[2][0])
         keyword = []
         for i in range(3):
-            keyword.append('#' + s[i][0])
+            keyword.append(s[i][0])
             # print(s[i][0])
         print('-original text-\n', text)
         print('top 3 keyword = ', keyword)

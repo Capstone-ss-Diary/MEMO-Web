@@ -2,6 +2,14 @@
 
 <head>
 
+  <meta charset="UTF-8" />
+  <meta
+    name="Content-Security-Policy"
+    content="default-src: http: https: 'self'"
+  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -368,7 +376,7 @@
         <div id="sticker" class="cont">
           <p id="hashtag_none" style="margin-left: 10px; display: block; font-size: 22px">해시태그를 생성해주세요!</p>
           <select id="hashtag_select" style="display: block;"></select>
-
+          <div class="out"></div>
         </div>
 
       </div>
@@ -379,3 +387,48 @@
 
 <script type="text/javascript" src="/static/js/tabscript.js"></script>
 <script type="text/javascript" src="/static/js/wscript.js"></script>
+<script>
+  let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
+  let picnum = 30;
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+  });
+  document.addEventListener("DOMContentLoaded", init);
+  function init() {
+    document.getElementById("hashtag_select").addEventListener("change", ev => {
+      ev.preventDefault();
+      let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
+      let sticker_opt = document.getElementById("hashtag_select")
+      let str = sticker_opt.options[sticker_opt.selectedIndex].value;
+      {% comment %} let str = document.getElementById("hashtag_select").selected.value.trim(); {% endcomment %}
+      const gifs_gallery = document.getElementById('gifs');
+      if( gifs_gallery != null) {
+        gifs_gallery.remove(); }      
+      url = url.concat(str);
+      console.log(url);
+      fetch(url)
+        .then(response => response.json())
+        .then(content => {
+          //  data, pagination, meta
+          console.log(content.data);
+          console.log("META", content.meta);
+          let fig = document.createElement("figure");
+          fig.setAttribute("id", "gifs");
+          content.data.forEach(element => {
+            let img = document.createElement("img");
+            let fc = document.createElement("figcaption");
+            img.src = element.images.downsized.url;
+            img.alt = element.title;
+            {% comment %} fc.textContent = element.title; {% endcomment %}
+            fig.appendChild(img);
+            {% comment %} fig.appendChild(fc); {% endcomment %}
+            let out = document.querySelector(".out");
+            out.insertAdjacentElement("afterbegin", fig);
+          })
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    });
+  }
+</script>

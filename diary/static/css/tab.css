@@ -353,3 +353,10 @@ body{
   font-size: 18px;
   margin-left: 10px;
 }
+
+div.out img{
+  padding: .4em;
+  float: left;
+  width: 30%;
+  max-width: 50%;
+}
