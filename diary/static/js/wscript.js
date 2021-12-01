@@ -534,6 +534,7 @@ document.getElementById("hashtag_auto").onclick = function () {
 function sticker_hashtag() {
   var tag_input = document.getElementById("hash_input").childElementCount;
   var tag_count = 0;
+  document.getElementById("hashtag_select").options.length = 0;
 
   if (tag_input == 0) {
     document.getElementById("hashtag_select").style.display = "none";
