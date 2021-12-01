@@ -186,6 +186,7 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
+  document.getElementById("pre_img_id").value = input.id
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -197,6 +198,7 @@ function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업�
     img_cnt += 1; // 이미지 수
     document.getElementById("img_count").value = img_cnt;
 
+    document.getElementById("background_remove").disabled = false;
     document.getElementById("imgSubmit").disabled = false; // 업로드 버튼 활성화
   }
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
@@ -402,18 +404,18 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제 �
   document.getElementById("checkImg").childNodes.item(slt).value = parseInt(0);
 }
 
-function backchange(back_color){
-    //var canvas = document.getElementById("paper");
-    //const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    // 채울 스타일을 적용
-    ctx.fillStyle = back_color;
-    // 캔버스 크기의 사각형으로 채우기
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    writingText(); // 일기작성 상태 불러오기
-    drawingImg(); // 사진업로드 상태 불러오기
-    console.log(back_color);
+function backchange(back_color) {
+  //var canvas = document.getElementById("paper");
+  //const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  // 채울 스타일을 적용
+  ctx.fillStyle = back_color;
+  // 캔버스 크기의 사각형으로 채우기
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  writingText(); // 일기작성 상태 불러오기
+  drawingImg(); // 사진업로드 상태 불러오기
+  console.log(back_color);
 }
 
 
@@ -423,14 +425,174 @@ function hashtagingClick() { // hashtag - 해시태그 입력칸 나타내기
   else { div.style.display = 'none'; }
 }
 
+
+var hash_num = 1;
 function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 버튼 클릭
+  if (document.getElementById("hashtagForm").childElementCount >= 40) {
+    alert("해시태그는 10개까지 가능합니다.");
+  }
+
   var input = document.getElementById("hashtagInput").value;
   if (input) {
-    var tag = document.getElementById("hashtagForm")
-    tag.innerHTML += `<p>#${input}</p>`;
-    // innerHTML 하고 input 값 비우기
-    // input에서 엔터하면 submit으로 넘어가는 거 막기
+    var tag = document.getElementById("hashtagForm");
+    tag.innerHTML += `<a id="hash${hash_num}" style="font-size: 22px;">#${input}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`;
+
+    var tag_input = document.getElementById("hash_input");
+    tag_input.innerHTML += `<input value="${input}" id="hashtag${hash_num}" name="hashtag${hash_num}">`;
+
+    document.getElementById("hashtagInput").value = "";
+    document.getElementById("hashtag_num").value = parseInt(hash_num);
+
+    hash_num += 1
   }
+
+}
+
+function hashtag_delete(button) {
+  var num = button.value;
+  var hashtag = document.getElementById(`hash${num}`);
+  var hash_input = document.getElementById(`hashtag${num}`);
+  var hash_br = document.getElementById(`br${num}`);
+  hashtag.parentNode.removeChild(hashtag);
+  hash_input.value = "";
+  hash_br.parentNode.removeChild(hash_br);
+  button.parentNode.removeChild(button);
+}
+
+document.getElementById("hashtagInput").addEventListener("keydown", event => {
+  if (event.code == "Enter") {
+    event.preventDefault();
+    alert("확인 버튼을 클릭하세요.");
+  }
+})
+
+document.getElementById("hashtag_auto").onclick = function () {
+  var formData = new FormData();
+  var input_num = 0;
+  var tag_num = document.getElementById("hashtagForm").childElementCount;
+
+  for (var i = 0; i < 6; i++) {
+    var input = document.getElementById(`UserInput${i + 1}`).value;
+    if (input != "") {
+      formData.append('text', String(input));
+      input_num += 1;
+    }
+  }
+
+  var data = { 'text': formData.getAll('text') };
+
+  console.log(input_num);
+
+  if (input_num == 0) {
+    alert("먼저 텍스트를 작성해주세요.");
+  }
+  else {
+    $.ajax({
+      type: 'post',
+      url: '/diary/hashtag/',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function (data) {
+        alert('해시태그가 생성되었습니다.');
+
+        if (typeof (data) != "undefined") {
+          var hashtag = data;
+
+          if (Array.isArray(hashtag) && hashtag.length === 0) {
+            alert("해시태그 생성 실패");
+          }
+          else {
+            $.each(data, function (index, item) {
+              if (tag_num < 40) {
+                $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
+                $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
+                hash_num += 1;
+                tag_num += 4;
+              }
+              else {
+                alert("해시태그는 10개까지 가능합니다.");
+              }
+
+            })
+          }
+        }
+      },
+      error: function (err) {
+        alert("실패");
+      }
+    });
+
+    document.getElementById("hashtag_num").value = parseInt(hash_num - 1);
+  }
+
+}
+
+document.getElementById("background_remove").onclick = function () {
+  var target_id = document.getElementById("pre_img_id").value;
+  var image = document.getElementById(target_id);
+  var formData = new FormData();
+
+  if (target_id != "") {
+    formData.append('removeFile', image.files[0]);
+  }
+
+  for (let value of formData.values()) {
+    console.log(value);
+  }
+
+  $.ajax({
+    url: '/diary/remove/',
+    data: formData,
+    enctype: 'multipart/form-data;charset=UTF-8',
+    processData: false,
+    contentType: false,
+    dataType: 'json',
+    type: 'POST',
+    success: function (data) {
+      alert("이미지 업로드 성공");
+    },
+    error: function () {
+      alert("fail");
+    }
+  });
+
+}
+
+
+// 스티커
+function sticker_hashtag() {
+  var tag_input = document.getElementById("hash_input").childElementCount;
+  var tag_count = 0;
+  document.getElementById("hashtag_select").options.length = 0;
+
+  if (tag_input == 0) {
+    document.getElementById("hashtag_select").style.display = "none";
+    document.getElementById("hashtag_none").style.display = "block";
+  }
+
+  else {
+    for (var i = 0; i < tag_input; i++) {
+      var hashtag = document.getElementById(`hashtag${i + 1}`).value;
+
+      if (hashtag != "") {
+        document.getElementById("hashtag_select").innerHTML += `<option value="${hashtag}">${hashtag}</option>`;
+        tag_count += 1;
+      }
+
+    }
+    if (tag_count > 0) {
+      document.getElementById("hashtag_select").style.display = "block";
+      document.getElementById("hashtag_none").style.display = "none";
+    }
+    else {
+      document.getElementById("hashtag_select").style.display = "none";
+      document.getElementById("hashtag_none").style.display = "block";
+    }
+  }
+
 }
 
 
@@ -456,112 +618,4 @@ canvas.onclick = function (event) {
   }
 
   totalCanvas(); // 다시 canvas 그리기
-}
-
-function testCanvas() {
-
-  var cvs_base64 = canvas.toDataURL(`image/png`);
-  var base64 = cvs_base64.split(',')[1];
-
-  console.log(base64);
-
-  var decodImg = atob(base64);
-  let array = [];
-  for (let i = 0; i < decodImg.length; i++) {
-    array.push(decodImg.charCodeAt(i));
-  }
-
-  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
-  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
-
-  console.log(canvasFile);
-
-  const url = window.URL.createObjectURL(canvasFile);
-  document.getElementById("test").src = url;
-  // window.URL.revokeObjectURL(url); // 할당 해제
-
-  var formData = new FormData();
-  formData['canvas'] = base64
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/decorate/',
-    data: {
-      canvas: base64
-    },
-    dataType: 'json',
-    processData: false,
-    contentType: 'application/octet-stream',
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function (err) {
-      alert(err);
-    }
-  });
-
-  alert("ajax 후");
-}
-
-
-/////////////////////////////////////////////////////////
-function saveCanvasImg() {
-
-  alert("함수 진입");
-
-  var cvs_base64 = canvas.toDataURL(`image/png`);
-  var base64 = cvs_base64.split(',')[1];
-
-  console.log(base64);
-
-  let array = [];
-  for (let i = 0; i < decodImg.length; i++) {
-    array.push(decodImg.charCodeAt(i));
-  }
-
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/decorate/',
-    data: {
-      file: base64
-    },
-    dataType: 'json',
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function () {
-      alert("fail");
-    }
-  });
-
-  alert("ajax 후");
-}
-//////////////////////////////////////////////////////////
-
-document.getElementById("background_remove").onclick = function () {
-  var img_file = document.getElementById(`chooseFile${imgNum}`);
-  var image = img_file[0].files[0];
-
-  var form = new FormData();
-  form.append("image", image);
-
-  if (document.getElementById("image")) {
-    form.append("image", image);
-  } else { alert("먼저 사진을 업로드 해주세요."); }
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/remove',
-    data: form,
-    dataType: 'json',
-    processData: false,
-    contentType: false,
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function () {
-      alert("fail");
-    }
-  });
 }
