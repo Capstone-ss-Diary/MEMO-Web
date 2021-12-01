@@ -423,6 +423,7 @@ function hashtagingClick() { // hashtag - 해시태그 입력칸 나타내기
   else { div.style.display = 'none'; }
 }
 
+
 var hash_num = 1;
 function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 버튼 클릭
   if (document.getElementById("hashtagForm").childElementCount >= 40) {
@@ -438,8 +439,7 @@ function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 �
     tag_input.innerHTML += `<input value="${input}" id="hashtag${hash_num}" name="hashtag${hash_num}">`;
 
     document.getElementById("hashtagInput").value = "";
-
-    document.getElementById("hashtag_num").value = hash_num;
+    document.getElementById("hashtag_num").value = parseInt(hash_num);
 
     hash_num += 1
   }

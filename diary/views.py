@@ -70,6 +70,7 @@ def decorate(request, user_id):
                     diaryImage.save()
 
         hash_cnt = request.POST.get("hashtag_num")
+        print(hash_cnt)
         if hash_cnt:
           for k in range(int(hash_cnt)):
             hash_name = "hashtag"+str(k+1)
