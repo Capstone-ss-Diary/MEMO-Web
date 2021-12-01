@@ -119,7 +119,7 @@ class SearchFormView(FormView):
 
     def form_valid(self, form):
         searchWord = form.cleaned_data['search_word']
-        post_list = DiaryText.objects.filter(Q(title__icontains=searchWord) | Q(description__icontains=searchWord) | Q(content__icontains=searchWord)).distinct()
+        post_list = DiaryText.objects.filter(Q(content__icontains=searchWord)).distinct()
 
         context = {}
         context['form'] = form
