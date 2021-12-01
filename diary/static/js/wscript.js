@@ -466,31 +466,58 @@ document.getElementById("hashtagInput").addEventListener("keydown", event => {
 
 document.getElementById("hashtag_auto").onclick = function () {
   var formData = new FormData();
+  var input_num = 0;
 
   for (var i = 0; i < 6; i++) {
     var input = document.getElementById(`UserInput${i + 1}`).value;
     if (input != "") {
       formData.append('text', String(input));
+      input_num += 1;
     }
   }
 
   var data = { 'text': formData.getAll('text') };
 
-  $.ajax({
-    type: 'post',
-    url: '/diary/hashtag/',
-    data: JSON.stringify(data),
-    dataType: 'json',
-    processData: false,
-    contentType: false,
-    cache: false,
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function (err) {
-      alert("실패");
-    }
-  });
+  console.log(input_num);
+
+  if (input_num == 0) {
+    alert("먼저 텍스트를 작성해주세요.");
+  }
+  else {
+    $.ajax({
+      type: 'post',
+      url: '/diary/hashtag/',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function (data) {
+        alert('해시태그가 생성되었습니다.');
+
+        if (typeof (data) != "undefined") {
+          var hashtag = data;
+
+          if (Array.isArray(hashtag) && hashtag.length === 0) {
+            alert("해시태그 생성 실패");
+          }
+          else {
+            $.each(data, function (index, item) {
+              $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}"></br>`);
+              $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
+              hash_num += 1;
+
+            })
+          }
+        }
+      },
+      error: function (err) {
+        alert("실패");
+      }
+    });
+
+    document.getElementById("hashtag_num").value = parseInt(hash_num - 1);
+  }
 
 }
 

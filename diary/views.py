@@ -192,7 +192,7 @@ def handwriting(request):
 #     return JsonResponse(jsonObject)
 
 
-# from hashtag_function import tfidfScorer
+from hashtag_function import tfidfScorer
 
 @csrf_exempt
 def hashtag(request):
@@ -203,15 +203,13 @@ def hashtag(request):
 
   for id, s in enumerate( hashtag_function.tfidfScorer(text) ):
       s = sorted(s, key=lambda x:x[1], reverse=True)
-      #print(type(s))
-      #print(s[0][0], s[1][0], s[2][0])
+
       keyword = []
       for i in range(3):
           keyword.append('#'+s[i][0])
-          #print(s[i][0])
+
       print('-original text-\n', text)
       print('top 3 keyword = ', keyword)
-      #print('[%d] %s ...' % (id, s[:10]))
 
-  return JsonResponse(text, safe=False)
+  return JsonResponse(keyword, safe=False)
 
