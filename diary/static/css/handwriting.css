@@ -42,7 +42,7 @@ body{
   font-style: normal;
 }
 
-#.container {
+.container {
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -71,7 +71,7 @@ body{
     border-radius: 30px;
     padding: 8px;
     justify-content: center;
-    margin : auto
+    margin : auto;
     font-size: 30px;
     font-family: 'Jua', sans-serif;
     cursor: pointer;

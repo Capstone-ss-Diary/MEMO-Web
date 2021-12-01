@@ -17,10 +17,6 @@ import sys
 import json
 from django.http.response import JsonResponse
 
-sys.path.insert(
-    1, 'diary/')
-import handwriting_function
-
 
 def calender(request, user_id):
 
@@ -156,25 +152,6 @@ def diary_list(request):
 def handwriting(request):
     return render(request, "diary/handwriting.html")
 
-############################################################################################################
-'''
-@csrf_exempt
-def handwriting(request):
-
-    if request.method == "POST":
-      hand_writing = HandWriting()
-      hand_writing.user_id = request.session.get("user")
-      hand_writing.image = request.FILES.get("chooseFile")
-      hand_writing.save()
-
-      data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
-    #   print(data_file[len(data_file)-1].image)
-
-      handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
-
-
-    return render(request, "diary/handwriting.html")
-'''
 ############################################################################################################
 
 ## 배경제거
