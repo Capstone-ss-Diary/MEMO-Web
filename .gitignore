@@ -1,3 +1,14 @@
 
 venv/
 db.sqlite3
+*.pyc
+diary/handwriting/model/
+diary/handwriting/experiment/checkpoint/experiment_0_batch_16/checkpoint
+diary/handwriting/experiment/checkpoint/experiment_0_batch_16/unet.model-15500.data-00000-of-00001
+diary/handwriting/experiment/checkpoint/experiment_0_batch_16/unet.model-15500.index
+diary/handwriting/experiment/checkpoint/experiment_0_batch_16/unet.model-15500.meta
+diary/handwriting/samples/*.jpg
+*.obj
+diary/handwriting/experiment/logs/*
+media/hand_writing/*.jpg
+media/images/*.jpg

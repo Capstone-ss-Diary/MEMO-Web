@@ -1,0 +1,101 @@
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bar.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <title>일기 검색</title>
+</head>
+
+<body bgcolor='#F5F5DC'>
+  <!-- 사이드바 -->
+  <div class="l-navbar" id="navbar">
+    <nav class="nav">
+      <div>
+        <div class="nav__brand">
+          <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+          <a href="#" class="nav__logo">MEMO</a>
+        </div>
+        <div class="nav__list">
+          <a href="/diary/search" class="nav__link active">
+            <ion-icon name="search" class="nav__icon"></ion-icon>
+            <span class="nav_name">일기 검색</span>
+          </a>
+          <a href="/" class="nav__link">
+            <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">캘린더</span>
+          </a>
+          <a href="/diary/handwriting" class="nav__link">
+            <ion-icon name="pencil-outline" class="nav__icon"></ion-icon>
+            <span class="nav_name">손글씨 등록</span>
+          </a>
+        </div>
+        <a href="/accounts/logout/" class="nav__link">
+          <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+          <span class="nav_name">Log out</span>
+          <!--href="accounts/logout/"-->
+        </a>
+      </div>
+    </nav>
+  </div>
+
+
+
+
+
+    {% block content %}
+    <h1>Search Diary</h1>
+    <br>
+
+
+    <form action="." method="post"> {% csrf_token %}
+        {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
+        Search Word :
+        <input type="text" placeholder="검색어 입력" class="btn btn-primary btn-sm">
+        <input type="Submit" value="Submit" class="btn btn-primary btn-sm">
+    </form>
+
+    <div class="searchcontainer">
+        <form action="." method="post"> {% csrf_token %}
+            {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
+            Search Word:
+            <input id = "searching" type = "text" placeholder = "검색어 입력">
+            <button id = "search"> 검색 </button>
+    <!--    <input type="submit" value="Submit" class="btn btn-primary btn-sm">-->
+        </form>
+    </div>
+
+<!--    <form action="." method="post"> {% csrf_token %}-->
+<!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->
+<!--        <input id = "searching" type = "text" placeholder = "검색어 입력">-->
+<!--        <button id = "search"> 검색 </button>-->
+<!--    &lt;!&ndash;    <input type="submit" value="Submit" class="btn btn-primary btn-sm">&ndash;&gt;-->
+<!--    </form>-->
+
+    <br/><br/>
+
+    {% if object_list %}
+        {% for post in object_list %}
+            <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
+            {{ post.modify_date|date:"N d, Y" }}
+            <p>{{ post.description }}</p>
+        {% endfor %}
+    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
+        <b><i>Search Word({{ search_term }}) Not Found</i></b>
+    {% endif %}
+    {% endblock %}
+
+
+
+</body>
+
+<!--사이드바-->
+<!-- IONICONS -->
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+<!-- JS -->
+<script type="text/javascript" src="/static/js/barScript.js"></script>

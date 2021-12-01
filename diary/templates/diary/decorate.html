@@ -2,6 +2,14 @@
 
 <head>
 
+  <meta charset="UTF-8" />
+  <meta
+    name="Content-Security-Policy"
+    content="default-src: http: https: 'self'"
+  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -23,7 +31,7 @@
       <li><button href="#bgchange" class="btn" onclick="backgroundClick()">배경선택</button></li>
       <li><button href="#photo" class="btn" onclick="photoClick()">사진업로드</button></li>
       <li><button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button></li>
-      <li><button href="#tab5" class="btn" onclick="stickerClick()">스티커</button></li>
+      <li><button href="#sticker" class="btn" onclick="stickerClick(); sticker_hashtag();">스티커</button></li>
     </ul>
 
     <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
@@ -142,30 +150,54 @@
 
         <div id="bgchange" class="cont">
           <span style="font-size: 22px;">배경을 선택하세요</span><br>
-          <button type="button" id="bc1" style="padding: 10px; background-color: white;" onclick="backchange('white')"></button>
-          <button type="button" id="bc2" style="padding: 10px; background-color: #DCDCDC;" onclick="backchange('#DCDCDC')"></button>
-          <button type="button" id="bc3" style="padding: 10px; background-color: #C0C0C0;" onclick="backchange('#C0C0C0')"></button>
-          <button type="button" id="bc4" style="padding: 10px; background-color: black;" onclick="backchange('black')"></button>
-          <button type="button" id="bc5" style="padding: 10px; background-color: #FDF5E6;" onclick="backchange('#FDF5E6')"></button>
-          <button type="button" id="bc6" style="padding: 10px; background-color: #FFF8DC;" onclick="backchange('#FFF8DC')"></button>
-          <button type="button" id="bc7" style="padding: 10px; background-color: #EEE8AA;" onclick="backchange('#EEE8AA')"></button>
-          <button type="button" id="bc8" style="padding: 10px; background-color: #FCF16E;" onclick="backchange('#FCF16E')"></button><br>
-          <button type="button" id="bc9" style="padding: 10px; background-color: #E6E6FA" onclick="backchange('#E6E6FA')"></button>
-          <button type="button" id="bc10" style="padding: 10px; background-color: #B0C4DE;" onclick="backchange('#B0C4DE')"></button>
-          <button type="button" id="bc11" style="padding: 10px; background-color: #FFE4E1;" onclick="backchange('#FFE4E1')"></button>
-          <button type="button" id="bc12" style="padding: 10px; background-color: #FFC0CB;" onclick="backchange('#FFC0CB')"></button>
-          <button type="button" id="bc13" style="padding: 10px; background-color: #D8CFD8;" onclick="backchange('#D8CFD8')"></button>
-          <button type="button" id="bc14" style="padding: 10px; background-color: #D8BFD8;" onclick="backchange('#D8BFD8')"></button>
-          <button type="button" id="bc15" style="padding: 10px; background-color: #DA70D6;" onclick="backchange('#DA70D6')"></button>
-          <button type="button" id="bc16" style="padding: 10px; background-color: #9370DB;" onclick="backchange('#9370DB')"></button><br>
-          <button type="button" id="bc17" style="padding: 10px; background-color: #E1FFFF;" onclick="backchange('#E1FFFF')"></button>
-          <button type="button" id="bc18" style="padding: 10px; background-color: #ADD8E6;" onclick="backchange('#ADD8E6')"></button>
-          <button type="button" id="bc19" style="padding: 10px; background-color: #87CEEB;" onclick="backchange('#87CEEB')"></button>
-          <button type="button" id="bc20" style="padding: 10px; background-color: #4682B4;" onclick="backchange('#4682B4')"></button>
-          <button type="button" id="bc21" style="padding: 10px; background-color: #F5FFFA;" onclick="backchange('#F5FFFA')"></button>
-          <button type="button" id="bc22" style="padding: 10px; background-color: #F0FFF0;" onclick="backchange('#F0FFF0')"></button>
-          <button type="button" id="bc23" style="padding: 10px; background-color: #98FB98;" onclick="backchange('#98FB98')"></button>
-          <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;" onclick="backchange('#8FBC8F')"></button>
+          <button type="button" id="bc1" style="padding: 10px; background-color: white;"
+            onclick="backchange('white')"></button>
+          <button type="button" id="bc2" style="padding: 10px; background-color: #DCDCDC;"
+            onclick="backchange('#DCDCDC')"></button>
+          <button type="button" id="bc3" style="padding: 10px; background-color: #C0C0C0;"
+            onclick="backchange('#C0C0C0')"></button>
+          <button type="button" id="bc4" style="padding: 10px; background-color: black;"
+            onclick="backchange('black')"></button>
+          <button type="button" id="bc5" style="padding: 10px; background-color: #FDF5E6;"
+            onclick="backchange('#FDF5E6')"></button>
+          <button type="button" id="bc6" style="padding: 10px; background-color: #FFF8DC;"
+            onclick="backchange('#FFF8DC')"></button>
+          <button type="button" id="bc7" style="padding: 10px; background-color: #EEE8AA;"
+            onclick="backchange('#EEE8AA')"></button>
+          <button type="button" id="bc8" style="padding: 10px; background-color: #FCF16E;"
+            onclick="backchange('#FCF16E')"></button><br>
+          <button type="button" id="bc9" style="padding: 10px; background-color: #E6E6FA"
+            onclick="backchange('#E6E6FA')"></button>
+          <button type="button" id="bc10" style="padding: 10px; background-color: #B0C4DE;"
+            onclick="backchange('#B0C4DE')"></button>
+          <button type="button" id="bc11" style="padding: 10px; background-color: #FFE4E1;"
+            onclick="backchange('#FFE4E1')"></button>
+          <button type="button" id="bc12" style="padding: 10px; background-color: #FFC0CB;"
+            onclick="backchange('#FFC0CB')"></button>
+          <button type="button" id="bc13" style="padding: 10px; background-color: #D8CFD8;"
+            onclick="backchange('#D8CFD8')"></button>
+          <button type="button" id="bc14" style="padding: 10px; background-color: #D8BFD8;"
+            onclick="backchange('#D8BFD8')"></button>
+          <button type="button" id="bc15" style="padding: 10px; background-color: #DA70D6;"
+            onclick="backchange('#DA70D6')"></button>
+          <button type="button" id="bc16" style="padding: 10px; background-color: #9370DB;"
+            onclick="backchange('#9370DB')"></button><br>
+          <button type="button" id="bc17" style="padding: 10px; background-color: #E1FFFF;"
+            onclick="backchange('#E1FFFF')"></button>
+          <button type="button" id="bc18" style="padding: 10px; background-color: #ADD8E6;"
+            onclick="backchange('#ADD8E6')"></button>
+          <button type="button" id="bc19" style="padding: 10px; background-color: #87CEEB;"
+            onclick="backchange('#87CEEB')"></button>
+          <button type="button" id="bc20" style="padding: 10px; background-color: #4682B4;"
+            onclick="backchange('#4682B4')"></button>
+          <button type="button" id="bc21" style="padding: 10px; background-color: #F5FFFA;"
+            onclick="backchange('#F5FFFA')"></button>
+          <button type="button" id="bc22" style="padding: 10px; background-color: #F0FFF0;"
+            onclick="backchange('#F0FFF0')"></button>
+          <button type="button" id="bc23" style="padding: 10px; background-color: #98FB98;"
+            onclick="backchange('#98FB98')"></button>
+          <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;"
+            onclick="backchange('#8FBC8F')"></button>
 
 
         </div>
@@ -295,6 +327,7 @@
 
             <div class="image-show" id="image-show">
               <img src="" class="image" id="image" />
+              <input type="hidden" id="pre_img" value="">
             </div>
             <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
               <button type="button" class="imgSubmit" id="imgSubmit" disabled style="margin-right: 1%;">업로드</button>
@@ -318,7 +351,7 @@
           <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
             <button id="hashtaging" type="button" style="margin-left: .5%; width: 43%; left: 10px;"
               onclick="hashtagingClick()">해시태그 만들기</button>
-            <button id="hashtaging" type="button">해시태그 생성하기</button>
+            <button id="hashtag_auto" type="button">해시태그 생성하기</button>
           </div>
 
           <div id="hashtagingDiv" style="display: none;">
@@ -329,21 +362,21 @@
           </div>
 
           <div id="hashtagForm">
-
+            <br>
           </div>
 
-          <p>위에 버튼 누르면 밑에</p>
-          <p>[해시태그 달기 버튼] [생성한 해시태그1] [해시태그 취소 버튼 (해시태그 달면 나타나게)]</p>
-          <p>[해시태그 달기 버튼] [생성한 해시태그2] [해시태그 취소 버튼]</p>
-          <p>일단 요런 식으로 목록을 뜨게 한다는 생각이긴 한데 (해시태그 달기 버튼 누르면 canvas에 해시태그 생성) 다른 생각 있었으면 말해주세용 꼭 요런식으로 안대두 됨!~! </p>
+          <div id="hash_input" style="display: none;">
+          </div>
+
+          <input type="hidden" id="hashtag_num" name="hashtag_num">
+
+
 
         </div>
-        <div id="tab5" class="cont">
-          Tab Content5
-          <button type="button" onclick="testCanvas(this);">캔버스 확인</button>
-          <div id="canvasImg">
-            <img src="" id="test" alt="Alternative text" />
-          </div>
+        <div id="sticker" class="cont">
+          <p id="hashtag_none" style="margin-left: 10px; display: block; font-size: 22px">해시태그를 생성해주세요!</p>
+          <select id="hashtag_select" style="display: block;"></select>
+          <div class="out"></div>
         </div>
 
       </div>
@@ -354,3 +387,48 @@
 
 <script type="text/javascript" src="/static/js/tabscript.js"></script>
 <script type="text/javascript" src="/static/js/wscript.js"></script>
+<script>
+  let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
+  let picnum = 30;
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+  });
+  document.addEventListener("DOMContentLoaded", init);
+  function init() {
+    document.getElementById("hashtag_select").addEventListener("change", ev => {
+      ev.preventDefault();
+      let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
+      let sticker_opt = document.getElementById("hashtag_select")
+      let str = sticker_opt.options[sticker_opt.selectedIndex].value;
+      {% comment %} let str = document.getElementById("hashtag_select").selected.value.trim(); {% endcomment %}
+      const gifs_gallery = document.getElementById('gifs');
+      if( gifs_gallery != null) {
+        gifs_gallery.remove(); }      
+      url = url.concat(str);
+      console.log(url);
+      fetch(url)
+        .then(response => response.json())
+        .then(content => {
+          //  data, pagination, meta
+          console.log(content.data);
+          console.log("META", content.meta);
+          let fig = document.createElement("figure");
+          fig.setAttribute("id", "gifs");
+          content.data.forEach(element => {
+            let img = document.createElement("img");
+            let fc = document.createElement("figcaption");
+            img.src = element.images.downsized.url;
+            img.alt = element.title;
+            {% comment %} fc.textContent = element.title; {% endcomment %}
+            fig.appendChild(img);
+            {% comment %} fig.appendChild(fc); {% endcomment %}
+            let out = document.querySelector(".out");
+            out.insertAdjacentElement("afterbegin", fig);
+          })
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    });
+  }
+</script>

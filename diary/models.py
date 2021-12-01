@@ -49,6 +49,12 @@ class DiaryImage(models.Model):
     degree = models.FloatField(null=True)
 
 
+# 사진 해시태그
+class DiaryHashtag(models.Model):
+  diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
+  hashtag = models.CharField(max_length=100, null=True)
+
+
 class HandWriting(models.Model):
   id = models.BigAutoField(primary_key=True, null=False)
   user_id = models.IntegerField(null=True)

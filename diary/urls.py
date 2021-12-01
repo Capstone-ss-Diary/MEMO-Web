@@ -15,5 +15,6 @@ urlpatterns = [
     path("detail/<int:diary_id>/edit/", views.edit, name="edit"),
     path("list/", views.diary_list, name="diary_list"),
     path("remove/", views.bgr_rm, name="remove"),
+    # path("hashtag/", views.hashtag, name="hashtag"),
 
 ]
