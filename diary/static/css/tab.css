@@ -291,6 +291,18 @@ body{
   cursor: pointer;
 }
 
+#hashtag #hashtag_auto {
+  background-color: #E5D0AD;
+  border: 0;
+  border-radius: 13px;
+  width: 40%;
+  height:33px;
+  margin-right: .5%;
+  font-family: 'Jua', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 #hashtag #hashtagInput {
   border: 0; 
   padding: .4em .5em; 

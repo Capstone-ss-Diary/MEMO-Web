@@ -467,6 +467,7 @@ document.getElementById("hashtagInput").addEventListener("keydown", event => {
 document.getElementById("hashtag_auto").onclick = function () {
   var formData = new FormData();
   var input_num = 0;
+  var tag_num = document.getElementById("hashtagForm").childElementCount;
 
   for (var i = 0; i < 6; i++) {
     var input = document.getElementById(`UserInput${i + 1}`).value;
@@ -503,9 +504,15 @@ document.getElementById("hashtag_auto").onclick = function () {
           }
           else {
             $.each(data, function (index, item) {
-              $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}"></br>`);
-              $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
-              hash_num += 1;
+              if(tag_num<40){
+                  $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
+                  $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
+                  hash_num += 1;
+                  tag_num += 4;
+              }
+              else{
+                alert("해시태그는 10개까지 가능합니다.");
+              }
 
             })
           }
