@@ -102,7 +102,8 @@ def detail(request, user_id, diary_id):
 
 
 def search(request):
-    return HttpResponse("Search index.")
+    # return HttpResponse("Search index.")
+    return render(request, "diary/search.html")
 
 
 def edit(request, diary_id):
