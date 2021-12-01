@@ -464,6 +464,36 @@ document.getElementById("hashtagInput").addEventListener("keydown", event => {
   }
 })
 
+document.getElementById("hashtag_auto").onclick = function () {
+  var formData = new FormData();
+
+  for (var i = 0; i < 6; i++) {
+    var input = document.getElementById(`UserInput${i + 1}`).value;
+    if (input != "") {
+      formData.append('text', String(input));
+    }
+  }
+
+  var data = { 'text': formData.getAll('text') };
+
+  $.ajax({
+    type: 'post',
+    url: '/diary/hashtag/',
+    data: JSON.stringify(data),
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+    cache: false,
+    success: function (data) {
+      alert('Upload Success');
+    },
+    error: function (err) {
+      alert("실패");
+    }
+  });
+
+}
+
 
 // canvas 클릭 이벤트
 canvas.onclick = function (event) {

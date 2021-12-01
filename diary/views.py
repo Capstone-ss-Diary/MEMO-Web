@@ -1,5 +1,9 @@
+from typing import Text
+from django.db.models.fields.json import DataContains
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
+
+from diary import hashtag_function
 from .models import Diary, DiaryImage, DiaryText, DiaryHashtag, HandWriting
 from .forms import DiaryForm
 from django.utils import timezone
@@ -7,7 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 import sys
 
-from django.db.models.fields import json
+# from django.db.models.fields import json
+import json
 from django.http.response import JsonResponse
 
 sys.path.insert(
@@ -185,3 +190,28 @@ def handwriting(request):
 
 
 #     return JsonResponse(jsonObject)
+
+
+# from hashtag_function import tfidfScorer
+
+@csrf_exempt
+def hashtag(request):
+
+  data = json.loads(request.body)
+  text = data['text']
+  print(text)
+
+  for id, s in enumerate( hashtag_function.tfidfScorer(text) ):
+      s = sorted(s, key=lambda x:x[1], reverse=True)
+      #print(type(s))
+      #print(s[0][0], s[1][0], s[2][0])
+      keyword = []
+      for i in range(3):
+          keyword.append('#'+s[i][0])
+          #print(s[i][0])
+      print('-original text-\n', text)
+      print('top 3 keyword = ', keyword)
+      #print('[%d] %s ...' % (id, s[:10]))
+
+  return JsonResponse(text, safe=False)
+
