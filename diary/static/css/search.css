@@ -51,15 +51,18 @@ body{
     align-items: center;
 }*/
 
-#searching {
-    padding: 8px;
-    width: 20%;
+
+
+#search {
+    padding: 20px;
+    width: 100%;
     justify-content: center;
     align-items: center;
     border:0;
+    text-align: center;
 }
 
-#search {
+#search_button {
     background-color: #E5D0AD;
     width: 4%;
     border: 0;
