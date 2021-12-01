@@ -1,12 +1,24 @@
+from typing import Text
+from django.db.models.fields.json import DataContains
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
-from .models import Diary, DiaryImage, DiaryText, HandWriting
-from .forms import DiaryForm
+
+from diary import hashtag_function
+from .models import Diary, DiaryImage, DiaryText, DiaryHashtag, HandWriting
+from .forms import DiaryForm, PostSearchForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import FormView
+from django.db.models import Q
+from django.shortcuts import render
+import sys
 
-from django.db.models.fields import json
+# from django.db.models.fields import json
+import json
 from django.http.response import JsonResponse
+
+sys.path.insert(
+    1, 'diary/')
 
 
 def calender(request, user_id):
@@ -29,7 +41,6 @@ def decorate(request, user_id):
         diary.user_id = request.session.get("user")
         # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
-        # diary.canvas = bytes(request.POST.get("canvas"))
         diary.save()  # Diary DB 저장
 
         # print(request.POST.get("file"))
@@ -64,7 +75,17 @@ def decorate(request, user_id):
                     )
                     diaryImage.save()
 
-                print(name)
+        hash_cnt = request.POST.get("hashtag_num")
+        print(hash_cnt)
+        if hash_cnt:
+          for k in range(int(hash_cnt)):
+            hash_name = "hashtag"+str(k+1)
+            if request.POST.get(hash_name) is not None:
+                diaryHashtag = DiaryHashtag(
+                  diary = diary,
+                  hashtag = request.POST.get(hash_name),
+                )
+                diaryHashtag.save()
 
         return redirect(
             "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
@@ -86,19 +107,25 @@ def detail(request, user_id, diary_id):
 
     return render(request, "diary/detail.html", content)
 
-@csrf_exempt
-def handwriting(request):
-
-    if request.method == "POST":
-      hand_writing = HandWriting()
-      hand_writing.user_id = request.session.get("user")
-      hand_writing.image = request.FILES.get("chooseFile")
-      hand_writing.save()
-
-    return render(request, "diary/handwriting.html")
 
 def search(request):
-    return HttpResponse("Search index.")
+    # return HttpResponse("Search index.")
+    return render(request, "diary/search.html")
+
+class SearchFormView(FormView):
+    form_class = PostSearchForm
+    template_name = 'diary/search.html'
+
+    def form_valid(self, form):
+        searchWord = form.cleaned_data['search_word']
+        post_list = DiaryText.objects.filter(Q(content__icontains=searchWord)).distinct()
+
+        context = {}
+        context['form'] = form
+        context['search_term'] = searchWord
+        context['object_list'] = post_list
+
+        return render(self.request, self.template_name, context)
 
 
 def edit(request, diary_id):
@@ -125,83 +152,22 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
-'''
-#######################################################################
-
-import numpy as np
-from django.conf import settings
-from django.core.files.storage import default_storage
-from django.shortcuts import render
-from keras.applications import vgg16
-from keras.applications.imagenet_utils import decode_predictions
-from keras.preprocessing.image import img_to_array, load_img
-from tensorflow.python.keras.backend import set_session
-
-
-def model(request):
-    if request.method == "POST":
-
-        file = request.FILES["imageFile"]
-        # file_name = default_storage.save(file.name, file)
-        # file_url = default_storage.path(file_name)
-
-        # image = load_img(file_url, target_size=(224, 224))
-        image = load_img(file.files[0].src, target_size=(224, 224))
-        numpy_array = img_to_array(image)
-        image_batch = np.expand_dims(numpy_array, axis=0)
-        processed_image = vgg16.preprocess_input(image_batch.copy())
-
-        with settings.GRAPH1.as_default():
-            set_session(settings.SESS)
-            predictions = settings.IMAGE_MODEL.predict(processed_image)
-
-        label = decode_predictions(predictions, top=3)
-        return render(request, "model.html", {"predictions": label})
-
-    else:
-        return render(request, "model.html")
-
-from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
-import os
-from PIL import Image
-import pytesseract
-
-def ocr_upload(request):
-    context = {}
-
-    imgname = ''
-    resulttext = ''
-    if 'uploadfile' in request.FILES:
-        uploadfile = request.FILES.get('uploadfile', '')
-
-        if uploadfile != '':
-            name_old = uploadfile.name
-            name_ext = os.path.splitext(name_old)[1]
-
-            fs = FileSystemStorage(location='static/source')
-            imgname = fs.save(f"src-{name_old}", uploadfile)
-
-            imgfile = Image.open(f"./static/source/{imgname}")
-            resulttext = pytesseract.image_to_string(imgfile, lang='eng')
-
-    context['imgname'] = imgname
-    context['resulttext'] = resulttext
-    return render(request, 'ocr_upload.html', context)
+def handwriting(request):
+    return render(request, "diary/handwriting.html")
 
 ############################################################################################################
 
 ## 배경제거
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+# from PIL import ImageFile
+# ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from rembg.bg import remove
-import numpy as np
-import io
-from PIL import Image
+# from rembg.bg import remove
+# import numpy as np
+# import io
+# from PIL import Image
 
-from django.db.models.fields import json
-from django.http.response import JsonResponse
+# from django.db.models.fields import json
+# from django.http.response import JsonResponse
 
 
 
@@ -224,4 +190,42 @@ def bgr_rm(request):
 
 
     return JsonResponse(jsonObject)
-'''
+
+
+from hashtag_function import tfidfScorer
+
+@csrf_exempt
+def hashtag(request):
+    data = json.loads(request.body)
+    # text = data['text']
+
+
+    data_text = data['text']
+    text = ''
+
+    for dt in data_text:
+        text += dt + ' '
+
+    print(text)
+    print([text])
+
+
+    for id, s in enumerate(hashtag_function.tfidfScorer([text])):
+        s = sorted(s, key=lambda x: x[1], reverse=True)
+        # print(s)
+        # print(type(s))
+        # print(s[0][0], s[1][0], s[2][0])
+        keyword = []
+        for i in range(3):
+            keyword.append(s[i][0])
+            # print(s[i][0])
+        print('-original text-\n', text)
+        print('top 3 keyword = ', keyword)
+        # print('[%d] %s ...' % (id, s[:10]))
+
+        context = []
+        for k in keyword:
+            context.append({"keyword":k})
+        print(context)
+
+    return JsonResponse(context, safe=False)
