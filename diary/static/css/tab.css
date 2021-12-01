@@ -342,3 +342,14 @@ body{
   border: 0;
   top: 3px;
 }
+
+#sticker select{
+  position: relative;
+  top: 10px;
+  width: 100px;
+  padding: .4em .5em; 
+  font-family: 'Jua', sans-serif; 
+  border: 1px solid #999; 
+  font-size: 18px;
+  margin-left: 10px;
+}

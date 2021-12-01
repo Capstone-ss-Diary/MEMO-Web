@@ -186,6 +186,7 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
+  console.log(input.id);
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -504,13 +505,13 @@ document.getElementById("hashtag_auto").onclick = function () {
           }
           else {
             $.each(data, function (index, item) {
-              if(tag_num<40){
-                  $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
-                  $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
-                  hash_num += 1;
-                  tag_num += 4;
+              if (tag_num < 40) {
+                $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
+                $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
+                hash_num += 1;
+                tag_num += 4;
               }
-              else{
+              else {
                 alert("해시태그는 10개까지 가능합니다.");
               }
 
@@ -524,6 +525,39 @@ document.getElementById("hashtag_auto").onclick = function () {
     });
 
     document.getElementById("hashtag_num").value = parseInt(hash_num - 1);
+  }
+
+}
+
+
+// 스티커
+function sticker_hashtag() {
+  var tag_input = document.getElementById("hash_input").childElementCount;
+  var tag_count = 0;
+
+  if (tag_input == 0) {
+    document.getElementById("hashtag_select").style.display = "none";
+    document.getElementById("hashtag_none").style.display = "block";
+  }
+
+  else {
+    for (var i = 0; i < tag_input; i++) {
+      var hashtag = document.getElementById(`hashtag${i + 1}`).value;
+
+      if (hashtag != "") {
+        document.getElementById("hashtag_select").innerHTML += `<option value="${hashtag}">${hashtag}</option>`;
+        tag_count += 1;
+      }
+
+    }
+    if (tag_count > 0) {
+      document.getElementById("hashtag_select").style.display = "block";
+      document.getElementById("hashtag_none").style.display = "none";
+    }
+    else {
+      document.getElementById("hashtag_select").style.display = "none";
+      document.getElementById("hashtag_none").style.display = "block";
+    }
   }
 
 }

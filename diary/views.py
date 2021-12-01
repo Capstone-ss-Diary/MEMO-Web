@@ -211,7 +211,7 @@ def handwriting(request):
 
 #     return JsonResponse(jsonObject)
 
-
+'''
 from hashtag_function import tfidfScorer
 
 @csrf_exempt
@@ -249,5 +249,5 @@ def hashtag(request):
         print(context)
 
     return JsonResponse(context, safe=False)
-
+'''
 
