@@ -3,10 +3,7 @@
 <head>
 
   <meta charset="UTF-8" />
-  <meta
-    name="Content-Security-Policy"
-    content="default-src: http: https: 'self'"
-  />
+  <meta name="Content-Security-Policy" content="default-src: http: https: 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
@@ -199,7 +196,7 @@
           <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;"
             onclick="backchange('#8FBC8F')"></button>
 
-
+          <input type="hidden" name="back_color" id="back_color" value="white">
         </div>
 
         <div id="photo" class="cont">
@@ -310,7 +307,8 @@
           <div class="editBox">
             <div class="editBoxM"
               style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
-              <button type="button" id="background_remove" style="margin-right: .5%; width: 40%;">배경 제거</button>
+              <button type="button" id="background_remove" style="margin-right: .5%; width: 40%;" disabled>배경
+                제거</button>
             </div>
             <div class="imgSetting" style="position: relative; display: flex; justify-content: center; top:30px">
               <select id="selectImg"></select>&nbsp;&nbsp;
@@ -327,7 +325,7 @@
 
             <div class="image-show" id="image-show">
               <img src="" class="image" id="image" />
-              <input type="hidden" id="pre_img" value="">
+              <input type="hidden" id="pre_img_id" value="">
             </div>
             <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
               <button type="button" class="imgSubmit" id="imgSubmit" disabled style="margin-right: 1%;">업로드</button>
@@ -350,8 +348,8 @@
 
           <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
             <button id="hashtaging" type="button" style="margin-left: .5%; width: 43%; left: 10px;"
-              onclick="hashtagingClick()">해시태그 만들기</button>
-            <button id="hashtag_auto" type="button">해시태그 생성하기</button>
+              onclick="hashtagingClick()">해시태그 직접 만들기</button>
+            <button id="hashtag_auto" type="button">해시태그 자동 생성하기</button>
           </div>
 
           <div id="hashtagingDiv" style="display: none;">
@@ -400,10 +398,11 @@
       let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
       let sticker_opt = document.getElementById("hashtag_select")
       let str = sticker_opt.options[sticker_opt.selectedIndex].value;
-      {% comment %} let str = document.getElementById("hashtag_select").selected.value.trim(); {% endcomment %}
+
       const gifs_gallery = document.getElementById('gifs');
-      if( gifs_gallery != null) {
-        gifs_gallery.remove(); }      
+      if (gifs_gallery != null) {
+        gifs_gallery.remove();
+      }
       url = url.concat(str);
       console.log(url);
       fetch(url)
@@ -419,9 +418,9 @@
             let fc = document.createElement("figcaption");
             img.src = element.images.downsized.url;
             img.alt = element.title;
-            {% comment %} fc.textContent = element.title; {% endcomment %}
+            // {% comment %} fc.textContent = element.title; {% endcomment %}
             fig.appendChild(img);
-            {% comment %} fig.appendChild(fc); {% endcomment %}
+            // {% comment %} fig.appendChild(fc); {% endcomment %}
             let out = document.querySelector(".out");
             out.insertAdjacentElement("afterbegin", fig);
           })

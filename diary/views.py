@@ -39,8 +39,9 @@ def decorate(request, user_id):
     elif request.method == "POST":  # text 값
         diary = Diary()
         diary.user_id = request.session.get("user")
-        # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
+        diary.published_date = timezone.datetime.now()
+        diary.backColor = request.POST.get("back_color")
         diary.save()  # Diary DB 저장
 
         # print(request.POST.get("file"))
@@ -109,23 +110,22 @@ def detail(request, user_id, diary_id):
 
 
 def search(request):
-    # return HttpResponse("Search index.")
-    return render(request, "diary/search.html")
-
-class SearchFormView(FormView):
-    form_class = PostSearchForm
-    template_name = 'diary/search.html'
-
-    def form_valid(self, form):
-        searchWord = form.cleaned_data['search_word']
-        post_list = DiaryText.objects.filter(Q(content__icontains=searchWord)).distinct()
-
-        context = {}
-        context['form'] = form
-        context['search_term'] = searchWord
-        context['object_list'] = post_list
-
-        return render(self.request, self.template_name, context)
+    # date_list = Diary.objects.filter(diary=id)
+    qs = DiaryText.objects.all()
+    q = request.GET.get('q', '')  # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
+    print('검색어: ', q)
+    if q:  # q가 있으면
+        queryset = (Q(content__icontains=q))
+        print('this is query', queryset)
+        qs = DiaryText.objects.filter(queryset).distinct()
+        #qs = qs.filter(content__icontains=q)
+        print('검색어 있음: ', q, qs)
+    else:
+        print('검색어 없음: ', q, qs)
+    return render(request, 'diary/search.html', {
+        'search': qs,
+        'q': q,
+    })
 
 
 def edit(request, diary_id):
@@ -156,20 +156,39 @@ def handwriting(request):
     return render(request, "diary/handwriting.html")
 
 ############################################################################################################
+'''
+@csrf_exempt
+def handwriting(request):
 
-## 배경제거
-# from PIL import ImageFile
-# ImageFile.LOAD_TRUNCATED_IMAGES = True
+    if request.method == "POST":
+      hand_writing = HandWriting()
+      hand_writing.user_id = request.session.get("user")
+      hand_writing.image = request.FILES.get("chooseFile")
+      hand_writing.save()
 
-# from rembg.bg import remove
-# import numpy as np
-# import io
-# from PIL import Image
+      data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
+    #   print(data_file[len(data_file)-1].image)
 
-# from django.db.models.fields import json
-# from django.http.response import JsonResponse
+      handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
 
 
+    return render(request, "diary/handwriting.html")
+'''
+############################################################################################################
+
+# 배경제거
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+from rembg.bg import remove
+import numpy as np
+import io
+from PIL import Image
+
+import json
+
+from django.http.response import JsonResponse
+import urllib.request
 
 @csrf_exempt
 def bgr_rm(request):
@@ -177,11 +196,28 @@ def bgr_rm(request):
 
     print(data)
     print(data['image'])
+    print(type(data['image']))
+
+    url = 'http://img.lifestyler.co.kr/uploads/program/2/2367/menu/3/html/f132793634612225081(0).jpg'
+    urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
+    # urllib.request.urlretrieve(data['image'], 'diary/static/backimages/test.jpg')
+    input_path = 'diary/static/backimages/test.jpg'
+    output_path = 'diary/static/backimages/out.png'
+
+    f = np.fromfile(input_path)
+    print(f)
+    result = remove(f)
+    print(result)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    img.save(output_path)
+
+
+    print(data)
+    print(data['image'])
 
     return JsonResponse(data)
 
 
-from hashtag_function import tfidfScorer
 
 @csrf_exempt
 def hashtag(request):
