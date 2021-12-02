@@ -180,7 +180,7 @@ def bgr_rm(request):
 
     return JsonResponse(data)
 
-'''
+
 from hashtag_function import tfidfScorer
 
 @csrf_exempt
@@ -218,5 +218,3 @@ def hashtag(request):
         print(context)
 
     return JsonResponse(context, safe=False)
-
-'''
