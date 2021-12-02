@@ -1,6 +1,6 @@
 from math import log10
-# from konlpy.tag import Okt
-from kon
+from konlpy.tag import Okt
+
 # =======================================
 # -- TF-IDF function
 # =======================================
