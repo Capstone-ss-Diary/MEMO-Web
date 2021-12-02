@@ -19,6 +19,7 @@ from django.http.response import JsonResponse
 
 sys.path.insert(
     1, 'diary/')
+import hashtag_function
 
 import hashtag_function
 

@@ -55,8 +55,19 @@ function writingText() {
           currentY += fontSize * (1.2);
         }
       }
+      if (font.value != "hand-writing") { ctx.fillText(line, parseFloat(input_x.value), currentY); }
+      else {
+        document.getElementById(`hand-writing${i + 1}`).innerText = line;
+        document.getElementById(`hand-writing${i + 1}`).style.top = currentY;
+        document.getElementById(`hand-writing${i + 1}`).style.left = input_x.value;
+        document.getElementById(`hand-writing${i + 1}`).style.color = font_color.value;
+        document.getElementById(`hand-writing${i + 1}`).style.fontSize = font_size.value;
 
-      ctx.fillText(line, parseFloat(input_x.value), currentY);
+        document.getElementById(`fontSelect`).addEventListener("change", ev => {
+          console.log("값 변경")
+          document.getElementById(`hand-writing${i + 1}`).style.display = "none";
+        })
+      }
 
     }
   }
