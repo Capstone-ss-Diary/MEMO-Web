@@ -186,7 +186,7 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
-  document.getElementById("pre_img_id").value = input.id
+  // document.getElementById("pre_img_id").value = input.id
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -531,33 +531,31 @@ document.getElementById("hashtag_auto").onclick = function () {
 }
 
 document.getElementById("background_remove").onclick = function () {
-  var target_id = document.getElementById("pre_img_id").value;
-  var image = document.getElementById(target_id);
-  var formData = new FormData();
+  var image_src = document.getElementById("image").src;
+  console.log(image_src);
 
-  if (target_id != "") {
-    formData.append('removeFile', image.files[0]);
+  var image_data = { 'image': image_src };
+
+  if (image_src == "") {
+    alert("먼저 이미지를 불러와 주세요.");
   }
-
-  for (let value of formData.values()) {
-    console.log(value);
+  else {
+    $.ajax({
+      type: 'post',
+      url: '/diary/remove/',
+      data: JSON.stringify(image_data),
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function (data) {
+        alert("이미지 전송 성공");
+      },
+      error: function () {
+        alert("실패");
+      }
+    });
   }
-
-  $.ajax({
-    url: '/diary/remove/',
-    data: formData,
-    enctype: 'multipart/form-data;charset=UTF-8',
-    processData: false,
-    contentType: false,
-    dataType: 'json',
-    type: 'POST',
-    success: function (data) {
-      alert("이미지 업로드 성공");
-    },
-    error: function () {
-      alert("fail");
-    }
-  });
 
 }
 
