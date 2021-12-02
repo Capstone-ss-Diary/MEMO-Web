@@ -105,29 +105,24 @@ def detail(request, user_id, diary_id):
     return render(request, "diary/detail.html", content)
 
 
-
 def search(request):
-    # date_list = Diary.objects.filter(diary=id)
-    qs = DiaryText.objects.all()
+    # return HttpResponse("Search index.")
+    return render(request, "diary/search.html")
 
+class SearchFormView(FormView):
+    form_class = PostSearchForm
+    template_name = 'diary/search.html'
 
-    q = request.GET.get('q', '')  # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
-    print('검색어: ', q)
-    if q:  # q가 있으면
-        queryset = (Q(content__icontains=q))
-        print('this is query', queryset)
-        qs = DiaryText.objects.filter(queryset).distinct()
-        #qs = qs.filter(content__icontains=q)
-        print('검색어 있음: ', q, qs)
-    else:
-        print('검색어 없음: ', q, qs)
+    def form_valid(self, form):
+        searchWord = form.cleaned_data['search_word']
+        post_list = DiaryText.objects.filter(Q(content__icontains=searchWord)).distinct()
 
-    return render(request, 'diary/search.html', {
-        'search': qs,
-        'q': q,
-    })
+        context = {}
+        context['form'] = form
+        context['search_term'] = searchWord
+        context['object_list'] = post_list
 
-
+        return render(self.request, self.template_name, context)
 
 
 def edit(request, diary_id):
@@ -173,27 +168,15 @@ def handwriting(request):
 
 
 
-# @csrf_exempt
-# def bgr_rm(request):
-#     jsonObject = json.loads(request.body)
-#     print(jsonObject)
+@csrf_exempt
+def bgr_rm(request):
+    data = json.loads(request.body)
 
+    print(data)
 
-#     input_path = jsonObject
+    return JsonResponse(data)
 
-#     # output_path = 'out.png'
-
-#     f = np.fromfile(input_path)
-#     result = remove(f)
-#     img = Image.open(io.BytesIO(result)).convert("RGBA")
-#     # img.save(output_path)
-
-#     print(img)
-
-
-#     return JsonResponse(jsonObject)
-
-
+'''
 from hashtag_function import tfidfScorer
 
 @csrf_exempt
@@ -232,4 +215,4 @@ def hashtag(request):
 
     return JsonResponse(context, safe=False)
 
-
+'''
