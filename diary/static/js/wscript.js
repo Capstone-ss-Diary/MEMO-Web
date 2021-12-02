@@ -531,10 +531,11 @@ document.getElementById("hashtag_auto").onclick = function () {
 }
 
 document.getElementById("background_remove").onclick = function () {
-  var image_src = document.getElementById("image").src;
-  console.log(image_src);
+var image_src = document.getElementById("image").src;
 
+  console.log(image_src);
   var image_data = { 'image': image_src };
+
 
   if (image_src == "") {
     alert("먼저 이미지를 불러와 주세요.");
