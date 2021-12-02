@@ -17,6 +17,9 @@ import sys
 import json
 from django.http.response import JsonResponse
 
+sys.path.insert(
+    1, 'diary/')
+
 
 def calender(request, user_id):
 
@@ -173,27 +176,16 @@ def handwriting(request):
 
 
 
-# @csrf_exempt
-# def bgr_rm(request):
-#     jsonObject = json.loads(request.body)
-#     print(jsonObject)
+@csrf_exempt
+def bgr_rm(request):
+    data = json.loads(request.body)
 
+    print(data)
+    print(data['image'])
 
-#     input_path = jsonObject
+    return JsonResponse(data)
 
-#     # output_path = 'out.png'
-
-#     f = np.fromfile(input_path)
-#     result = remove(f)
-#     img = Image.open(io.BytesIO(result)).convert("RGBA")
-#     # img.save(output_path)
-
-#     print(img)
-
-
-#     return JsonResponse(jsonObject)
-
-
+'''
 from hashtag_function import tfidfScorer
 
 @csrf_exempt
@@ -232,4 +224,4 @@ def hashtag(request):
 
     return JsonResponse(context, safe=False)
 
-
+'''

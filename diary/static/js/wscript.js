@@ -186,7 +186,7 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
-  console.log(input.id);
+  // document.getElementById("pre_img_id").value = input.id
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -198,6 +198,7 @@ function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업�
     img_cnt += 1; // 이미지 수
     document.getElementById("img_count").value = img_cnt;
 
+    document.getElementById("background_remove").disabled = false;
     document.getElementById("imgSubmit").disabled = false; // 업로드 버튼 활성화
   }
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
@@ -529,6 +530,35 @@ document.getElementById("hashtag_auto").onclick = function () {
 
 }
 
+document.getElementById("background_remove").onclick = function () {
+  var image_src = document.getElementById("image").src;
+  console.log(image_src);
+
+  var image_data = { 'image': image_src };
+
+  if (image_src == "") {
+    alert("먼저 이미지를 불러와 주세요.");
+  }
+  else {
+    $.ajax({
+      type: 'post',
+      url: '/diary/remove/',
+      data: JSON.stringify(image_data),
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function (data) {
+        alert("이미지 전송 성공");
+      },
+      error: function () {
+        alert("실패");
+      }
+    });
+  }
+
+}
+
 
 // 스티커
 function sticker_hashtag() {
@@ -586,112 +616,4 @@ canvas.onclick = function (event) {
   }
 
   totalCanvas(); // 다시 canvas 그리기
-}
-
-function testCanvas() {
-
-  var cvs_base64 = canvas.toDataURL(`image/png`);
-  var base64 = cvs_base64.split(',')[1];
-
-  console.log(base64);
-
-  var decodImg = atob(base64);
-  let array = [];
-  for (let i = 0; i < decodImg.length; i++) {
-    array.push(decodImg.charCodeAt(i));
-  }
-
-  var canvasFile = new Blob([new Uint8Array(array)], { type: 'image/png' });
-  var canvasFileName = 'canvas_img_' + new Date().getMilliseconds() + '.png';
-
-  console.log(canvasFile);
-
-  const url = window.URL.createObjectURL(canvasFile);
-  document.getElementById("test").src = url;
-  // window.URL.revokeObjectURL(url); // 할당 해제
-
-  var formData = new FormData();
-  formData['canvas'] = base64
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/decorate/',
-    data: {
-      canvas: base64
-    },
-    dataType: 'json',
-    processData: false,
-    contentType: 'application/octet-stream',
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function (err) {
-      alert(err);
-    }
-  });
-
-  alert("ajax 후");
-}
-
-
-/////////////////////////////////////////////////////////
-function saveCanvasImg() {
-
-  alert("함수 진입");
-
-  var cvs_base64 = canvas.toDataURL(`image/png`);
-  var base64 = cvs_base64.split(',')[1];
-
-  console.log(base64);
-
-  let array = [];
-  for (let i = 0; i < decodImg.length; i++) {
-    array.push(decodImg.charCodeAt(i));
-  }
-
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/decorate/',
-    data: {
-      file: base64
-    },
-    dataType: 'json',
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function () {
-      alert("fail");
-    }
-  });
-
-  alert("ajax 후");
-}
-//////////////////////////////////////////////////////////
-
-document.getElementById("background_remove").onclick = function () {
-  var img_file = document.getElementById(`chooseFile${imgNum}`);
-  var image = img_file[0].files[0];
-
-  var form = new FormData();
-  form.append("image", image);
-
-  if (document.getElementById("image")) {
-    form.append("image", image);
-  } else { alert("먼저 사진을 업로드 해주세요."); }
-
-  $.ajax({
-    type: 'post',
-    url: '/diary/remove',
-    data: form,
-    dataType: 'json',
-    processData: false,
-    contentType: false,
-    success: function (data) {
-      alert('Upload Success');
-    },
-    error: function () {
-      alert("fail");
-    }
-  });
 }
