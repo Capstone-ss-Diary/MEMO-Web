@@ -77,20 +77,26 @@ if (image_num > 0) {
 
 }
 
-var encode_data = canvas.toDataURL('image/png');
-
-encode_data = encode_data.split(',')[1];
-
-var decode_data = atob(encode_data);
-var data = [];
-
-for (var i = 0; i < decode_data.length; i++) {
-  data.push(decode_data.charCodeAt(i));
-}
-
-var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
-var url = window.URL.createObjectURL(blob);
 
 setTimeout(function () {
+  var encode_data = canvas.toDataURL('image/png');
+
+  encode_data = encode_data.split(',')[1];
+
+  var decode_data = atob(encode_data);
+  var data = [];
+
+  for (var i = 0; i < decode_data.length; i++) {
+    data.push(decode_data.charCodeAt(i));
+  }
+
+  var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
+  var url = window.URL.createObjectURL(blob);
+
+  var bc = document.getElementById("bc").value;
+
   document.getElementById("diary_canvas").src = url;
+  document.getElementById("diary_canvas").style.backgroundColor = bc;
+  console.log(bc);
+  console.log(document.getElementById("diary_canvas").style.backgroundColor);
 }, 1000);
