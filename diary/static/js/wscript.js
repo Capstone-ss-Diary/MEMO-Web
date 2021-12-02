@@ -611,3 +611,7 @@ canvas.onclick = function (event) {
 
   totalCanvas(); // 다시 canvas 그리기
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf

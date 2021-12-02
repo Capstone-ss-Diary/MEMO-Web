@@ -400,9 +400,14 @@
       let str = sticker_opt.options[sticker_opt.selectedIndex].value;
 
       const gifs_gallery = document.getElementById('gifs');
+<<<<<<< HEAD
       if (gifs_gallery != null) {
         gifs_gallery.remove();
       }
+=======
+      if( gifs_gallery != null) {
+        gifs_gallery.remove(); }
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf
       url = url.concat(str);
       console.log(url);
       fetch(url)

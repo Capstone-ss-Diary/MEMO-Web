@@ -48,27 +48,24 @@
 
 
 
-    {% block content %}
-    <h1>Search Diary</h1>
-    <br>
-
-
-    <form action="." method="post"> {% csrf_token %}
-        {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
-        Search Word :
-        <input type="text" placeholder="검색어 입력" class="btn btn-primary btn-sm">
-        <input type="Submit" value="Submit" class="btn btn-primary btn-sm">
-    </form>
-
-    <div class="searchcontainer">
-        <form action="." method="post"> {% csrf_token %}
-            {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
+     {% block content %}
+    <div style="text-align:center">
+        <h1>Search Diary</h1>
+        <br><br>
+        <form method='GET' action=".">
             Search Word:
-            <input id = "searching" type = "text" placeholder = "검색어 입력">
-            <button id = "search"> 검색 </button>
-    <!--    <input type="submit" value="Submit" class="btn btn-primary btn-sm">-->
-        </form>
+            <input type="text" name="q" value="{{ q }}" style="padding:8px; border:0; width:15%;" >
+            <input id = "search_button" type="submit"  value="검색"/>
+          </form>
+
+
+       <div id="content">
+<!--            {% for text in search %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>-->
+            {% for text in search %}{{text.diary}}{{text.content}}<br>{% endfor %}</div>
+
+
     </div>
+    <br>
 
 <!--    <form action="." method="post"> {% csrf_token %}-->
 <!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->

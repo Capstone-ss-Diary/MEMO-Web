@@ -21,6 +21,7 @@ sys.path.insert(
     1, 'diary/')
 
 
+
 def calender(request, user_id):
 
     date_list = Diary.objects.filter(user_id=user_id)
@@ -159,6 +160,25 @@ def handwriting(request):
 '''
 @csrf_exempt
 def handwriting(request):
+<<<<<<< HEAD
+=======
+
+    if request.method == "POST":
+      hand_writing = HandWriting()
+      hand_writing.user_id = request.session.get("user")
+      hand_writing.image = request.FILES.get("chooseFile")
+      hand_writing.save()
+
+      data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
+    #   print(data_file[len(data_file)-1].image)
+
+      handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
+
+
+    return render(request, "diary/handwriting.html")
+'''
+############################################################################################################
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf
 
     if request.method == "POST":
       hand_writing = HandWriting()
@@ -190,10 +210,12 @@ import json
 from django.http.response import JsonResponse
 import urllib.request
 
-@csrf_exempt
-def bgr_rm(request):
-    data = json.loads(request.body)
+# @csrf_exempt
+# def bgr_rm(request):
+#     jsonObject = json.loads(request.body)
+#     print(jsonObject)
 
+<<<<<<< HEAD
     print(data)
     print(data['image'])
     print(type(data['image']))
@@ -214,10 +236,28 @@ def bgr_rm(request):
 
     print(data)
     print(data['image'])
+=======
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf
 
-    return JsonResponse(data)
+#     input_path = jsonObject
+
+#     # output_path = 'out.png'
+
+#     f = np.fromfile(input_path)
+#     result = remove(f)
+#     img = Image.open(io.BytesIO(result)).convert("RGBA")
+#     # img.save(output_path)
+
+#     print(img)
 
 
+#     return JsonResponse(jsonObject)
+
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf
 
 @csrf_exempt
 def hashtag(request):
@@ -254,3 +294,8 @@ def hashtag(request):
         print(context)
 
     return JsonResponse(context, safe=False)
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e738cfd805a3433cee740cb4e76873fd6b19afdf
