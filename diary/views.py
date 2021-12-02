@@ -17,6 +17,8 @@ import sys
 import json
 from django.http.response import JsonResponse
 
+sys.path.insert(
+    1, 'diary/')
 
 def calender(request, user_id):
 
@@ -153,6 +155,7 @@ def handwriting(request):
     return render(request, "diary/handwriting.html")
 
 ############################################################################################################
+
 
 ## 배경제거
 # from PIL import ImageFile
