@@ -2,14 +2,14 @@
 
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bar.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/search.css' %}">
-    <title>일기 검색</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bar.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/search.css' %}">
+  <title>일기 검색</title>
 </head>
 
 <body bgcolor='#F5F5DC'>
@@ -48,47 +48,63 @@
 
 
 
-    {% block content %}
+  {% block content %}
+  <div style="text-align:center">
     <h1>Search Diary</h1>
-    <br>
+    <br><br>
+    <form method='GET' action=".">
+      Search Word:
+      <input type="text" name="q" value="{{ q }}" style="padding:8px; border:0; width:15%;">
+      <input id="search_button" type="submit" value="검색" />
+    </form>
 
+
+    <div id="content">
+      <!--            {% for text in search %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>-->
+      {% for text in search %}{{text.diary}}{{text.content}}<br>{% endfor %}
+    </div>
 
     <form action="." method="post"> {% csrf_token %}
-        {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
-        Search Word :
-        <input type="text" placeholder="검색어 입력" class="btn btn-primary btn-sm">
-        <input type="Submit" value="Submit" class="btn btn-primary btn-sm">
+      {{ form.as_table }}
+      <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
+      Search Word :
+      <input type="text" placeholder="검색어 입력" class="btn btn-primary btn-sm">
+      <input type="Submit" value="Submit" class="btn btn-primary btn-sm">
     </form>
 
     <div class="searchcontainer">
-        <form action="." method="post"> {% csrf_token %}
-            {{ form.as_table }} <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
-            Search Word:
-            <input id = "searching" type = "text" placeholder = "검색어 입력">
-            <button id = "search"> 검색 </button>
-    <!--    <input type="submit" value="Submit" class="btn btn-primary btn-sm">-->
-        </form>
+      <form action="." method="post"> {% csrf_token %}
+        {{ form.as_table }}
+        <!-- form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임-->
+        Search Word:
+        <input id="searching" type="text" placeholder="검색어 입력">
+        <button id="search"> 검색 </button>
+        <!--    <input type="submit" value="Submit" class="btn btn-primary btn-sm">-->
+      </form>
     </div>
+    <<<<<<< HEAD=======<br>
+      >>>>>>> f08cbcd0c3da524e53c8f4a9553233175dd8aa7f
 
-<!--    <form action="." method="post"> {% csrf_token %}-->
-<!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->
-<!--        <input id = "searching" type = "text" placeholder = "검색어 입력">-->
-<!--        <button id = "search"> 검색 </button>-->
-<!--    &lt;!&ndash;    <input type="submit" value="Submit" class="btn btn-primary btn-sm">&ndash;&gt;-->
-<!--    </form>-->
+      <!--    <form action="." method="post"> {% csrf_token %}-->
+      <!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->
+      <!--        <input id = "searching" type = "text" placeholder = "검색어 입력">-->
+      <!--        <button id = "search"> 검색 </button>-->
+      <!--    &lt;!&ndash;    <input type="submit" value="Submit" class="btn btn-primary btn-sm">&ndash;&gt;-->
+      <!--    </form>-->
 
-    <br/><br/>
+      <br /><br />
 
-    {% if object_list %}
-        {% for post in object_list %}
-            <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
-            {{ post.modify_date|date:"N d, Y" }}
-            <p>{{ post.description }}</p>
-        {% endfor %}
-    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
-        <b><i>Search Word({{ search_term }}) Not Found</i></b>
-    {% endif %}
-    {% endblock %}
+      {% if object_list %}
+      {% for post in object_list %}
+      <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
+      {{ post.modify_date|date:"N d, Y" }}
+      <p>{{ post.description }}</p>
+      {% endfor %}
+      {% elif search_term %}
+      <!-- 검색란이 공란인지 확인-->
+      <b><i>Search Word({{ search_term }}) Not Found</i></b>
+      {% endif %}
+      {% endblock %}
 
 
 
