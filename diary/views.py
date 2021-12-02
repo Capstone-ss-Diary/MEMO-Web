@@ -200,11 +200,12 @@ def bgr_rm(request):
     print(data['image'])
     print(type(data['image']))
 
-    url = 'http://img.lifestyler.co.kr/uploads/program/2/2367/menu/3/html/f132793634612225081(0).jpg'
+    url = data['image']
     urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
     # urllib.request.urlretrieve(data['image'], 'diary/static/backimages/test.jpg')
-    input_path = 'diary/static/backimages/test.jpg'
-    output_path = 'diary/static/backimages/out.png'
+    input_path = 'media/backimages/test.jpg'
+    output_path = 'media/backimages/out.png'
+  
 
     f = np.fromfile(input_path)
     print(f)

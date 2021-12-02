@@ -17,6 +17,10 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+  <!-- 스티커 gif -->
+  <script src="https://unpkg.com/konva@4.0.18/konva.min.js"></script>
+  <script src="https://unpkg.com/gifler@0.1.0/gifler.min.js"></script>
+
 </head>
 
 <body>
@@ -34,7 +38,7 @@
     <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
       {% csrf_token %}
 
-      <div class="diary_paper">
+      <div class="diary_paper" id="diary_paper">
         <canvas id="paper" width="880" height="600" style="background-color: white; border: #F5F5DC 10px solid;">
         </canvas>
         <div class="select">

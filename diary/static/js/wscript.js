@@ -196,7 +196,7 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
-  // document.getElementById("pre_img_id").value = input.id
+  document.getElementById("pre_img_id").value = file.name
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -527,10 +527,15 @@ document.getElementById("hashtag_auto").onclick = function () {
 }
 
 document.getElementById("background_remove").onclick = function () {
-  var image_src = document.getElementById("image").src;
+  // var image_src = document.getElementById("image").src;
 
-  console.log(image_src);
-  var image_data = { 'image': image_src };
+  // console.log(image_src);
+  // var image_data = { 'image': image_src };
+
+  var image_name = document.getElementById("pre_img_id").value;
+  console.log(image_name);
+
+  var image_data = { 'image': image_name };
 
 
   if (image_src == "") {
@@ -591,7 +596,7 @@ function sticker_hashtag() {
 }
 
 let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
-let picnum = 30;
+let picnum = 1;
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 });
@@ -622,7 +627,8 @@ function init() {
           let fc = document.createElement("figcaption");
           img.src = element.images.downsized.url;
           img.alt = element.title;
-          img.onclick = sticker_on_canvas(this);
+          img.id = `gif1`;
+          img.onclick = sticker_on_canvas(img.src);
           // {% comment %} fc.textContent = element.title; {% endcomment %}
           fig.appendChild(img);
           // {% comment %} fig.appendChild(fc); {% endcomment %}
@@ -637,9 +643,39 @@ function init() {
 }
 
 function sticker_on_canvas(sticker) {
+  console.log(sticker);
 
-  ctx.drawImage(sticker, 50, 50, 20, 20);
-  // console.log(sticker);
+  var width = canvas.width;
+  var height = canvas.height;
+
+  var stage = new Konva.Stage({
+    container: 'diary_paper',
+    width: width,
+    height: height
+  });
+
+  var layer = new Konva.Layer();
+  stage.add(layer);
+
+
+  // use external library to parse and draw gif animation
+  function onDrawFrame(ctx, frame) {
+
+    // update canvas that we are using for Konva.Image
+    ctx.drawImage(frame.buffer, 0, 0);
+    // redraw the layer
+    layer.draw();
+  }
+
+  gifler(sticker).frames(canvas, onDrawFrame);
+
+  // draw resulted canvas into the stage as Konva.Image
+  var image = new Konva.Image({
+    image: canvas
+  });
+  layer.add(image);
+
+
 
 }
 
