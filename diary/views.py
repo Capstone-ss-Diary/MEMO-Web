@@ -20,6 +20,8 @@ from django.http.response import JsonResponse
 sys.path.insert(
     1, 'diary/')
 
+import hashtag_function
+
 
 def calender(request, user_id):
 

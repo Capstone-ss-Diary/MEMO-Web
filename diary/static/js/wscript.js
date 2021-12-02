@@ -16,6 +16,8 @@ function writingText() {
       var font_size = document.getElementById(`font_size${i + 1}`);
       var font_color = document.getElementById(`font_color${i + 1}`);
 
+      console.log(font);
+
       // select box
       var select_font = document.getElementById("fontSelect");
       var select_font_size = document.getElementById("fontSize");
@@ -525,7 +527,7 @@ document.getElementById("hashtag_auto").onclick = function () {
 }
 
 document.getElementById("background_remove").onclick = function () {
-var image_src = document.getElementById("image").src;
+  var image_src = document.getElementById("image").src;
 
   console.log(image_src);
   var image_data = { 'image': image_src };
@@ -585,6 +587,59 @@ function sticker_hashtag() {
       document.getElementById("hashtag_none").style.display = "block";
     }
   }
+
+}
+
+let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
+let picnum = 30;
+window.addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOM fully loaded and parsed');
+});
+document.addEventListener("DOMContentLoaded", init);
+function init() {
+  document.getElementById("hashtag_select").addEventListener("change", ev => {
+    ev.preventDefault();
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
+    let sticker_opt = document.getElementById("hashtag_select")
+    let str = sticker_opt.options[sticker_opt.selectedIndex].value;
+
+    const gifs_gallery = document.getElementById('gifs');
+    if (gifs_gallery != null) {
+      gifs_gallery.remove();
+    }
+    url = url.concat(str);
+    console.log(url);
+    fetch(url)
+      .then(response => response.json())
+      .then(content => {
+        //  data, pagination, meta
+        console.log(content.data);
+        console.log("META", content.meta);
+        let fig = document.createElement("figure");
+        fig.setAttribute("id", "gifs");
+        content.data.forEach(element => {
+          let img = document.createElement("img");
+          let fc = document.createElement("figcaption");
+          img.src = element.images.downsized.url;
+          img.alt = element.title;
+          img.onclick = sticker_on_canvas(this);
+          // {% comment %} fc.textContent = element.title; {% endcomment %}
+          fig.appendChild(img);
+          // {% comment %} fig.appendChild(fc); {% endcomment %}
+          let out = document.querySelector(".out");
+          out.insertAdjacentElement("afterbegin", fig);
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+}
+
+function sticker_on_canvas(sticker) {
+
+  ctx.drawImage(sticker, 50, 50, 20, 20);
+  // console.log(sticker);
 
 }
 

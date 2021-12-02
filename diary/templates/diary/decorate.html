@@ -65,6 +65,7 @@
             <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
+            <option value="hand-writing" style="font-family: 'hw';">손글씨</option>
           </select>
           <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18"
             oninput="font_size_selected_change(this)">
@@ -385,49 +386,3 @@
 
 <script type="text/javascript" src="/static/js/tabscript.js"></script>
 <script type="text/javascript" src="/static/js/wscript.js"></script>
-<script>
-  let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
-  let picnum = 30;
-  window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
-  });
-  document.addEventListener("DOMContentLoaded", init);
-  function init() {
-    document.getElementById("hashtag_select").addEventListener("change", ev => {
-      ev.preventDefault();
-      let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
-      let sticker_opt = document.getElementById("hashtag_select")
-      let str = sticker_opt.options[sticker_opt.selectedIndex].value;
-
-      const gifs_gallery = document.getElementById('gifs');
-      if (gifs_gallery != null) {
-        gifs_gallery.remove();
-      }
-      url = url.concat(str);
-      console.log(url);
-      fetch(url)
-        .then(response => response.json())
-        .then(content => {
-          //  data, pagination, meta
-          console.log(content.data);
-          console.log("META", content.meta);
-          let fig = document.createElement("figure");
-          fig.setAttribute("id", "gifs");
-          content.data.forEach(element => {
-            let img = document.createElement("img");
-            let fc = document.createElement("figcaption");
-            img.src = element.images.downsized.url;
-            img.alt = element.title;
-            // {% comment %} fc.textContent = element.title; {% endcomment %}
-            fig.appendChild(img);
-            // {% comment %} fig.appendChild(fc); {% endcomment %}
-            let out = document.querySelector(".out");
-            out.insertAdjacentElement("afterbegin", fig);
-          })
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    });
-  }
-</script>

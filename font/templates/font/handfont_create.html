@@ -1,18 +1,20 @@
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
 
-<div class="container">
-  <h2>손글씨 등록하기</h2>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
+  <style>
+    body {
+      font-size: 50px;
+    }
+  </style>
+</head>
 
+<body>
+  <i class="icon-벌"></i><span><i class="icon-써"></i></span>
+  <i>벌써</i>
+</body>
 
-  <form method="post">
-    {% csrf_token %}
-    <div>
-      <label for="file">file</label>
-      <input type="text" class="form-control" name="file" id="file">
-      <button type="submit" class="btn btn-primary">파일 불러오기</button>
-    </div>
-    <a href="{% url 'account:home' %}">취소</a>
-  </form>
-</div>
-
-{% endblock %}
+</html>

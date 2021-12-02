@@ -32,3 +32,13 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'hw';
+  src: url('/media/fonts/fontello.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'bmjua';
+  src: url('/media/fonts/BMJUA_ttf.ttf');
+}
