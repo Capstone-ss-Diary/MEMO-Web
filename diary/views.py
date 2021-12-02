@@ -188,6 +188,7 @@ from PIL import Image
 import json
 
 from django.http.response import JsonResponse
+import urllib.request
 
 @csrf_exempt
 def bgr_rm(request):
@@ -195,28 +196,24 @@ def bgr_rm(request):
 
     print(data)
     print(data['image'])
+    print(type(data['image']))
+
+    url = 'http://img.lifestyler.co.kr/uploads/program/2/2367/menu/3/html/f132793634612225081(0).jpg'
+    urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
+    # urllib.request.urlretrieve(data['image'], 'diary/static/backimages/test.jpg')
+    input_path = 'diary/static/backimages/test.jpg'
+    output_path = 'diary/static/backimages/out.png'
+
+    f = np.fromfile(input_path)
+    print(f)
+    result = remove(f)
+    print(result)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    img.save(output_path)
+
+
 
     return JsonResponse(data)
-
-# @csrf_exempt
-# def bgr_rm(request):
-#     jsonObject = json.loads(request.body)
-#     print(jsonObject)
-#
-#
-#     input_path = jsonObject
-#
-#     # output_path = 'out.png'
-#
-#     f = np.fromfile(input_path)
-#     result = remove(f)
-#     img = Image.open(io.BytesIO(result)).convert("RGBA")
-#     # img.save(output_path)
-#
-#     print(img)
-#
-#
-#     return JsonResponse(jsonObject)
 
 
 

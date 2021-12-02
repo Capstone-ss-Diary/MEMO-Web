@@ -21,7 +21,7 @@ def tfidf(t, d, D):
     return tf(t,d)*idf(t, D)
 
 
-not_token = ['오늘', '도대체', '왜', '다시', '가기', '가면']
+not_token = ['오늘', '도대체', '왜', '다시', '가기', '가면', '이번']
 
 
 def tokenizer(d):

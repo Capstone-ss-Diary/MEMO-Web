@@ -435,7 +435,7 @@ function hashtagingOk() { // hashtag - 해시태그를 입력하세요 확인 �
   var input = document.getElementById("hashtagInput").value;
   if (input) {
     var tag = document.getElementById("hashtagForm");
-    tag.innerHTML += `<a id="hash${hash_num}" style="font-size: 22px;">#${input}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`;
+    tag.innerHTML += `<a id="hash${hash_num}" style="font-size: 22px;">#${input}</a><button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`;
 
     var tag_input = document.getElementById("hash_input");
     tag_input.innerHTML += `<input value="${input}" id="hashtag${hash_num}" name="hashtag${hash_num}">`;
@@ -507,10 +507,10 @@ document.getElementById("hashtag_auto").onclick = function () {
           else {
             $.each(data, function (index, item) {
               if (tag_num < 40) {
-                $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">${item.keyword}</a>&nbsp;&nbsp;<button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
+                $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">#${item.keyword}</a><button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
                 $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
                 hash_num += 1;
-                tag_num += 4;
+                tag_num += 2;
               }
               else {
                 alert("해시태그는 10개까지 가능합니다.");
