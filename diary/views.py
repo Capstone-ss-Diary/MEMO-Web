@@ -185,30 +185,38 @@ import numpy as np
 import io
 from PIL import Image
 
-from django.db.models.fields import json
+import json
+
 from django.http.response import JsonResponse
-
-
 
 @csrf_exempt
 def bgr_rm(request):
-    jsonObject = json.loads(request.body)
-    print(jsonObject)
+    data = json.loads(request.body)
 
+    print(data)
+    print(data['image'])
 
-    input_path = jsonObject
+    return JsonResponse(data)
 
-    # output_path = 'out.png'
-
-    f = np.fromfile(input_path)
-    result = remove(f)
-    img = Image.open(io.BytesIO(result)).convert("RGBA")
-    # img.save(output_path)
-
-    print(img)
-
-
-    return JsonResponse(jsonObject)
+# @csrf_exempt
+# def bgr_rm(request):
+#     jsonObject = json.loads(request.body)
+#     print(jsonObject)
+#
+#
+#     input_path = jsonObject
+#
+#     # output_path = 'out.png'
+#
+#     f = np.fromfile(input_path)
+#     result = remove(f)
+#     img = Image.open(io.BytesIO(result)).convert("RGBA")
+#     # img.save(output_path)
+#
+#     print(img)
+#
+#
+#     return JsonResponse(jsonObject)
 
 
 
