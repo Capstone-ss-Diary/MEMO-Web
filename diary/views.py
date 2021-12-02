@@ -21,6 +21,7 @@ sys.path.insert(
     1, 'diary/')
 
 
+
 def calender(request, user_id):
 
     date_list = Diary.objects.filter(user_id=user_id)
@@ -108,12 +109,9 @@ def detail(request, user_id, diary_id):
     return render(request, "diary/detail.html", content)
 
 
-
 def search(request):
     # date_list = Diary.objects.filter(diary=id)
     qs = DiaryText.objects.all()
-
-
     q = request.GET.get('q', '')  # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
     print('검색어: ', q)
     if q:  # q가 있으면
@@ -124,13 +122,10 @@ def search(request):
         print('검색어 있음: ', q, qs)
     else:
         print('검색어 없음: ', q, qs)
-
     return render(request, 'diary/search.html', {
         'search': qs,
         'q': q,
     })
-
-
 
 
 def edit(request, diary_id):
@@ -161,6 +156,25 @@ def handwriting(request):
     return render(request, "diary/handwriting.html")
 
 ############################################################################################################
+'''
+@csrf_exempt
+def handwriting(request):
+
+    if request.method == "POST":
+      hand_writing = HandWriting()
+      hand_writing.user_id = request.session.get("user")
+      hand_writing.image = request.FILES.get("chooseFile")
+      hand_writing.save()
+
+      data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
+    #   print(data_file[len(data_file)-1].image)
+
+      handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
+
+
+    return render(request, "diary/handwriting.html")
+'''
+############################################################################################################
 
 ## 배경제거
 # from PIL import ImageFile
@@ -176,17 +190,27 @@ def handwriting(request):
 
 
 
-@csrf_exempt
-def bgr_rm(request):
-    data = json.loads(request.body)
+# @csrf_exempt
+# def bgr_rm(request):
+#     jsonObject = json.loads(request.body)
+#     print(jsonObject)
 
-    print(data)
-    print(data['image'])
 
-    return JsonResponse(data)
+#     input_path = jsonObject
 
-'''
-from hashtag_function import tfidfScorer
+#     # output_path = 'out.png'
+
+#     f = np.fromfile(input_path)
+#     result = remove(f)
+#     img = Image.open(io.BytesIO(result)).convert("RGBA")
+#     # img.save(output_path)
+
+#     print(img)
+
+
+#     return JsonResponse(jsonObject)
+
+
 
 @csrf_exempt
 def hashtag(request):
@@ -224,4 +248,4 @@ def hashtag(request):
 
     return JsonResponse(context, safe=False)
 
-'''
+

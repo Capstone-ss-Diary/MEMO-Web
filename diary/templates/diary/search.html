@@ -46,7 +46,9 @@
 
 
 
-    {% block content %}
+
+
+     {% block content %}
     <div style="text-align:center">
         <h1>Search Diary</h1>
         <br><br>
@@ -65,24 +67,25 @@
     </div>
     <br>
 
-
 <!--    <form action="." method="post"> {% csrf_token %}-->
 <!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->
-<!--        Search Word :-->
-<!--        <input type="text" placeholder="검색어 입력" class="btn btn-primary btn-sm">-->
-<!--        <input type="Submit" value="Submit" class="btn btn-primary btn-sm">-->
+<!--        <input id = "searching" type = "text" placeholder = "검색어 입력">-->
+<!--        <button id = "search"> 검색 </button>-->
+<!--    &lt;!&ndash;    <input type="submit" value="Submit" class="btn btn-primary btn-sm">&ndash;&gt;-->
 <!--    </form>-->
-<!--  -->
-<!--    {% if object_list %}-->
-<!--        {% for post in object_list %}-->
-<!--            <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>-->
-<!--            {{ post.modify_date|date:"N d, Y" }}-->
-<!--            <p>{{ post.description }}</p>-->
-<!--        {% endfor %}-->
-<!--    {% elif search_term %}&lt;!&ndash; 검색란이 공란인지 확인&ndash;&gt;-->
-<!--        <b><i>Search Word({{ search_term }}) Not Found</i></b>-->
-<!--    {% endif %}-->
-<!--    {% endblock %}-->
+
+    <br/><br/>
+
+    {% if object_list %}
+        {% for post in object_list %}
+            <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
+            {{ post.modify_date|date:"N d, Y" }}
+            <p>{{ post.description }}</p>
+        {% endfor %}
+    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
+        <b><i>Search Word({{ search_term }}) Not Found</i></b>
+    {% endif %}
+    {% endblock %}
 
 
 
