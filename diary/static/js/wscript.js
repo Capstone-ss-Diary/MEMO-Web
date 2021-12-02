@@ -539,7 +539,7 @@ document.getElementById("background_remove").onclick = function () {
   var image_data = { 'image': image_name };
 
 
-  if (image_src == "") {
+  if (image_name == "") {
     alert("먼저 이미지를 불러와 주세요.");
   }
   else {
@@ -553,6 +553,9 @@ document.getElementById("background_remove").onclick = function () {
       cache: false,
       success: function (data) {
         alert("이미지 전송 성공");
+        console.log(data.path);
+        console.log(document.getElementById("image"));
+        document.getElementById("image").src = `/media/rmImages/${data.path}`;
       },
       error: function () {
         alert("실패");
