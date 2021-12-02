@@ -176,6 +176,7 @@ def bgr_rm(request):
     data = json.loads(request.body)
 
     print(data)
+    print(data['image'])
 
     return JsonResponse(data)
 
