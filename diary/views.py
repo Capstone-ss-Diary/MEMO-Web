@@ -204,6 +204,8 @@ def bgr_rm(request):
     input_path = 'diary/static/backimages/test.jpg'
     output_path = 'diary/static/backimages/out.png'
 
+
+
     f = np.fromfile(input_path)
     print(f)
     result = remove(f)

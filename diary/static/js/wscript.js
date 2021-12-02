@@ -504,6 +504,7 @@ document.getElementById("hashtag_auto").onclick = function () {
                 $("#hashtagForm").append(`<a id="hash${hash_num}" style="font-size: 22px;">#${item.keyword}</a><button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`);
                 $("#hash_input").append(`<input value="${item.keyword}" id="hashtag${hash_num}" name="hashtag${hash_num}">`);
                 hash_num += 1;
+                document.getElementById("hashtag_num").value = parseInt(hash_num);
                 tag_num += 2;
               }
               else {
