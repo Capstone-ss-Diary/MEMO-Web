@@ -17,6 +17,7 @@
   </div>
 
   <div style="display: none;">
+    <input id="bc" value="{{ diary.backColor }}">
 
     <div id="content">{% for text in diaryText %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>
     <div id="font">{% for text in diaryText %}<input value="{{ text.font }}">{% endfor %}</div>
@@ -36,7 +37,7 @@
   </div>
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 50px;">
-    <img id="diary_canvas" src="" style="background-color: white;" />
+    <img id="diary_canvas" src='' />
   </div>
 
 </body>

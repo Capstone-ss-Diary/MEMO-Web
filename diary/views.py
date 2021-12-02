@@ -39,8 +39,9 @@ def decorate(request, user_id):
     elif request.method == "POST":  # text 값
         diary = Diary()
         diary.user_id = request.session.get("user")
-        # diary.title = "title"  # title input 추후 추가
         diary.created_date = timezone.datetime.now()
+        diary.published_date = timezone.datetime.now()
+        diary.backColor = request.POST.get("back_color")
         diary.save()  # Diary DB 저장
 
         # print(request.POST.get("file"))

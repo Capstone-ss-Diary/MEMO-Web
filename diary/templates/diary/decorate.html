@@ -196,7 +196,7 @@
           <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;"
             onclick="backchange('#8FBC8F')"></button>
 
-
+          <input type="hidden" name="back_color" id="back_color" value="white">
         </div>
 
         <div id="photo" class="cont">
@@ -398,7 +398,7 @@
       let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
       let sticker_opt = document.getElementById("hashtag_select")
       let str = sticker_opt.options[sticker_opt.selectedIndex].value;
-      {% comment %} let str = document.getElementById("hashtag_select").selected.value.trim(); {% endcomment %}
+
       const gifs_gallery = document.getElementById('gifs');
       if (gifs_gallery != null) {
         gifs_gallery.remove();

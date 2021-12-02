@@ -7,21 +7,16 @@ from accounts.models import User
 class Diary(models.Model):
     id = models.BigAutoField(primary_key=True, null=False)  # 식별자: 다이어리 id
     user_id = models.IntegerField(null=True)
-    # user_id = models.ForeignKey(
-    #     User, related_name="user", on_delete=models.CASCADE, db_column="username"
-    # )  # 외래키: username (사용자ID)
-    # title = models.CharField(max_length=200)  # 제목
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    canvas = models.BinaryField(null=True)
-    # hashtag
+    backColor = models.CharField(max_length=100, null=True)
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
-    # def __str__(self):
-    #     return self.title
+    class Meta:
+        db_table = "Diary"
 
 
 # 일기 작성
@@ -48,14 +43,23 @@ class DiaryImage(models.Model):
     imageY = models.FloatField(null=True)
     degree = models.FloatField(null=True)
 
+    class Meta:
+        db_table = "Diary_Image"
+
 
 # 사진 해시태그
 class DiaryHashtag(models.Model):
   diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
   hashtag = models.CharField(max_length=100, null=True)
 
+  class Meta:
+      db_table = "Diary_Hashtag"
+
 
 class HandWriting(models.Model):
   id = models.BigAutoField(primary_key=True, null=False)
   user_id = models.IntegerField(null=True)
   image = models.ImageField(upload_to="hand_writing/", blank=True, null=True)
+
+  class Meta:
+      db_table = "HandWriting"

@@ -93,6 +93,14 @@ function drawingImg() {
   }
 }
 
+function backchange(back_color) {
+
+  totalCanvas();
+  document.getElementById("paper").style.backgroundColor = back_color;
+  document.getElementById("back_color").value = back_color;
+
+}
+
 function totalCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
@@ -402,20 +410,6 @@ document.getElementById("delImg").onclick = function () { // 이미지 삭제 �
   totalCanvas();
 
   document.getElementById("checkImg").childNodes.item(slt).value = parseInt(0);
-}
-
-function backchange(back_color) {
-  //var canvas = document.getElementById("paper");
-  //const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  // 채울 스타일을 적용
-  ctx.fillStyle = back_color;
-  // 캔버스 크기의 사각형으로 채우기
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  writingText(); // 일기작성 상태 불러오기
-  drawingImg(); // 사진업로드 상태 불러오기
-  console.log(back_color);
 }
 
 
