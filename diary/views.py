@@ -176,39 +176,39 @@ def handwriting(request):
 '''
 ############################################################################################################
 
-## 배경제거
-# from PIL import ImageFile
-# ImageFile.LOAD_TRUNCATED_IMAGES = True
+# 배경제거
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-# from rembg.bg import remove
-# import numpy as np
-# import io
-# from PIL import Image
+from rembg.bg import remove
+import numpy as np
+import io
+from PIL import Image
 
-# from django.db.models.fields import json
-# from django.http.response import JsonResponse
-
-
-
-# @csrf_exempt
-# def bgr_rm(request):
-#     jsonObject = json.loads(request.body)
-#     print(jsonObject)
+from django.db.models.fields import json
+from django.http.response import JsonResponse
 
 
-#     input_path = jsonObject
 
-#     # output_path = 'out.png'
-
-#     f = np.fromfile(input_path)
-#     result = remove(f)
-#     img = Image.open(io.BytesIO(result)).convert("RGBA")
-#     # img.save(output_path)
-
-#     print(img)
+@csrf_exempt
+def bgr_rm(request):
+    jsonObject = json.loads(request.body)
+    print(jsonObject)
 
 
-#     return JsonResponse(jsonObject)
+    input_path = jsonObject
+
+    # output_path = 'out.png'
+
+    f = np.fromfile(input_path)
+    result = remove(f)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    # img.save(output_path)
+
+    print(img)
+
+
+    return JsonResponse(jsonObject)
 
 
 
