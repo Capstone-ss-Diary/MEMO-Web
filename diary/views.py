@@ -207,6 +207,8 @@ def bgr_rm(request):
     output_path = 'media/backimages/out.png'
   
 
+
+
     f = np.fromfile(input_path)
     print(f)
     result = remove(f)
