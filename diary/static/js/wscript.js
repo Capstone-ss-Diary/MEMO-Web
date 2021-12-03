@@ -107,6 +107,39 @@ function drawingImg() {
   }
 }
 
+function drawingSti() {
+
+  var canvasImg = document.getElementById("canvasSti");
+  var canvasImgX = document.getElementById("canvasStiX");
+  var canvasImgY = document.getElementById("canvasStiY");
+  var canvasDegree = document.getElementById("degreeSti");
+
+  // 업로드 한 이미지기 1개 이상이면 출력
+  if (canvasImg.childElementCount > 0) {
+    var images = canvasImg.childNodes; // 업로드한 이미지 모두 불러오기
+    var imagesX = canvasImgX.childNodes; // 이미지 x좌표 모두 불러오기
+    var imagesY = canvasImgY.childNodes; // 이미지 y좌표 모두 불러오기
+    var imagesD = canvasDegree.childNodes;
+
+    for (var i = 0; i < images.length; i++) {
+      var img = images.item(i);
+      var degree = imagesD.item(i).value;
+
+      var x = parseInt(imagesX.item(i).value) + (img.width / 2);
+      var y = parseInt(imagesY.item(i).value) + (img.height / 2);
+
+      ctx.save();
+      ctx.translate(parseInt(x), parseInt(y));
+      ctx.rotate(degree * Math.PI / 180);
+      ctx.translate((-1) * parseInt(x), (-1) * parseInt(y));
+      ctx.drawImage(img, imagesX.item(i).value, imagesY.item(i).value, img.width, img.height);
+      ctx.restore();
+
+    }
+
+  }
+}
+
 function backchange(back_color) {
 
   totalCanvas();
@@ -121,6 +154,7 @@ function totalCanvas() {
 
   writingText(); // 일기작성 상태 불러오기
   drawingImg(); // 사진업로드 상태 불러오기
+  drawingSti();
 }
 
 function font_selected_change(font_selected) {
@@ -676,57 +710,59 @@ function init() {
   });
 }
 
+var stiNum = 0;
+
 function sticker_on_canvas(sticker) {
-  imgNum += 1;
-  document.getElementById("imgNum").value = parseInt(imgNum); // 업로드 이미지 수 업뎃
+  stiNum += 1;
+  document.getElementById("stiNum").value = parseInt(stiNum); // 업로드 이미지 수 업뎃
 
   // // img 태그 생성
-  var img = document.createElement("img");
-  img.id = `img${String(imgNum)}`;
-  img.src = sticker.src;
-  img.width = sticker.clientWidth;
-  img.height = sticker.clientHeight;
-  img.style.display = "none";
-  document.getElementById("canvasImg").appendChild(img);
+  var sti = document.createElement("img");
+  sti.id = `sti${String(stiNum)}`;
+  sti.src = sticker.src;
+  sti.width = sticker.clientWidth;
+  sti.height = sticker.clientHeight;
+  sti.style.display = "none";
+  document.getElementById("canvasSti").appendChild(sti);
 
   // img weight 태그 생성
-  var imgW = document.createElement("input");
-  imgW.name = `attr${String(imgNum)}[]`;
-  imgW.value = sticker.clientWidth;
-  img.style.display = "none";
-  document.getElementById("canvasImgW").appendChild(imgW);
+  var stiW = document.createElement("input");
+  stiW.name = `attr${String(stiNum)}[]`;
+  stiW.value = sticker.clientWidth;
+  sti.style.display = "none";
+  document.getElementById("canvasStiW").appendChild(stiW);
 
   // img height 태그 생성
-  var imgH = document.createElement("input");
-  imgH.name = `attr${String(imgNum)}[]`;
-  imgH.value = sticker.clientHeight;
-  img.style.display = "none";
-  document.getElementById("canvasImgH").appendChild(imgH);
+  var stiH = document.createElement("input");
+  stiH.name = `attr${String(stiNum)}[]`;
+  stiH.value = sticker.clientHeight;
+  sti.style.display = "none";
+  document.getElementById("canvasStiH").appendChild(stiH);
 
   // img x 좌표 태그 생성
-  var imgX = document.createElement("input");
-  imgX.name = `attr${String(imgNum)}[]`;
-  imgX.value = text_x;
-  imgX.style.display = "none"
-  document.getElementById("canvasImgX").appendChild(imgX);
+  var stiX = document.createElement("input");
+  stiX.name = `attr${String(stiNum)}[]`;
+  stiX.value = text_x;
+  stiX.style.display = "none"
+  document.getElementById("canvasStiX").appendChild(stiX);
 
   // img y 좌표 태그 생성
-  var imgY = document.createElement("input");
-  imgY.name = `attr${String(imgNum)}[]`;
-  imgY.value = text_y;
-  imgY.style.display = "none";
-  document.getElementById("canvasImgY").appendChild(imgY);
+  var stiY = document.createElement("input");
+  stiY.name = `attr${String(stiNum)}[]`;
+  stiY.value = text_y;
+  stiY.style.display = "none";
+  document.getElementById("canvasStiY").appendChild(stiY);
 
   // 이미지 기울기
-  var degree = document.createElement("input");
-  degree.name = `attr${String(imgNum)}[]`;
-  degree.value = 0;
-  degree.style.display = "none";
-  document.getElementById("degree").appendChild(degree);3
+  var degreeSti = document.createElement("input");
+  degreeSti.name = `attr${String(stiNum)}[]`;
+  degreeSti.value = 0;
+  degreeSti.style.display = "none";
+  document.getElementById("degreeSti").appendChild(degreeSti);
 
   // 다음 label 
-  document.getElementById(`label${String(imgNum)}`).style.display = "none";
-  document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
+  document.getElementById(`label${String(stiNum)}`).style.display = "none";
+  document.getElementById(`label${String(stiNum + 1)}`).style.display = "block";
 
   totalCanvas();
 }
