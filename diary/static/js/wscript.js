@@ -111,14 +111,12 @@ function drawingSti() {
   var canvasImg = document.getElementById("canvasSti");
   var canvasImgX = document.getElementById("canvasStiX");
   var canvasImgY = document.getElementById("canvasStiY");
-  var canvasDegree = document.getElementById("degreeSti");
 
   // 업로드 한 이미지기 1개 이상이면 출력
   if (canvasImg.childElementCount > 0) {
     var images = canvasImg.childNodes; // 업로드한 이미지 모두 불러오기
     var imagesX = canvasImgX.childNodes; // 이미지 x좌표 모두 불러오기
     var imagesY = canvasImgY.childNodes; // 이미지 y좌표 모두 불러오기
-    var imagesD = canvasDegree.childNodes;
 
     for (var i = 0; i < images.length; i++) {
       var img = images.item(i);
@@ -720,30 +718,32 @@ function sticker_on_canvas(sticker) {
   sti.style.display = "none";
   document.getElementById("canvasSti").appendChild(sti);
 
+  document.getElementById("sticker_url").innerHTML += `<input id="sticker${String(stiNum)}" name="sti${String(stiNum)}" value="${sti.src}">`;
+
   // img weight 태그 생성
   var stiW = document.createElement("input");
-  stiW.name = `attr${String(stiNum)}[]`;
+  stiW.name = `aticker${String(stiNum)}[]`;
   stiW.value = sticker.clientWidth;
   sti.style.display = "none";
   document.getElementById("canvasStiW").appendChild(stiW);
 
   // img height 태그 생성
   var stiH = document.createElement("input");
-  stiH.name = `attr${String(stiNum)}[]`;
+  stiH.name = `aticker${String(stiNum)}[]`;
   stiH.value = sticker.clientHeight;
   sti.style.display = "none";
   document.getElementById("canvasStiH").appendChild(stiH);
 
   // img x 좌표 태그 생성
   var stiX = document.createElement("input");
-  stiX.name = `attr${String(stiNum)}[]`;
+  stiX.name = `aticker${String(stiNum)}[]`;
   stiX.value = text_x;
   stiX.style.display = "none"
   document.getElementById("canvasStiX").appendChild(stiX);
 
   // img y 좌표 태그 생성
   var stiY = document.createElement("input");
-  stiY.name = `attr${String(stiNum)}[]`;
+  stiY.name = `aticker${String(stiNum)}[]`;
   stiY.value = text_y;
   stiY.style.display = "none";
   document.getElementById("canvasStiY").appendChild(stiY);

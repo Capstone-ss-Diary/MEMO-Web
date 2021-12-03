@@ -46,14 +46,24 @@
     <div id="remove_x">{% for remove in diaryRemove %}<input value="{{remove.imageX}}">{% endfor %}</div>
     <div id="remove_y">{% for remove in diaryRemove %}<input value="{{remove.imageY}}">{% endfor %}</div>
     <div id="remove_degree">{% for remove in diaryRemove %}<input value="{{remove.degree}}">{% endfor %}</div>
+
+    <div id="stickers">
+      {% for sticker in diarySticker %}
+      <img src="{{sticker.url}}" width="{{sticker.width}}" height="{{sticker.height}}" />
+      {% endfor %}
+    </div>
+    <div id="sticker_x">{% for sticker in diarySticker %}<input value="{{sticker.imageX}}">{% endfor %}</div>
+    <div id="sticker_y">{% for sticker in diarySticker %}<input value="{{sticker.imageY}}">{% endfor %}</div>
+
   </div>
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 30px;">
-    <div id="hashtags">{% for hashtag in diaryHashtag %}<a style="font-family: 'Jua', sans-serif; font-size:20px">#{{hashtag.hashtag}}</a>&nbsp;&nbsp;{% endfor %}</div>
+    <div id="hashtags">{% for hashtag in diaryHashtag %}<a
+        style="font-family: 'Jua', sans-serif; font-size:20px">#{{hashtag.hashtag}}</a>&nbsp;&nbsp;{% endfor %}</div>
   </div>
 
-   <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
-    <img id="diary_canvas" src=''/>
+  <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+    <img id="diary_canvas" src='' />
   </div>
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">

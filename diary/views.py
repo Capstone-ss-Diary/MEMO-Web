@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
 
 from diary import hashtag_function
-from .models import Diary, DiaryImage, DiaryRemove, DiaryText, DiaryHashtag, HandWriting
+from .models import Diary, DiaryImage, DiaryRemove, DiarySticker, DiaryText, DiaryHashtag, HandWriting
 from .forms import DiaryForm, PostSearchForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -108,6 +108,20 @@ def decorate(request, user_id):
                   hashtag = request.POST.get(hash_name),
                 )
                 diaryHashtag.save()
+        
+        sti_cnt = request.POST.get("stiNum")
+        if sti_cnt:
+            for r in range(int(sti_cnt)):
+                name = "sti" + str(r + 1)
+                diarySticker = DiarySticker(
+                    diary=diary,
+                    url=request.POST.get(name),
+                    width=request.POST.getlist("aticker" + str(r + 1) + "[]")[0],
+                    height=request.POST.getlist("aticker" + str(r + 1) + "[]")[1],
+                    imageX=request.POST.getlist("aticker" + str(r + 1) + "[]")[2],
+                    imageY=request.POST.getlist("aticker" + str(r + 1) + "[]")[3],
+                )
+                diarySticker.save()
 
         return redirect(
             "diary:detail", user_id=request.session.get("user"), diary_id=diary.id
@@ -122,6 +136,7 @@ def detail(request, user_id, diary_id):
     diary_images = DiaryImage.objects.filter(diary=diary)
     diary_remove = DiaryRemove.objects.filter(diary=diary)
     diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
+    diary_sticker = DiarySticker.objects.filter(diary=diary)
 
     content = {
         "diary": diary,
@@ -129,6 +144,7 @@ def detail(request, user_id, diary_id):
         "diaryImage": diary_images,
         "diaryRemove": diary_remove,
         "diaryHashtag":diary_hashtag,
+        "diarySticker":diary_sticker,
     }
 
     return render(request, "diary/detail.html", content)
