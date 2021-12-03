@@ -46,14 +46,34 @@ class DiaryImage(models.Model):
     class Meta:
         db_table = "Diary_Image"
 
+# 배경 제거 이미지
+class DiaryRemove(models.Model):
+  diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
+  path = models.CharField(max_length=100, null=True)
+  width = models.FloatField(null=True)
+  height = models.FloatField(null=True)
+  imageX = models.FloatField(null=True)
+  imageY = models.FloatField(null=True)
+  degree = models.FloatField(null=True)
 
-# 사진 해시태그
+
+# 해시태그
 class DiaryHashtag(models.Model):
   diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
   hashtag = models.CharField(max_length=100, null=True)
 
   class Meta:
       db_table = "Diary_Hashtag"
+
+
+# 스티커
+class DiarySticker(models.Model):
+    diary = models.ForeignKey(Diary, on_delete=models.CASCADE, null=True)
+    url = models.CharField(max_length=300, null=True)
+    width = models.FloatField(null=True)
+    height = models.FloatField(null=True)
+    imageX = models.FloatField(null=True)
+    imageY = models.FloatField(null=True)
 
 
 class HandWriting(models.Model):

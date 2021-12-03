@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, request
 
 from diary import hashtag_function
-from .models import Diary, DiaryImage, DiaryText, DiaryHashtag, HandWriting
+from .models import Diary, DiaryImage, DiaryRemove, DiaryText, DiaryHashtag, HandWriting
 from .forms import DiaryForm, PostSearchForm
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -67,17 +67,35 @@ def decorate(request, user_id):
         if img_cnt:
             for i in range(int(img_cnt)):
                 name = "img" + str(i + 1)
+                removes = request.POST.get("remove_list")
+                remove_list = removes.split('/')
+                names = request.POST.get("name_list")
+                name_list = names.split('/')
+                print(name_list)
                 if request.FILES.get(name) is not None:
-                    diaryImage = DiaryImage(
-                        diary=diary,
-                        image=request.FILES[name],
+                    if name not in remove_list:
+                      diaryImage = DiaryImage(
+                          diary=diary,
+                          image=request.FILES[name],
+                          width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                          height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                          imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                          imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                          degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
+                      )
+                      diaryImage.save()
+                    else:
+                      imgIdx = remove_list.index(name)
+                      diaryRemove = DiaryRemove(
+                        diary = diary,
+                        path = 'rmImages/'+name_list[imgIdx],
                         width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
                         height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
                         imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
                         imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
                         degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
-                    )
-                    diaryImage.save()
+                      )
+                      diaryRemove.save()
 
         hash_cnt = request.POST.get("hashtag_num")
         print(hash_cnt)
@@ -102,11 +120,15 @@ def detail(request, user_id, diary_id):
     diary = Diary.objects.get(id=diary_id)
     diary_text = DiaryText.objects.filter(diary=diary)
     diary_images = DiaryImage.objects.filter(diary=diary)
+    diary_remove = DiaryRemove.objects.filter(diary=diary)
+    diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
 
     content = {
         "diary": diary,
         "diaryText": diary_text,
         "diaryImage": diary_images,
+        "diaryRemove": diary_remove,
+        "diaryHashtag":diary_hashtag,
     }
 
     return render(request, "diary/detail.html", content)

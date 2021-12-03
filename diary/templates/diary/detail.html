@@ -37,22 +37,30 @@
     <div id="image_x">{% for image in diaryImage %}<input value="{{image.imageX}}">{% endfor %}</div>
     <div id="image_y">{% for image in diaryImage %}<input value="{{image.imageY}}">{% endfor %}</div>
     <div id="degree">{% for image in diaryImage %}<input value="{{image.degree}}">{% endfor %}</div>
+
+    <div id="remove_images">
+      {% for remove in diaryRemove %}
+      <img src="/media/{{remove.path}}" width="{{remove.width}}" height="{{remove.height}}" />
+      {% endfor %}
+    </div>
+    <div id="remove_x">{% for remove in diaryRemove %}<input value="{{remove.imageX}}">{% endfor %}</div>
+    <div id="remove_y">{% for remove in diaryRemove %}<input value="{{remove.imageY}}">{% endfor %}</div>
+    <div id="remove_degree">{% for remove in diaryRemove %}<input value="{{remove.degree}}">{% endfor %}</div>
   </div>
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 50px;">
     <img id="diary_canvas" src='' />
   </div>
 
-    <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
-      <button id="edit" type="button" onclick="Edit()"
-              style="background-color: #E5D0AD; width: 5%; border: 0; border-radius: 20px; cursor: pointer;
-              padding: 8px; margin : auto font-size: 30px; font-family: 'Jua', sans-serif;">편집</button>
+  <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+    <button id="edit" type="button" onclick="Edit()"
+      style="background-color: #E5D0AD; width: 5%; border: 0; border-radius: 20px; cursor: pointer; padding: 8px; margin-right: 10px; font-size: 30px; font-family: 'Jua', sans-serif; display: none;">수정</button>
 
-      <button id="check" type="button" onclick = "location.href = '/' "
-        style="background-color: #E5D0AD; width: 5%; border: 0; border-radius: 20px; cursor: pointer;
-        padding: 8px; margin-left: 10px; margin : auto font-size: 30px; font-family: 'Jua', sans-serif;">확인</button>
+    <button id="check" type="button" onclick="location.href = '/' "
+      style="background-color: #E5D0AD; width: 5%; border: 0; border-radius: 20px; cursor: pointer;
+        padding: 8px; margin-left: 10px; margin-left: 10px; font-size: 30px; font-family: 'Jua', sans-serif; display: none;">확인</button>
 
-    </div>
+  </div>
 
 
 </body>

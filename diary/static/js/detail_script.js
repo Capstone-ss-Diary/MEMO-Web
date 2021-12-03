@@ -74,8 +74,35 @@ if (image_num > 0) {
     ctx.restore();
 
   }
+}
+
+var remove_num = document.getElementById("remove_images").childElementCount;
+
+if (remove_num > 0) {
+  var images = document.getElementById("remove_images").children;
+  var remove_x = document.getElementById("remove_x").childNodes;
+  var remove_y = document.getElementById("remove_y").childNodes;
+  var remove_degree = document.getElementById("remove_degree").childNodes;
+
+  for (var i = 0; i < remove_num; i++) {
+
+    var rm = images.item(i);
+    var rm_degree = remove_degree.item(i).value;
+
+    var x = parseInt(remove_x.item(i).value) + (rm.width / 2);
+    var y = parseInt(remove_y.item(i).value) + (rm.height / 2);
+
+    ctx.save();
+    ctx.translate(parseInt(x), parseInt(y));
+    ctx.rotate(rm_degree * Math.PI / 180);
+    ctx.translate((-1) * parseInt(x), (-1) * parseInt(y));
+    ctx.drawImage(rm, remove_x.item(i).value, remove_y.item(i).value, rm.width, rm.height);
+    ctx.restore();
+
+  }
 
 }
+
 
 
 setTimeout(function () {
@@ -97,6 +124,8 @@ setTimeout(function () {
 
   document.getElementById("diary_canvas").src = url;
   document.getElementById("diary_canvas").style.backgroundColor = bc;
-  console.log(bc);
-  console.log(document.getElementById("diary_canvas").style.backgroundColor);
+
+  document.getElementById("edit").style.display = "block";
+  document.getElementById("check").style.display = "block";
+
 }, 1000);
