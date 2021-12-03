@@ -1,17 +1,6 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
-var hand_inputs = document.getElementById("hand_inputs");
-console.log(hand_inputs);
-var hand_num = hand_inputs.childElementCount;
-console.log(hand_num);
-for (var i = 0; i < hand_num; i++) {
-  // var hand_input = document.getElementById("hand_inputs").childNodes.item(i);
-  console.log(document.getElementById("hand_inputs").childNodes.item(i));
-  // document.getElementById("hand-writings").innerHTML += `<div class="hand-writing" id="hand-writing${i + 1}>${hand_input}</div>`;
-}
-
-
 
 var text_num = document.getElementById("content").childElementCount;
 
@@ -23,6 +12,7 @@ if (text_num > 0) {
   var coordinate_x = document.getElementById("text_x").childNodes;
   var coordinate_y = document.getElementById("text_y").childNodes;
 
+
   for (var j = 0; j < text_num; j++) {
     var text = content.item(j).value;
     var font = text_font.item(j).value;
@@ -31,47 +21,51 @@ if (text_num > 0) {
     var text_x = coordinate_x.item(j).value;
     var text_y = coordinate_y.item(j).value;
 
-    text_x = parseInt(text_x);
-    text_y = parseInt(text_y);
+    console.log(font);
+    if (font != "hand-writing") {
 
-    ctx.font = font_size + "px " + font;
-    ctx.fillStyle = font_color;
+      text_x = parseInt(text_x);
+      text_y = parseInt(text_y);
 
-    var line = "";
-    var fontSize = parseFloat(ctx.font);
-    var currentY = text_y;
+      ctx.font = font_size + "px " + font;
+      ctx.fillStyle = font_color;
 
-    ctx.textBaseline = "top"
+      var line = "";
+      var fontSize = parseFloat(ctx.font);
+      var currentY = text_y;
 
-    for (var i = 0; i < text.length; i++) {
+      ctx.textBaseline = "top"
 
-      var tempLine = line + text[i];
-      var tempWidth = text_x + ctx.measureText(tempLine).width;
+      for (var i = 0; i < text.length; i++) {
 
-      if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
-      else {
-        ctx.fillText(line, text_x, currentY);
-        if (text[i] != "\n") line = text[i];
-        else line = "";
-        currentY += fontSize * (1.2);
+        var tempLine = line + text[i];
+        var tempWidth = text_x + ctx.measureText(tempLine).width;
+
+        if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
+        else {
+          ctx.fillText(line, text_x, currentY);
+          if (text[i] != "\n") line = text[i];
+          else line = "";
+          currentY += fontSize * (1.2);
+        }
+
       }
 
+      ctx.fillText(line, text_x, currentY);
     }
-
-    ctx.fillText(line, text_x, currentY);
   }
 }
 
 var ele = document.getElementById('hand-writings');
-for(var i=0; i<ele.childElementCount; i++) {
+for (var i = 0; i < ele.childElementCount; i++) {
   var hand_input = document.getElementsByClassName("hand-writing").item(i)
-  hand_input.id = `hand-writing${i+1}`
-  if (document.getElementById('font').childNodes.item(i).value != "hand-writing") hand_input.style.display="none";
+  hand_input.id = `hand-writing${i + 1}`
+  if (document.getElementById('font').childNodes.item(i).value != "hand-writing") hand_input.style.display = "none";
   hand_input.style.fontSize = document.getElementById('font_size').childNodes.item(i).value;
   hand_input.style.color = document.getElementById('font_color').childNodes.item(i).value
-  hand_input.style.left = parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(328);
-  hand_input.style.top = parseFloat(document.getElementById('text_y').childNodes.item(i).value)+parseFloat(24);
-  console.log(parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(100))
+  hand_input.style.left = parseFloat(document.getElementById('text_x').childNodes.item(i).value) + parseFloat(328);
+  hand_input.style.top = parseFloat(document.getElementById('text_y').childNodes.item(i).value) + parseFloat(24);
+  console.log(parseFloat(document.getElementById('text_x').childNodes.item(i).value) + parseFloat(100))
 }
 
 var image_num = document.getElementById("images").childElementCount;
