@@ -142,27 +142,26 @@ if (sticker_num > 0) {
 }
 
 
-setTimeout(function () {
-  var encode_data = canvas.toDataURL('image/png');
 
-  encode_data = encode_data.split(',')[1];
+var encode_data = canvas.toDataURL('image/png');
 
-  var decode_data = atob(encode_data);
-  var data = [];
+encode_data = encode_data.split(',')[1];
 
-  for (var i = 0; i < decode_data.length; i++) {
-    data.push(decode_data.charCodeAt(i));
-  }
+var decode_data = atob(encode_data);
+var data = [];
 
-  var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
-  var url = window.URL.createObjectURL(blob);
+for (var i = 0; i < decode_data.length; i++) {
+  data.push(decode_data.charCodeAt(i));
+}
 
-  var bc = document.getElementById("bc").value;
+var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
+var url = window.URL.createObjectURL(blob);
 
-  document.getElementById("diary_canvas").src = url;
-  document.getElementById("diary_canvas").style.backgroundColor = bc;
+var bc = document.getElementById("bc").value;
 
-  document.getElementById("edit").style.display = "block";
-  document.getElementById("check").style.display = "block";
+document.getElementById("diary_canvas").src = url;
+document.getElementById("diary_canvas").style.backgroundColor = bc;
 
-}, 1000);
+document.getElementById("edit").style.display = "block";
+document.getElementById("check").style.display = "block";
+
