@@ -1,6 +1,18 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
+var hand_inputs = document.getElementById("hand_inputs");
+console.log(hand_inputs);
+var hand_num = hand_inputs.childElementCount;
+console.log(hand_num);
+for (var i = 0; i < hand_num; i++) {
+  // var hand_input = document.getElementById("hand_inputs").childNodes.item(i);
+  console.log(document.getElementById("hand_inputs").childNodes.item(i));
+  // document.getElementById("hand-writings").innerHTML += `<div class="hand-writing" id="hand-writing${i + 1}>${hand_input}</div>`;
+}
+
+
+
 var text_num = document.getElementById("content").childElementCount;
 
 if (text_num > 0) {
@@ -122,7 +134,6 @@ if (sticker_num > 0) {
 
   }
 }
-
 
 
 setTimeout(function () {
