@@ -122,17 +122,13 @@ function drawingSti() {
 
     for (var i = 0; i < images.length; i++) {
       var img = images.item(i);
-      var degree = imagesD.item(i).value;
 
       var x = parseInt(imagesX.item(i).value) + (img.width / 2);
       var y = parseInt(imagesY.item(i).value) + (img.height / 2);
 
-      ctx.save();
-      ctx.translate(parseInt(x), parseInt(y));
-      ctx.rotate(degree * Math.PI / 180);
-      ctx.translate((-1) * parseInt(x), (-1) * parseInt(y));
+      // ctx.save();
       ctx.drawImage(img, imagesX.item(i).value, imagesY.item(i).value, img.width, img.height);
-      ctx.restore();
+      // ctx.restore();
 
     }
 
@@ -153,7 +149,7 @@ function totalCanvas() {
 
   writingText(); // 일기작성 상태 불러오기
   drawingImg(); // 사진업로드 상태 불러오기
-  drawingSti();
+  drawingSti(); // 스티커 업로드 상태 불러오기
 }
 
 function font_selected_change(font_selected) {
@@ -635,7 +631,7 @@ function sticker_hashtag() {
   document.getElementById("hashtag_select").options.length = 0;
 
   if (tag_input == 0) {
-    document.getElementById("hashtag_select").style.display = "none";
+    document.getElementById("hashtag_sticker").style.display = "none";
     document.getElementById("hashtag_none").style.display = "block";
   }
 
@@ -650,11 +646,11 @@ function sticker_hashtag() {
 
     }
     if (tag_count > 0) {
-      document.getElementById("hashtag_select").style.display = "block";
+      document.getElementById("hashtag_sticker").style.display = "block";
       document.getElementById("hashtag_none").style.display = "none";
     }
     else {
-      document.getElementById("hashtag_select").style.display = "none";
+      document.getElementById("hashtag_sticker").style.display = "none";
       document.getElementById("hashtag_none").style.display = "block";
     }
   }
@@ -710,7 +706,7 @@ function init() {
 }
 
 var stiNum = 0;
-
+var sticker_select_num = 0;
 function sticker_on_canvas(sticker) {
   stiNum += 1;
   document.getElementById("stiNum").value = parseInt(stiNum); // 업로드 이미지 수 업뎃
@@ -752,18 +748,19 @@ function sticker_on_canvas(sticker) {
   stiY.style.display = "none";
   document.getElementById("canvasStiY").appendChild(stiY);
 
-  // 이미지 기울기
-  var degreeSti = document.createElement("input");
-  degreeSti.name = `attr${String(stiNum)}[]`;
-  degreeSti.value = 0;
-  degreeSti.style.display = "none";
-  document.getElementById("degreeSti").appendChild(degreeSti);
-
-  // 다음 label 
-  document.getElementById(`label${String(stiNum)}`).style.display = "none";
-  document.getElementById(`label${String(stiNum + 1)}`).style.display = "block";
 
   totalCanvas();
+
+  sticker_select_num = parseInt(sticker_select_num) + 1;
+
+  // option 태그 생성
+  var selecticker = document.createElement("option");
+  selecticker.id = `gif${String(sticker_select_num)}`;
+  selecticker.selected = true;
+  selecticker.innerText = sticker.alt;
+  document.getElementById("sticker_select").appendChild(selecticker);
+
+  // console.log(sticker);
 }
 
 
@@ -789,10 +786,10 @@ canvas.onclick = function (event) {
   }
 
   else if (document.getElementById("selectEdit").value == "sticker") {
-    var slt = document.getElementById("selectImg").selectedIndex;
-    var pimg = document.getElementById("canvasImg").childNodes.item(slt);
-    var px = document.getElementById("canvasImgX").childNodes.item(slt);
-    var py = document.getElementById("canvasImgY").childNodes.item(slt);
+    var slt = document.getElementById("sticker_select").selectedIndex;
+    var pimg = document.getElementById("canvasSti").childNodes.item(slt);
+    var px = document.getElementById("canvasStiX").childNodes.item(slt);
+    var py = document.getElementById("canvasStiY").childNodes.item(slt);
     var photo_x = event.clientX - ctx.canvas.offsetLeft - (pimg.width / 2); // 이미지 x 좌표 변경
     var photo_y = event.clientY - ctx.canvas.offsetTop - (pimg.height / 2); // 이미지 y 좌표 변경
     px.value = photo_x;
