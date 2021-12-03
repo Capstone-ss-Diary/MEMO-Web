@@ -81,8 +81,8 @@
     <img id="diary_canvas" src='' />
   </div>
 
-  <div>
-    <div class="hand-writing" id="hand-writing1">{% for text in diaryText %}{{text.content}}{% endfor %}</div>
+  <div id="hand-writings">
+    {% for text in diaryText %}<div class="hand-writing" id="">{{text.content}}</div>{% endfor %}
   </div>
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 625px;">

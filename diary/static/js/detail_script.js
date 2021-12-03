@@ -50,6 +50,18 @@ if (text_num > 0) {
   }
 }
 
+var ele = document.getElementById('hand-writings');
+for(var i=0; i<ele.childElementCount; i++) {
+  var hand_input = document.getElementsByClassName("hand-writing").item(i)
+  hand_input.id = `hand-writing${i+1}`
+  if (document.getElementById('font').childNodes.item(i).value != "hand-writing") hand_input.style.display="none";
+  hand_input.style.fontSize = document.getElementById('font_size').childNodes.item(i).value;
+  hand_input.style.color = document.getElementById('font_color').childNodes.item(i).value
+  hand_input.style.left = parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(328);
+  hand_input.style.top = parseFloat(document.getElementById('text_y').childNodes.item(i).value)+parseFloat(24);
+  console.log(parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(100))
+}
+
 var image_num = document.getElementById("images").childElementCount;
 
 if (image_num > 0) {
