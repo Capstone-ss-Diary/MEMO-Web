@@ -82,10 +82,8 @@
     <img id="diary_canvas" src='' />
   </div>
 
-  <div id="hand_inputs">
-    {% for text in diaryText %}
-    <input value="{{text.content}}">
-    {% endfor %}
+  <div id="hand-writings">
+    {% for text in diaryText %}<div class="hand-writing" id="">{{text.content}}</div>{% endfor %}
   </div>
 
   <div id="hand-writings"></div>
