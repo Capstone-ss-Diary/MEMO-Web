@@ -26,7 +26,7 @@ calendars.clndr1 = $('.cal1').clndr({
 
       // 해당 날짜 일기가 있으면 detail, 없으면 decorate 페이지로 이동
 
-      // location.href = `/diary/decorate/${url[5]}/`;
+      location.href = `/diary/decorate/${url[5]}/`;
 
       // ajax
     }
