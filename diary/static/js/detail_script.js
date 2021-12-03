@@ -87,6 +87,7 @@ if (remove_num > 0) {
   for (var i = 0; i < remove_num; i++) {
 
     var rm = images.item(i);
+    console.log(rm);
     var rm_degree = remove_degree.item(i).value;
 
     var x = parseInt(remove_x.item(i).value) + (rm.width / 2);
