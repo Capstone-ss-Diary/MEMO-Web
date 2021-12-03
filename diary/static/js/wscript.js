@@ -63,10 +63,10 @@ function writingText() {
         document.getElementById(`hand-writing${i + 1}`).style.color = font_color.value;
         document.getElementById(`hand-writing${i + 1}`).style.fontSize = font_size.value;
 
-        document.getElementById(`fontSelect`).addEventListener("change", ev => {
-          console.log("값 변경")
-          document.getElementById(`hand-writing${i + 1}`).style.display = "none";
-        })
+//        document.getElementById(`fontSelect`).addEventListener("change", ev => {
+//          console.log("값 변경")
+//          document.getElementById(`hand-writing${i + 1}`).style.display = "none";
+//        })
       }
 
     }
