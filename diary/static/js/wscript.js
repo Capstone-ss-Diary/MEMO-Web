@@ -43,33 +43,32 @@ function writingText() {
 
       ctx.textBaseline = "top";
 
-      for (var j = 0; j < text.length; j++) {
-        var tempLine = line + text[j];
-        var tempWidth = parseFloat(input_x.value) + ctx.measureText(tempLine).width;
+      if (font.value != "hand-writing") {
+        for (var j = 0; j < text.length; j++) {
+          var tempLine = line + text[j];
+          var tempWidth = parseFloat(input_x.value) + ctx.measureText(tempLine).width;
 
-        if (tempWidth < canvas.width && text[j] != "\n") { line = tempLine; }
-        else {
-          ctx.fillText(line, parseFloat(input_x.value), currentY);
-          if (text[i] != "\n") line = text[j];
-          else line = "";
-          currentY += fontSize * (1.2);
+          if (tempWidth < canvas.width && text[j] != "\n") line = tempLine;
+          else {
+            ctx.fillText(line, parseFloat(input_x.value), currentY);
+            if (text[j] != "\n") line = text[j];
+            else line = "";
+            currentY += fontSize * (1.2);
+          }
+        }
+        ctx.fillText(line, parseFloat(input_x.value), currentY);
+      }
+
+      else {
+        for (var j = 0; j < text.length; j++) {
+          line = line + text[j];
+          document.getElementById(`hand-writing${i + 1}`).innerText = line;
+          document.getElementById(`hand-writing${i + 1}`).style.top = currentY;
+          document.getElementById(`hand-writing${i + 1}`).style.left = input_x.value;
+          document.getElementById(`hand-writing${i + 1}`).style.color = font_color.value;
+          document.getElementById(`hand-writing${i + 1}`).style.fontSize = font_size.value;
         }
       }
-      if (font.value != "hand-writing") { ctx.fillText(line, parseFloat(input_x.value), currentY); }
-      else {
-        document.getElementById(`hand-writing${i + 1}`).innerText = line;
-        document.getElementById(`hand-writing${i + 1}`).style.top = currentY;
-        document.getElementById(`hand-writing${i + 1}`).style.left = input_x.value;
-        document.getElementById(`hand-writing${i + 1}`).style.color = font_color.value;
-        document.getElementById(`hand-writing${i + 1}`).style.fontSize = font_size.value;
-
-        // document.getElementById(`fontSelect`).addEventListener("change", ev => {
-        //   console.log("값 변경")
-        //   console.log(document.getElementById(`hand-writing${i + 1}`))
-        //   document.getElementsByClassName(`hand-writing${i + 1}`).style.display = none;
-        // })
-      }
-
     }
   }
 }
