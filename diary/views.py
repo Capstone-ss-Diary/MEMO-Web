@@ -201,25 +201,24 @@ def bgr_rm(request):
     print(data['image'])
     print(type(data['image']))
 
-    url = data['image']
-    urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
+    image = data['image']
+
+    # url = data['image']
+    # urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
     # urllib.request.urlretrieve(data['image'], 'diary/static/backimages/test.jpg')
-    input_path = 'media/backimages/test.jpg'
-    output_path = 'media/backimages/out.png'
-  
+    path = 'media/rmImages/'+image
 
-
-
-    f = np.fromfile(input_path)
+    f = np.fromfile(path)
     print(f)
     result = remove(f)
     print(result)
     img = Image.open(io.BytesIO(result)).convert("RGBA")
-    img.save(output_path)
-
+    img.save(path)
 
     print(data)
     print(data['image'])
+    data = dict()
+    data['path'] = image
 
     return JsonResponse(data)
 
