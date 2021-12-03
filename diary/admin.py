@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Diary, DiaryText, DiaryImage, DiaryHashtag, HandWriting
+from .models import Diary, DiaryText, DiaryImage, DiaryHashtag, HandWriting, DiaryRemove, DiarySticker
 
 class DiaryText(admin.TabularInline):
     model = DiaryText
@@ -12,11 +12,19 @@ class DiaryImageInline(admin.TabularInline):
 class DiaryHashtag(admin.TabularInline):
     model = DiaryHashtag
 
+class DiaryRemoveInline(admin.TabularInline):
+    model = DiaryRemove
+
+class DiaryStickerInline(admin.TabularInline):
+    model = DiarySticker
+
 class DiaryAdmin(admin.ModelAdmin):
     inlines = [
         DiaryText,
         DiaryImageInline,
         DiaryHashtag,
+        DiaryRemoveInline,
+        DiaryStickerInline
     ]
 
 

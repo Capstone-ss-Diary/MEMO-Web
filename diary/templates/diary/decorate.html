@@ -18,11 +18,9 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<<<<<<< Updated upstream
   <!-- 스티커 gif -->
   <script src="https://unpkg.com/konva@4.0.18/konva.min.js"></script>
   <script src="https://unpkg.com/gifler@0.1.0/gifler.min.js"></script>
-=======
   <style>
     .hand-writing {
       font-family: "fontello";
@@ -30,11 +28,11 @@
       top: 35px;
       left: 35px;
     }
+
     #hand-writing1 #hand-writing2 #hand-writing3 #hand-writing4 #hand-writing5 {
       font-family: "fontello";
     }
   </style>
->>>>>>> Stashed changes
 
 </head>
 
@@ -52,12 +50,7 @@
 
     <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
       {% csrf_token %}
-<<<<<<< Updated upstream
-
-      <div class="diary_paper" id="diary_paper">
-=======
       <div class="diary_paper">
->>>>>>> Stashed changes
         <canvas id="paper" width="880" height="600" style="background-color: white; border: #F5F5DC 10px solid;">
         </canvas>
         <div class="hand-writing" id="hand-writing1" style="display: 'none';"></div>
@@ -93,7 +86,7 @@
             <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
-            <option value="hand-writing" style="font-family: 'hw';" id="hand-writing">&#xac00</option>
+            <option value="hand-writing" style="font-family: 'hand-writing';" id="hand-writing">&#xac00</option>
           </select>
           <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18"
             oninput="font_size_selected_change(this)">
@@ -354,7 +347,13 @@
 
             <div class="image-show" id="image-show">
               <img src="" class="image" id="image" />
+
               <input type="hidden" id="pre_img_id" value="">
+              <input type="hidden" id="pre_img_name" value="">
+              <input type="hidden" id="remove_id" value="">
+              <input type="hidden" id="remove_name" value="">
+              <input type="hidden" id="remove_list" name="remove_list" value="">
+              <input type="hidden" id="name_list" name="name_list" value="">
             </div>
             <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
               <button type="button" class="imgSubmit" id="imgSubmit" disabled style="margin-right: 1%;">업로드</button>

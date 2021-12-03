@@ -207,7 +207,8 @@ var img_cnt = 0; // 업로드한 이미지 개수
 
 function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업로드
   var file = input.files[0]; // 파일 가져오기
-  document.getElementById("pre_img_id").value = file.name
+  document.getElementById("pre_img_name").value = file.name;
+  document.getElementById("pre_img_id").value = input.id;
 
   if (validateName(file.name)) { // 허용된 확장자명이면
     document.getElementById("fileName").textContent = file.name; // 파일명 넣기
@@ -226,6 +227,8 @@ function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업�
 }
 
 var imgNum = 0; // 업로드한 이미지 개수
+var removes = "";
+var rmImages = "";
 
 document.getElementById("imgSubmit").onclick = function () { // canvas에 이미지 올리기
   var pre_img = document.querySelector(".image"); // 미리보기 이미지 불러오기
@@ -287,14 +290,26 @@ document.getElementById("imgSubmit").onclick = function () { // canvas에 이미
   document.getElementById(`label${String(imgNum)}`).style.display = "none";
   document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
 
-  /*
-    // form 동적 태그 생성
-    var fileForm = document.getElementById("forms");
-    fileForm.innerHTML += `<label id="label${String(imgNum + 1)}" for="chooseFile${String(imgNum + 1)}">불러오기</label>
-  <input type ="file" id="chooseFile${String(imgNum + 1)}" name="img${String(img_cnt + 1)}" accept="image/*" onchange="loadFile(this)"/>`
-  */
-
   totalCanvas()
+
+  var pre_file_name = document.getElementById("pre_img_name").value;
+  var rm_file_name = document.getElementById("remove_name").value;
+  var rm_file_id = document.getElementById("pre_img_id").value;
+
+  console.log(document.getElementById("pre_img_name"));
+
+  if (pre_file_name == rm_file_name) {
+    // console.log(rm_file_name);
+    // console.log(rm_file_name);
+
+    var file_name = document.getElementById(rm_file_id).name;
+    removes += `${file_name}/`;
+    document.getElementById("remove_list").value = removes;
+    rmImages += `${rm_file_name}/`;
+    document.getElementById("name_list").value = rmImages;
+    // console.log(removes);
+    // console.log(document.getElementById("remove_list").value);
+  }
 
   // 미리보기 이미지 파트 리셋
   document.getElementById("fileName").textContent = null;
@@ -529,7 +544,7 @@ document.getElementById("hashtag_auto").onclick = function () {
         }
       },
       error: function (err) {
-        alert("실패");
+        alert("글이 너무 간결해서 해시태그를 생성할 수 없습니다.");
       }
     });
 
@@ -544,8 +559,8 @@ document.getElementById("background_remove").onclick = function () {
   // console.log(image_src);
   // var image_data = { 'image': image_src };
 
-  var image_name = document.getElementById("pre_img_id").value;
-  console.log(image_name);
+  var image_name = document.getElementById("pre_img_name").value;
+  console.log(document.getElementById("pre_img_id").value);
 
   var image_data = { 'image': image_name };
 
@@ -563,10 +578,12 @@ document.getElementById("background_remove").onclick = function () {
       contentType: false,
       cache: false,
       success: function (data) {
-        alert("이미지 전송 성공");
+        alert("이미지 배경이 제거되었습니다.");
         console.log(data.path);
         console.log(document.getElementById("image"));
         document.getElementById("image").src = `/media/rmImages/${data.path}`;
+        document.getElementById("remove_id").value = document.getElementById("pre_img_id").value;
+        document.getElementById("remove_name").value = image_name;
       },
       error: function () {
         alert("실패");
