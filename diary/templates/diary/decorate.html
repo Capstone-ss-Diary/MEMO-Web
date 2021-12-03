@@ -17,10 +17,7 @@
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-  <!-- 스티커 gif -->
-  <script src="https://unpkg.com/konva@4.0.18/konva.min.js"></script>
-  <script src="https://unpkg.com/gifler@0.1.0/gifler.min.js"></script>
+  
   <style>
     .hand-writing {
       font-family: "fontello";
@@ -50,10 +47,10 @@
 
     <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
       {% csrf_token %}
-      <div class="diary_paper">
+      <div class="diary_paper" id="diary_paper">
         <canvas id="paper" width="880" height="600" style="background-color: white; border: #F5F5DC 10px solid;">
         </canvas>
-        <div class="hand-writing" id="hand-writing1" style="display: 'none';"></div>
+        <div class="hand-writing" id="hand-writing1"></div>
         <div class="hand-writing" id="hand-writing2"></div>
         <div class="hand-writing" id="hand-writing3"></div>
         <div class="hand-writing" id="hand-writing4"></div>

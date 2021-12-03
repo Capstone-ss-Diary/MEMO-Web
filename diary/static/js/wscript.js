@@ -16,7 +16,7 @@ function writingText() {
       var font_size = document.getElementById(`font_size${i + 1}`);
       var font_color = document.getElementById(`font_color${i + 1}`);
 
-      console.log(font);
+      // console.log(font);
 
       // select box
       var select_font = document.getElementById("fontSelect");
@@ -63,10 +63,11 @@ function writingText() {
         document.getElementById(`hand-writing${i + 1}`).style.color = font_color.value;
         document.getElementById(`hand-writing${i + 1}`).style.fontSize = font_size.value;
 
-        document.getElementById(`fontSelect`).addEventListener("change", ev => {
-          console.log("값 변경")
-          document.getElementById(`hand-writing${i + 1}`).style.display = "none";
-        })
+        // document.getElementById(`fontSelect`).addEventListener("change", ev => {
+        //   console.log("값 변경")
+        //   console.log(document.getElementById(`hand-writing${i + 1}`))
+        //   document.getElementsByClassName(`hand-writing${i + 1}`).style.display = none;
+        // })
       }
 
     }
@@ -628,7 +629,7 @@ function sticker_hashtag() {
 }
 
 let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
-let picnum = 1;
+let picnum = 30;
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 });
@@ -636,7 +637,7 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   document.getElementById("hashtag_select").addEventListener("change", ev => {
     ev.preventDefault();
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
+    let url = `https://api.giphy.com/v1/stickers/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
     let sticker_opt = document.getElementById("hashtag_select")
     let str = sticker_opt.options[sticker_opt.selectedIndex].value;
 
@@ -654,19 +655,20 @@ function init() {
         console.log("META", content.meta);
         let fig = document.createElement("figure");
         fig.setAttribute("id", "gifs");
+        var num = 1;
         content.data.forEach(element => {
           let img = document.createElement("img");
-          let fc = document.createElement("figcaption");
+          // let fc = document.createElement("figcaption");
           img.src = element.images.downsized.url;
           img.alt = element.title;
-          img.id = `gif1`;
-          img.onclick = sticker_on_canvas(img.src);
-          // {% comment %} fc.textContent = element.title; {% endcomment %}
+          img.onclick = "";
+          img.id = `gif${num}`;
+          num += 1;
           fig.appendChild(img);
-          // {% comment %} fig.appendChild(fc); {% endcomment %}
           let out = document.querySelector(".out");
           out.insertAdjacentElement("afterbegin", fig);
         })
+        for (var i = 1; i < num; i++) { document.getElementById(`gif${i}`).setAttribute("onclick", "sticker_on_canvas(this)") }
       })
       .catch(err => {
         console.error(err);
@@ -675,40 +677,58 @@ function init() {
 }
 
 function sticker_on_canvas(sticker) {
-  console.log(sticker);
+  imgNum += 1;
+  document.getElementById("imgNum").value = parseInt(imgNum); // 업로드 이미지 수 업뎃
 
-  var width = canvas.width;
-  var height = canvas.height;
+  // // img 태그 생성
+  var img = document.createElement("img");
+  img.id = `img${String(imgNum)}`;
+  img.src = sticker.src;
+  img.width = sticker.clientWidth;
+  img.height = sticker.clientHeight;
+  img.style.display = "none";
+  document.getElementById("canvasImg").appendChild(img);
 
-  var stage = new Konva.Stage({
-    container: 'diary_paper',
-    width: width,
-    height: height
-  });
+  // img weight 태그 생성
+  var imgW = document.createElement("input");
+  imgW.name = `attr${String(imgNum)}[]`;
+  imgW.value = sticker.clientWidth;
+  img.style.display = "none";
+  document.getElementById("canvasImgW").appendChild(imgW);
 
-  var layer = new Konva.Layer();
-  stage.add(layer);
+  // img height 태그 생성
+  var imgH = document.createElement("input");
+  imgH.name = `attr${String(imgNum)}[]`;
+  imgH.value = sticker.clientHeight;
+  img.style.display = "none";
+  document.getElementById("canvasImgH").appendChild(imgH);
 
+  // img x 좌표 태그 생성
+  var imgX = document.createElement("input");
+  imgX.name = `attr${String(imgNum)}[]`;
+  imgX.value = text_x;
+  imgX.style.display = "none"
+  document.getElementById("canvasImgX").appendChild(imgX);
 
-  // use external library to parse and draw gif animation
-  function onDrawFrame(ctx, frame) {
+  // img y 좌표 태그 생성
+  var imgY = document.createElement("input");
+  imgY.name = `attr${String(imgNum)}[]`;
+  imgY.value = text_y;
+  imgY.style.display = "none";
+  document.getElementById("canvasImgY").appendChild(imgY);
 
-    // update canvas that we are using for Konva.Image
-    ctx.drawImage(frame.buffer, 0, 0);
-    // redraw the layer
-    layer.draw();
-  }
+  // 이미지 기울기
+  var degree = document.createElement("input");
+  degree.name = `attr${String(imgNum)}[]`;
+  degree.value = 0;
+  degree.style.display = "none";
+  document.getElementById("degree").appendChild(degree);3
 
-  gifler(sticker).frames(canvas, onDrawFrame);
+  // 다음 label 
+  document.getElementById(`label${String(imgNum)}`).style.display = "none";
+  document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
 
-  // draw resulted canvas into the stage as Konva.Image
-  var image = new Konva.Image({
-    image: canvas
-  });
-  layer.add(image);
-
-
-
+  totalCanvas();
 }
 
 
@@ -723,6 +743,17 @@ canvas.onclick = function (event) {
 
   // 사진 업로드
   else if (document.getElementById("selectEdit").value == "photo") {
+    var slt = document.getElementById("selectImg").selectedIndex;
+    var pimg = document.getElementById("canvasImg").childNodes.item(slt);
+    var px = document.getElementById("canvasImgX").childNodes.item(slt);
+    var py = document.getElementById("canvasImgY").childNodes.item(slt);
+    var photo_x = event.clientX - ctx.canvas.offsetLeft - (pimg.width / 2); // 이미지 x 좌표 변경
+    var photo_y = event.clientY - ctx.canvas.offsetTop - (pimg.height / 2); // 이미지 y 좌표 변경
+    px.value = photo_x;
+    py.value = photo_y;
+  }
+
+  else if (document.getElementById("selectEdit").value == "sticker") {
     var slt = document.getElementById("selectImg").selectedIndex;
     var pimg = document.getElementById("canvasImg").childNodes.item(slt);
     var px = document.getElementById("canvasImgX").childNodes.item(slt);
