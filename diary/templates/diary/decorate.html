@@ -24,8 +24,8 @@
       position: absolute;
       top: 35px;
       left: 35px;
-      word-break:break-all;
-      line-height:130%
+      word-break: break-all;
+      line-height: 130%
     }
 
     #hand-writing1 #hand-writing2 #hand-writing3 #hand-writing4 #hand-writing5 {
@@ -85,7 +85,7 @@
             <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
             <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
             <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
-            <option value="hand-writing" style="font-family: 'hand-writing';" id="hand-writing">&#xac00</option>
+            <option value="hand-writing" style="font-family: 'hand-writing';" id="hand-writing">손글씨</option>
           </select>
           <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18"
             oninput="font_size_selected_change(this)">
@@ -400,14 +400,18 @@
         </div>
         <div id="sticker" class="cont">
           <p id="hashtag_none" style="margin-left: 10px; display: block; font-size: 22px">해시태그를 생성해주세요!</p>
-          <select id="hashtag_select" style="display: block;"></select>
+          <div id="hashtag_sticker" style="display: block;">
+            <a style="font-size: 20px;">해시태그 선택</a><select id="hashtag_select"
+              style="width: 20%;"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;">선택한 스티커</a><select id="sticker_select" style="width:  20%;"></select>
+          </div>
           <div class="out"></div>
           <div id="canvasSti" style="display: none;"></div>
           <div id="canvasStiW" style="display: none;"></div>
           <div id="canvasStiH" style="display: none;"></div>
           <div id="canvasStiX" style="display: none;"></div>
           <div id="canvasStiY" style="display: none;"></div>
-          <div id="degreeSti" style="display: none;"></div>
+          <div id="sticker_url" style="display: none;"></div>
           <input id="stiNum" name="stiNum" style="display: none;" />
           <div id="checkSti" style="display: none;">
             <input id="checking1" name="checking1" value="" style="display: none;" />

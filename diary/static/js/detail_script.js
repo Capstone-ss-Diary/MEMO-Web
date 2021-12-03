@@ -104,6 +104,25 @@ if (remove_num > 0) {
 
 }
 
+var sticker_num = document.getElementById("stickers").childElementCount;
+
+if (sticker_num > 0) {
+  var stickers = document.getElementById("stickers").children;
+  var sticker_x = document.getElementById("sticker_x").childNodes;
+  var sticker_y = document.getElementById("sticker_y").childNodes;
+
+  for (var i = 0; i < sticker_num; i++) {
+
+    var sti = stickers.item(i);
+
+    // var x = parseInt(sticker_x.item(i).value) + (sti.width / 2);
+    // var y = parseInt(sticker_y.item(i).value) + (sti.height / 2);
+
+    ctx.drawImage(sti, sticker_x.item(i).value, sticker_y.item(i).value, sti.width, sti.height);
+
+  }
+}
+
 
 
 setTimeout(function () {
