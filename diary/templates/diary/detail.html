@@ -49,7 +49,7 @@
 
     <div id="stickers">
       {% for sticker in diarySticker %}
-      <img src="{{sticker.url}}" width="{{sticker.width}}" height="{{sticker.height}}" />
+      <img src="{{sticker.url}}" width="{{sticker.width}}" height="{{sticker.height}}" crossorigin="anonymous" />
       {% endfor %}
     </div>
     <div id="sticker_x">{% for sticker in diarySticker %}<input value="{{sticker.imageX}}">{% endfor %}</div>
