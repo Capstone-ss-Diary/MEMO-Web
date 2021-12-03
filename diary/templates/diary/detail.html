@@ -9,6 +9,21 @@
   <link rel="stylesheet" href="{% static 'css/font.css' %}">
   <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
 
+  <style>
+    .hand-writing {
+      font-family: "fontello";
+      position: absolute;
+      top: 300px;
+      left: 300px;
+      word-break: break-all;
+      line-height: 130%
+    }
+
+    #hand-writing1 #hand-writing2 #hand-writing3 #hand-writing4 #hand-writing5 {
+      font-family: "fontello";
+    }
+  </style>
+
   <title>MEMO:일기확인</title>
 
 </head>
@@ -62,11 +77,15 @@
         style="font-family: 'Jua', sans-serif; font-size:20px">#{{hashtag.hashtag}}</a>&nbsp;&nbsp;{% endfor %}</div>
   </div>
 
-  <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+  <div style="position: absolute; display: flex; justify-content: center; margin-top: 10px; left: 50%; transform: translateX(-50%);">
     <img id="diary_canvas" src='' />
   </div>
 
-  <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+  <div>
+    <div class="hand-writing" id="hand-writing1">{% for text in diaryText %}{{text.content}}{% endfor %}</div>
+  </div>
+
+  <div style="position: relative; display: flex; justify-content: center; margin-top: 625px;">
     <button id="edit" type="button" onclick="Edit()"
       style="background-color: #E5D0AD; width: 5%; border: 0; border-radius: 20px; cursor: pointer; padding: 8px; margin-right: 10px; font-size: 30px; font-family: 'Jua', sans-serif; display: none;">수정</button>
 
