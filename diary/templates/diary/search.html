@@ -54,17 +54,16 @@
         <br><br>
         <form method='GET' action=".">
             Search Word:
-            <input type="text" name="q" value="{{ q }}" style="padding:8px; border:0; width:15%;" >
+            <input type="text" id="search_key" name="q" value="{{ q }}" style="padding:8px; border:0; width:15%;" >
             <input id = "search_button" type="submit"  value="검색"/>
           </form>
 
 
-       <div id="content">
+       <div id="content" style="display: none;">
 <!--            {% for text in search %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>-->
             {% for text in search %}{{text.diary}}{{text.content}}<br>{% endfor %}</div>
+        </div>
 
-
-    </div>
     <br>
 
 <!--    <form action="." method="post"> {% csrf_token %}-->
@@ -96,3 +95,9 @@
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <!-- JS -->
 <script type="text/javascript" src="/static/js/barScript.js"></script>
+
+<script>
+    if(document.getElementById("search_key").value != ""){
+        document.getElementById("content").style.display = "block";
+    }
+</script>
