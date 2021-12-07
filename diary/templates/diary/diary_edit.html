@@ -1,8 +1,468 @@
-{% extends "diary/base.html" %}
+{% load static %}
 
-{% block content %}
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-primary">Save</button>
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="Content-Security-Policy" content="default-src: http: https: 'self'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/font.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tab.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <title>MEMO:일기편집</title>
+  <style>
+    .hand-writing {
+      font-family: "fontello";
+      position: absolute;
+      top: 35px;
+      left: 35px;
+      word-break: break-all;
+      line-height: 130%
+    }
+
+    #hand-writing1 #hand-writing2 #hand-writing3 #hand-writing4 #hand-writing5 {
+      font-family: "fontello";
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div style="display: none;">
+    <input id="bc" value="{{ diary.backColor }}">
+
+    <div id="content">{% for text in diaryText %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>
+    <div id="font">{% for text in diaryText %}<input value="{{ text.font }}">{% endfor %}</div>
+    <div id="font_size">{% for text in diaryText %}<input value="{{ text.font_size }}">{% endfor %}</div>
+    <div id="font_color">{% for text in diaryText %}<input value="{{ text.font_color }}">{% endfor %}</div>
+    <div id="text_x">{% for text in diaryText %}<input value="{{ text.coordinateX }}">{% endfor %}</div>
+    <div id="text_y">{% for text in diaryText %}<input value="{{ text.coordinateY }}">{% endfor %}</div>
+
+    <div id="images">
+      {% for image in diaryImage %}
+      <img src="/media/{{image.image}}" width="{{image.width}}" height="{{image.height}}" />
+      {% endfor %}
+    </div>
+    <div id="image_x">{% for image in diaryImage %}<input value="{{image.imageX}}">{% endfor %}</div>
+    <div id="image_y">{% for image in diaryImage %}<input value="{{image.imageY}}">{% endfor %}</div>
+    <div id="degree">{% for image in diaryImage %}<input value="{{image.degree}}">{% endfor %}</div>
+
+    <div id="remove_images">
+      {% for remove in diaryRemove %}
+      <img src="/media/{{remove.path}}" width="{{remove.width}}" height="{{remove.height}}" />
+      {% endfor %}
+    </div>
+    <div id="remove_x">{% for remove in diaryRemove %}<input value="{{remove.imageX}}">{% endfor %}</div>
+    <div id="remove_y">{% for remove in diaryRemove %}<input value="{{remove.imageY}}">{% endfor %}</div>
+    <div id="remove_degree">{% for remove in diaryRemove %}<input value="{{remove.degree}}">{% endfor %}</div>
+
+    <div id="stickers">
+      {% for sticker in diarySticker %}
+      <img src="{{sticker.url}}" width="{{sticker.width}}" height="{{sticker.height}}" crossorigin="anonymous" />
+      {% endfor %}
+    </div>
+    <div id="sticker_x">{% for sticker in diarySticker %}<input value="{{sticker.imageX}}">{% endfor %}</div>
+    <div id="sticker_y">{% for sticker in diarySticker %}<input value="{{sticker.imageY}}">{% endfor %}</div>
+
+    <div id="hashtags">{% for hashtag in diaryHashtag %}<input value="{{hashtag.hashtag}}">{% endfor %}</div>
+
+  </div>
+
+  <div class="tab_menu">
+
+    <ul class="list">
+      <li class="is_on"><button href="#write" class="btn" onclick="writeClick()">일기작성</button></li>
+      <li><button href="#bgchange" class="btn" onclick="backgroundClick()">배경선택</button></li>
+      <li><button href="#photo" class="btn" onclick="photoClick()">사진업로드</button></li>
+      <li><button href="#hashtag" class="btn" onclick="hashClick()">해시태그</button></li>
+      <li><button href="#sticker" class="btn" onclick="stickerClick(); sticker_hashtag();">스티커</button></li>
+    </ul>
+
+    <form method="POST" name="edit_form" action="." enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="diary_paper" id="diary_paper">
+        <canvas id="paper" width="880" height="600" style="background-color: white; border: #F5F5DC 10px solid;">
+        </canvas>
+        <div class="hand-writing" id="hand-writing1"></div>
+        <div class="hand-writing" id="hand-writing2"></div>
+        <div class="hand-writing" id="hand-writing3"></div>
+        <div class="hand-writing" id="hand-writing4"></div>
+        <div class="hand-writing" id="hand-writing5"></div>
+        <div class="select">
+          <button type="submit" onclick="alert('저장되었습니다');">저장</button>
+          <button type="button">취소</button>
+          <input type="hidden" name="selectEdit" id="selectEdit" value="write">
+        </div>
+      </div>
+
+      <div class="cont_area">
+        <div id="write" class="cont" style="display:block;">
+
+          <div style="position: relative; display: flex; top:10px">
+            <span style="font-size: 22px; margin-left: 10px;">글을 작성하고 원하는 폰트 설정 후 위치를 클릭해보세요.</span>
+          </div>
+
+          <div class="text_option">
+            <button type="button" id="text_append" style="cursor:pointer;">텍스트 추가</button>
+            <button type="button" id="text_delete">텍스트 삭제</button>
+            <select id="UserInput_select" style="margin-top: 0;">
+              <option selected value="userInput1">텍스트1</option>
+            </select>
+          </div>
+
+          <select id="fontSelect" onchange="font_selected_change(this);">
+            <option selected value="GowunDodum-Regular" style="font-family: 'GowunDodum-Regular';">고운돋움</option>
+            <option value="EliceDigitalBaeum_Regular" style="font-family: 'EliceDigitalBaeum_Regular';">엘리스</option>
+            <option value="SF_IceLemon" style="font-family: 'SF_IceLemon';">레몬빙수</option>
+            <option value="IM_Hyemin-Regular" style="font-family: 'IM_Hyemin-Regular';">IM혜민체</option>
+            <option value="HSYuji-Regular" style="font-family: 'HSYuji-Regular';">HS유지</option>
+            <option value="hand-writing" style="font-family: 'hand-writing';" id="hand-writing">손글씨</option>
+          </select>
+          <input type="text" id="fontSize" name="fontSize" style="height: 36.4px;" value="18"
+            oninput="font_size_selected_change(this)">
+          <select id="fontColorSelect" onchange="settingRGB(this); font_color_selected_change(this);">
+            <option selected value="rgb(0,0,0)" style="color: rgb(0,0,0);">검정</option>
+            <option value="rgb(255,0,0)" style="color: rgb(255,0,0);">빨강</option>
+            <option value="rgb(0,255,0)" style="color: rgb(0,255,0);">초록</option>
+            <option value="rgb(0,0,255)" style="color: rgb(0,0,255);">파랑</option>
+            <option value="rgb(235,211,176)" style="color: rgb(235,211,176);">베이지</option>
+            <option id=setRGB value="">RGB입력</option>
+          </select> &nbsp;&nbsp;
+          <a id="rgb1" style="font-size: 18px; visibility: hidden;">R</a>
+          <input type="text" name="R" id="R" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <a id="rgb2" style="font-size: 18px; visibility: hidden;">G</a>
+          <input type="text" name="G" id="G" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
+          <a id="rgb3" style="font-size: 18px; visibility: hidden;">B</a>
+          <input type="text" name="B" id="B" style="width: 40px; visibility: hidden;" value="0" oninput="totalCanvas()">
+
+          <div style="position: relative; display: flex; top:10px;">
+            <textarea type="text" id="UserInput1" name="UserInput1" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: visible;"></textarea>
+            <input type="hidden" name="input1[]" id="text_x1" value="">
+            <input type="hidden" name="input1[]" id="text_y1" value="">
+            <input type="hidden" name="input1[]" id="font1" value="">
+            <input type="hidden" name="input1[]" id="font_size1" value="">
+            <input type="hidden" name="input1[]" id="font_color1" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:20px;">
+            <textarea type="text" id="UserInput2" name="UserInput2" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input2[]" id="text_x2" value="">
+            <input type="hidden" name="input2[]" id="text_y2" value="">
+            <input type="hidden" name="input2[]" id="font2" value="">
+            <input type="hidden" name="input2[]" id="font_size2" value="">
+            <input type="hidden" name="input2[]" id="font_color2" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:30px; visibility: hidden;">
+            <textarea type="text" id="UserInput3" name="UserInput3" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input3[]" id="text_x3" value="">
+            <input type="hidden" name="input3[]" id="text_y3" value="">
+            <input type="hidden" name="input3[]" id="font3" value="">
+            <input type="hidden" name="input3[]" id="font_size3" value="">
+            <input type="hidden" name="input3[]" id="font_color3" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:40px; visibility: hidden;">
+            <textarea type="text" id="UserInput4" name="UserInput4" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input4[]" id="text_x4" value="">
+            <input type="hidden" name="input4[]" id="text_y4" value="">
+            <input type="hidden" name="input4[]" id="font4" value="">
+            <input type="hidden" name="input4[]" id="font_size4" value="">
+            <input type="hidden" name="input4[]" id="font_color4" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:50px; visibility: hidden;">
+            <textarea type="text" id="UserInput5" name="UserInput5" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input5[]" id="text_x5" value="">
+            <input type="hidden" name="input5[]" id="text_y5" value="">
+            <input type="hidden" name="input5[]" id="font5" value="">
+            <input type="hidden" name="input5[]" id="font_size5" value="">
+            <input type="hidden" name="input5[]" id="font_color5" value="">
+          </div>
+
+          <div style="position: relative; display: flex; top:60px; visibility: hidden;">
+            <textarea type="text" id="UserInput6" name="UserInput6" cols="80" rows="5" oninput="totalCanvas()"
+              style="visibility: hidden;"></textarea>
+            <input type="hidden" name="input6[]" id="text_x6" value="">
+            <input type="hidden" name="input6[]" id="text_y6" value="">
+            <input type="hidden" name="input6[]" id="font6" value="">
+            <input type="hidden" name="input6[]" id="font_size6" value="">
+            <input type="hidden" name="input6[]" id="font_color6" value="">
+          </div>
+
+        </div>
+
+        <div id="bgchange" class="cont">
+          <span style="font-size: 22px;">배경을 선택하세요</span><br>
+          <button type="button" id="bc1" style="padding: 10px; background-color: white;"
+            onclick="backchange('white')"></button>
+          <button type="button" id="bc2" style="padding: 10px; background-color: #DCDCDC;"
+            onclick="backchange('#DCDCDC')"></button>
+          <button type="button" id="bc3" style="padding: 10px; background-color: #C0C0C0;"
+            onclick="backchange('#C0C0C0')"></button>
+          <button type="button" id="bc4" style="padding: 10px; background-color: black;"
+            onclick="backchange('black')"></button>
+          <button type="button" id="bc5" style="padding: 10px; background-color: #FDF5E6;"
+            onclick="backchange('#FDF5E6')"></button>
+          <button type="button" id="bc6" style="padding: 10px; background-color: #FFF8DC;"
+            onclick="backchange('#FFF8DC')"></button>
+          <button type="button" id="bc7" style="padding: 10px; background-color: #EEE8AA;"
+            onclick="backchange('#EEE8AA')"></button>
+          <button type="button" id="bc8" style="padding: 10px; background-color: #FCF16E;"
+            onclick="backchange('#FCF16E')"></button><br>
+          <button type="button" id="bc9" style="padding: 10px; background-color: #E6E6FA"
+            onclick="backchange('#E6E6FA')"></button>
+          <button type="button" id="bc10" style="padding: 10px; background-color: #B0C4DE;"
+            onclick="backchange('#B0C4DE')"></button>
+          <button type="button" id="bc11" style="padding: 10px; background-color: #FFE4E1;"
+            onclick="backchange('#FFE4E1')"></button>
+          <button type="button" id="bc12" style="padding: 10px; background-color: #FFC0CB;"
+            onclick="backchange('#FFC0CB')"></button>
+          <button type="button" id="bc13" style="padding: 10px; background-color: #D8CFD8;"
+            onclick="backchange('#D8CFD8')"></button>
+          <button type="button" id="bc14" style="padding: 10px; background-color: #D8BFD8;"
+            onclick="backchange('#D8BFD8')"></button>
+          <button type="button" id="bc15" style="padding: 10px; background-color: #DA70D6;"
+            onclick="backchange('#DA70D6')"></button>
+          <button type="button" id="bc16" style="padding: 10px; background-color: #9370DB;"
+            onclick="backchange('#9370DB')"></button><br>
+          <button type="button" id="bc17" style="padding: 10px; background-color: #E1FFFF;"
+            onclick="backchange('#E1FFFF')"></button>
+          <button type="button" id="bc18" style="padding: 10px; background-color: #ADD8E6;"
+            onclick="backchange('#ADD8E6')"></button>
+          <button type="button" id="bc19" style="padding: 10px; background-color: #87CEEB;"
+            onclick="backchange('#87CEEB')"></button>
+          <button type="button" id="bc20" style="padding: 10px; background-color: #4682B4;"
+            onclick="backchange('#4682B4')"></button>
+          <button type="button" id="bc21" style="padding: 10px; background-color: #F5FFFA;"
+            onclick="backchange('#F5FFFA')"></button>
+          <button type="button" id="bc22" style="padding: 10px; background-color: #F0FFF0;"
+            onclick="backchange('#F0FFF0')"></button>
+          <button type="button" id="bc23" style="padding: 10px; background-color: #98FB98;"
+            onclick="backchange('#98FB98')"></button>
+          <button type="button" id="bc24" style="padding: 10px; background-color: #8FBC8F;"
+            onclick="backchange('#8FBC8F')"></button>
+
+          <input type="hidden" name="back_color" id="back_color" value="white">
+        </div>
+
+        <div id="photo" class="cont">
+          <div class="image-upload" id="image-upload">
+            <div class="fileBox">
+              <input type="hidden" id="img_count" name="img_count" value="">
+
+              <div id="forms">
+
+                <label id="label1" for="chooseFile1" style="display: block;"> 불러오기</label>
+                <input type="file" id="chooseFile1" name="img1" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label2" for="chooseFile2"> 불러오기</label>
+                <input type="file" id="chooseFile2" name="img2" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label3" for="chooseFile3"> 불러오기</label>
+                <input type="file" id="chooseFile3" name="img3" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label4" for="chooseFile4"> 불러오기</label>
+                <input type="file" id="chooseFile4" name="img4" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label5" for="chooseFile5"> 불러오기</label>
+                <input type="file" id="chooseFile5" name="img5" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label6" for="chooseFile6"> 불러오기</label>
+                <input type="file" id="chooseFile6" name="img6" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label7" for="chooseFile7"> 불러오기</label>
+                <input type="file" id="chooseFile7" name="img7" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label8" for="chooseFile8"> 불러오기</label>
+                <input type="file" id="chooseFile8" name="img8" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label9" for="chooseFile9"> 불러오기</label>
+                <input type="file" id="chooseFile9" name="img9" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label10" for="chooseFile10"> 불러오기</label>
+                <input type="file" id="chooseFile10" name="img10" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label11" for="chooseFile11"> 불러오기</label>
+                <input type="file" id="chooseFile11" name="img11" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label12" for="chooseFile12"> 불러오기</label>
+                <input type="file" id="chooseFile12" name="img12" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label13" for="chooseFile13"> 불러오기</label>
+                <input type="file" id="chooseFile13" name="img13" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label14" for="chooseFile14"> 불러오기</label>
+                <input type="file" id="chooseFile14" name="img14" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label15" for="chooseFile15"> 불러오기</label>
+                <input type="file" id="chooseFile15" name="img15" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label16" for="chooseFile16"> 불러오기</label>
+                <input type="file" id="chooseFile16" name="img16" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label17" for="chooseFile17"> 불러오기</label>
+                <input type="file" id="chooseFile17" name="img17" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label18" for="chooseFile18"> 불러오기</label>
+                <input type="file" id="chooseFile18" name="img18" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label19" for="chooseFile19"> 불러오기</label>
+                <input type="file" id="chooseFile19" name="img19" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label20" for="chooseFile20"> 불러오기</label>
+                <input type="file" id="chooseFile20" name="img20" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label21" for="chooseFile21"> 불러오기</label>
+                <input type="file" id="chooseFile21" name="img21" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label22" for="chooseFile22"> 불러오기</label>
+                <input type="file" id="chooseFile22" name="img22" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label23" for="chooseFile23"> 불러오기</label>
+                <input type="file" id="chooseFile23" name="img23" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label24" for="chooseFile24"> 불러오기</label>
+                <input type="file" id="chooseFile24" name="img24" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label25" for="chooseFile25"> 불러오기</label>
+                <input type="file" id="chooseFile25" name="img25" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label26" for="chooseFile26"> 불러오기</label>
+                <input type="file" id="chooseFile26" name="img26" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label27" for="chooseFile27"> 불러오기</label>
+                <input type="file" id="chooseFile27" name="img27" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label28" for="chooseFile28"> 불러오기</label>
+                <input type="file" id="chooseFile28" name="img28" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label29" for="chooseFile29"> 불러오기</label>
+                <input type="file" id="chooseFile29" name="img29" accept="image/*" onchange="loadFile(this)">
+
+                <label id="label30" for="chooseFile30"> 불러오기</label>
+                <input type="file" id="chooseFile30" name="img30" accept="image/*" onchange="loadFile(this)">
+
+              </div>
+
+              <div class="fileInput">
+                <p>FILE NAME: </p>
+                <p id="fileName"></p>
+              </div>
+            </div>
+          </div>
+          <div class="editBox">
+            <div class="editBoxM"
+              style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+              <button type="button" id="background_remove" style="margin-right: .5%; width: 40%;" disabled>배경
+                제거</button>
+            </div>
+            <div class="imgSetting" style="position: relative; display: flex; justify-content: center; top:30px">
+              <select id="selectImg"></select>&nbsp;&nbsp;
+              <span>크기</span>&nbsp;
+              <button type="button" id="plus" style="margin-right: 2.5px;">+</button>
+              <button type="button" id="minus" style="margin-left: 2.5px;">-</button>
+              &nbsp;&nbsp;
+              <span>기울기</span>&nbsp;
+              <button type="button" id="leftRotate" style="margin-right: 5px;">↺</button>
+              <button type="button" id="rightRotate" style="margin-right: 5px;">↻</button>
+              &nbsp;&nbsp;
+              <button type="button" id="delImg" style="margin-right: 5px;">X</button>
+            </div>
+
+            <div class="image-show" id="image-show">
+              <img src="" class="image" id="image" />
+
+              <input type="hidden" id="pre_img_id" value="">
+              <input type="hidden" id="pre_img_name" value="">
+              <input type="hidden" id="remove_id" value="">
+              <input type="hidden" id="remove_name" value="">
+              <input type="hidden" id="remove_list" name="remove_list" value="">
+              <input type="hidden" id="name_list" name="name_list" value="">
+            </div>
+            <div style="position: relative; display: flex; justify-content: center; margin-top: 10px;">
+              <button type="button" class="imgSubmit" id="imgSubmit" disabled style="margin-right: 1%;">업로드</button>
+            </div>
+          </div>
+
+          <div id="canvasImg" style="display: none;"></div>
+          <div id="canvasImgW" style="display: none;"></div>
+          <div id="canvasImgH" style="display: none;"></div>
+          <div id="canvasImgX" style="display: none;"></div>
+          <div id="canvasImgY" style="display: none;"></div>
+          <div id="degree" style="display: none;"></div>
+          <input id="imgNum" name="imgNum" style="display: none;" />
+          <div id="checkImg" style="display: none;">
+            <input id="checking1" name="checking1" value="" style="display: none;" />
+          </div>
+        </div>
+
+        <div id="hashtag" class="cont">
+
+          <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+            <button id="hashtaging" type="button" style="margin-left: .5%; width: 43%; left: 10px;"
+              onclick="hashtagingClick()">해시태그 직접 만들기</button>
+            <button id="hashtag_auto" type="button">해시태그 자동 생성하기</button>
+          </div>
+
+          <div id="hashtagingDiv" style="display: none;">
+            <div style="position: relative; display: flex; justify-content: center; top: 15px; left: 5px;">
+              <input type="text" id="hashtagInput" placeholder="해시태그를 입력하세요">
+              <button type="button" id="hashtagInput_check" onclick="hashtagingOk()"> 확인 </button>
+            </div>
+          </div>
+
+          <div id="hashtagForm">
+            <br>
+          </div>
+
+          <div id="hash_input" style="display: none;">
+          </div>
+
+          <input type="hidden" id="hashtag_num" name="hashtag_num">
+
+
+
+        </div>
+        <div id="sticker" class="cont">
+          <p id="hashtag_none" style="margin-left: 10px; display: block; font-size: 22px">해시태그를 생성해주세요!</p>
+          <div id="hashtag_sticker" style="display: block;">
+            <a style="font-size: 20px;">해시태그 선택</a><select id="hashtag_select"
+              style="width: 20%;"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;">선택한 스티커</a><select id="sticker_select" style="width:  20%;"></select>
+          </div>
+          <div class="out"></div>
+          <div id="canvasSti" style="display: none;"></div>
+          <div id="canvasStiW" style="display: none;"></div>
+          <div id="canvasStiH" style="display: none;"></div>
+          <div id="canvasStiX" style="display: none;"></div>
+          <div id="canvasStiY" style="display: none;"></div>
+          <div id="sticker_url" style="display: none;"></div>
+          <input id="stiNum" name="stiNum" style="display: none;" />
+          <div id="checkSti" style="display: none;">
+            <input id="checking1" name="checking1" value="" style="display: none;" />
+          </div>
+        </div>
+
+      </div>
     </form>
-{% endblock %}
+  </div>
+
+</body>
+
+<script type="text/javascript" src="/static/js/tabscript.js"></script>
+<script type="text/javascript" src="/static/js/edit_script.js"></script>

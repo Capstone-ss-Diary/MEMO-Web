@@ -138,6 +138,8 @@ def detail(request, user_id, diary_id):
     diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
     diary_sticker = DiarySticker.objects.filter(diary=diary)
 
+    print(diary_id)
+
     content = {
         "diary": diary,
         "diaryText": diary_text,
@@ -169,20 +171,25 @@ def search(request):
     })
 
 
-def edit(request, diary_id):
-    diary = get_object_or_404(Diary, pk=diary_id)
-    if request.method == "POST":
-        form = DiaryForm(request.POST, request.FILES, instance=diary)
-        if form.is_valid():
-            diary = form.save(commit=False)
-            diary.user = request.user
-            diary.published_date = timezone.now()
-            diary.save()
-            return redirect("detail", diary.id)
-    else:
-        form = DiaryForm(instance=diary)
+def edit(request, user_id, diary_id): #, diary_id
+    diary = Diary.objects.get(id=diary_id)
+    diary_text = DiaryText.objects.filter(diary=diary)
+    diary_images = DiaryImage.objects.filter(diary=diary)
+    diary_remove = DiaryRemove.objects.filter(diary=diary)
+    diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
+    diary_sticker = DiarySticker.objects.filter(diary=diary)
 
-    return render(request, "diary/diary_edit.html", {"form": form})
+
+    content = {
+        "diary": diary,
+        "diaryText": diary_text,
+        "diaryImage": diary_images,
+        "diaryRemove": diary_remove,
+        "diaryHashtag":diary_hashtag,
+        "diarySticker":diary_sticker,
+    }
+
+    return render(request, "diary/diary_edit.html", content)
 
 
 def diary_list(request):
