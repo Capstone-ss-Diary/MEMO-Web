@@ -623,37 +623,6 @@ document.getElementById("background_remove").onclick = function () {
 
 
 // 스티커
-function sticker_hashtag() {
-  var tag_input = document.getElementById("hash_input").childElementCount;
-  var tag_count = 0;
-  document.getElementById("hashtag_select").options.length = 0;
-
-  if (tag_input == 0) {
-    document.getElementById("hashtag_sticker").style.display = "none";
-    document.getElementById("hashtag_none").style.display = "block";
-  }
-
-  else {
-    for (var i = 0; i < tag_input; i++) {
-      var hashtag = document.getElementById(`hashtag${i + 1}`).value;
-
-      if (hashtag != "") {
-        document.getElementById("hashtag_select").innerHTML += `<option value="${hashtag}">${hashtag}</option>`;
-        tag_count += 1;
-      }
-
-    }
-    if (tag_count > 0) {
-      document.getElementById("hashtag_sticker").style.display = "block";
-      document.getElementById("hashtag_none").style.display = "none";
-    }
-    else {
-      document.getElementById("hashtag_sticker").style.display = "none";
-      document.getElementById("hashtag_none").style.display = "block";
-    }
-  }
-
-}
 
 let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
 let picnum = 50;
@@ -663,6 +632,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 document.addEventListener("DOMContentLoaded", init);
 function init() {
   document.getElementById("hashtag_select").addEventListener("change", ev => {
+    console.log(ev)
     ev.preventDefault();
     let url = `https://api.giphy.com/v1/stickers/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
     let sticker_opt = document.getElementById("hashtag_select")
@@ -701,6 +671,75 @@ function init() {
         console.error(err);
       });
   });
+}
+
+function sticker_hashtag() {
+  var tag_input = document.getElementById("hash_input").childElementCount;
+  var tag_count = 0;
+  document.getElementById("hashtag_select").options.length = 0;
+
+  if (tag_input == 0) {
+    document.getElementById("hashtag_sticker").style.display = "none";
+    document.getElementById("hashtag_none").style.display = "block";
+  }
+
+  else {
+    for (var i = 0; i < tag_input; i++) {
+      var hashtag = document.getElementById(`hashtag${i + 1}`).value;
+
+      if (hashtag != "") {
+        document.getElementById("hashtag_select").innerHTML += `<option value="${hashtag}">${hashtag}</option>`;
+        tag_count += 1;
+      }
+
+    }
+    if (tag_count > 0) {
+      document.getElementById("hashtag_sticker").style.display = "block";
+      document.getElementById("hashtag_none").style.display = "none";
+
+      let url = `https://api.giphy.com/v1/stickers/search?api_key=${APIKEY}&limit=${picnum}&lang=ko&q=`;
+      let sticker_opt = document.getElementById("hashtag_select")
+      let str = sticker_opt.options[sticker_opt.selectedIndex].value;
+  
+      const gifs_gallery = document.getElementById('gifs');
+      if (gifs_gallery != null) {
+        gifs_gallery.remove();
+      }
+      url = url.concat(str);
+      console.log(url);
+      fetch(url)
+        .then(response => response.json())
+        .then(content => {
+          //  data, pagination, meta
+          console.log(content.data);
+          console.log("META", content.meta);
+          let fig = document.createElement("figure");
+          fig.setAttribute("id", "gifs");
+          var num = 1;
+          content.data.forEach(element => {
+            let img = document.createElement("img");
+            // let fc = document.createElement("figcaption");
+            img.src = element.images.downsized.url;
+            img.alt = element.title;
+            img.onclick = "";
+            img.id = `gif${num}`;
+            num += 1;
+            fig.appendChild(img);
+            let out = document.querySelector(".out");
+            out.insertAdjacentElement("afterbegin", fig);
+          })
+          for (var i = 1; i < num; i++) { document.getElementById(`gif${i}`).setAttribute("onclick", "sticker_on_canvas(this)") }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+    else {
+      document.getElementById("hashtag_sticker").style.display = "none";
+      document.getElementById("hashtag_none").style.display = "block";
+    }
+  }
+
 }
 
 var stiNum = 0;
