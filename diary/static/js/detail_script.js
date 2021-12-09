@@ -165,3 +165,7 @@ document.getElementById("diary_canvas").style.backgroundColor = bc;
 document.getElementById("edit").style.display = "block";
 document.getElementById("check").style.display = "block";
 
+function Edit() {
+  var url = String(window.location.href).split('/');
+  location.href = `/diary/edit/${url[5]}/${url[6]}/`;
+}
