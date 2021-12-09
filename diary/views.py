@@ -25,6 +25,7 @@ import hashtag_function
 
 
 def calender(request, user_id):
+
     date_list = Diary.objects.filter(user_id=user_id)
 
     date = {
@@ -51,19 +52,19 @@ def decorate(request, user_id, current_date):
 
         # print(request.POST.get("file"))
         for j in range(6):
-            if request.POST.get("UserInput" + str(j + 1)) is not None:  # for문 6번 돌릴 것
-                input = request.POST.get("UserInput" + str(j + 1))
-                print(input)
-                if input != "":
-                    text = DiaryText()
-                    text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
-                    text.content = input
-                    text.coordinateX = request.POST.getlist("input" + str(j + 1) + "[]")[0]
-                    text.coordinateY = request.POST.getlist("input" + str(j + 1) + "[]")[1]
-                    text.font = request.POST.getlist("input" + str(j + 1) + "[]")[2]
-                    text.font_size = request.POST.getlist("input" + str(j + 1) + "[]")[3]
-                    text.font_color = request.POST.getlist("input" + str(j + 1) + "[]")[4]
-                    text.save()  # DiaryText DB 저장
+          if request.POST.get("UserInput"+str(j+1)) is not None: # for문 6번 돌릴 것
+            input = request.POST.get("UserInput"+str(j+1))
+            print(input)
+            if input!="":
+              text = DiaryText()
+              text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
+              text.content = input
+              text.coordinateX = request.POST.getlist("input"+str(j+1)+"[]")[0]
+              text.coordinateY = request.POST.getlist("input"+str(j+1)+"[]")[1]
+              text.font = request.POST.getlist("input"+str(j+1)+"[]")[2]
+              text.font_size = request.POST.getlist("input"+str(j+1)+"[]")[3]
+              text.font_color = request.POST.getlist("input"+str(j+1)+"[]")[4]
+              text.save()  # DiaryText DB 저장
 
         img_cnt = request.POST.get("img_count")
         if img_cnt:
@@ -76,41 +77,41 @@ def decorate(request, user_id, current_date):
                 print(name_list)
                 if request.FILES.get(name) is not None:
                     if name not in remove_list:
-                        diaryImage = DiaryImage(
-                            diary=diary,
-                            image=request.FILES[name],
-                            width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                            height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                            imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                            imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-                            degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
-                        )
-                        diaryImage.save()
+                      diaryImage = DiaryImage(
+                          diary=diary,
+                          image=request.FILES[name],
+                          width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                          height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                          imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                          imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                          degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
+                      )
+                      diaryImage.save()
                     else:
-                        imgIdx = remove_list.index(name)
-                        diaryRemove = DiaryRemove(
-                            diary=diary,
-                            path='rmImages/' + name_list[imgIdx],
-                            width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                            height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                            imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                            imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-                            degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
-                        )
-                        diaryRemove.save()
+                      imgIdx = remove_list.index(name)
+                      diaryRemove = DiaryRemove(
+                        diary = diary,
+                        path = 'rmImages/'+name_list[imgIdx],
+                        width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                        height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                        imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                        imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                        degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
+                      )
+                      diaryRemove.save()
 
         hash_cnt = request.POST.get("hashtag_num")
         print(hash_cnt)
         if hash_cnt:
-            for k in range(int(hash_cnt)):
-                hash_name = "hashtag" + str(k + 1)
-                if request.POST.get(hash_name) is not None:
-                    diaryHashtag = DiaryHashtag(
-                        diary=diary,
-                        hashtag=request.POST.get(hash_name),
-                    )
-                    diaryHashtag.save()
-
+          for k in range(int(hash_cnt)):
+            hash_name = "hashtag"+str(k+1)
+            if request.POST.get(hash_name) is not None:
+                diaryHashtag = DiaryHashtag(
+                  diary = diary,
+                  hashtag = request.POST.get(hash_name),
+                )
+                diaryHashtag.save()
+        
         sti_cnt = request.POST.get("stiNum")
         if sti_cnt:
             for r in range(int(sti_cnt)):
@@ -147,8 +148,8 @@ def detail(request, user_id, diary_id):
         "diaryText": diary_text,
         "diaryImage": diary_images,
         "diaryRemove": diary_remove,
-        "diaryHashtag": diary_hashtag,
-        "diarySticker": diary_sticker,
+        "diaryHashtag":diary_hashtag,
+        "diarySticker":diary_sticker,
     }
 
     return render(request, "diary/detail.html", content)
@@ -163,7 +164,7 @@ def search(request):
         queryset = (Q(content__icontains=q))
         print('this is query', queryset)
         qs = DiaryText.objects.filter(queryset).distinct()
-        # qs = qs.filter(content__icontains=q)
+        #qs = qs.filter(content__icontains=q)
         print('검색어 있음: ', q, qs)
     else:
         print('검색어 없음: ', q, qs)
@@ -173,169 +174,170 @@ def search(request):
     })
 
 
-def edit(request, user_id, diary_id):  # , diary_id
+def edit(request, user_id, diary_id): #, diary_id
     if request.method == "POST":  # text 값
-        diary = Diary.objects.get(id=diary_id)
-        diary.user_id = user_id
-        # diary.created_data =
-        diary.published_date = timezone.datetime.now()
-        diary.backColor = request.POST.get("back_color")
-        diary.save()  # Diary DB 업데이트
+      diary = Diary.objects.get(id=diary_id)
+      diary.user_id = user_id
+      # diary.created_data = 
+      diary.published_date = timezone.datetime.now()
+      diary.backColor = request.POST.get("back_color")
+      diary.save()  # Diary DB 업데이트
 
-        diary_text = DiaryText.objects.filter(diary=diary)
-        diary_text = list(diary_text)
-        text_num = request.POST.get("text_num")
-        print("text_num:" + text_num)
-        for i in range(int(text_num)):
-            input = request.POST.get("UserInput" + str(i + 1))
-            if input != "":
-                print(diary_text[i].id)
-                userInput = diary_text[i]
-                userInput.content = input
-                userInput.coordinateX = request.POST.getlist("input" + str(i + 1) + "[]")[0]
-                userInput.coordinateY = request.POST.getlist("input" + str(i + 1) + "[]")[1]
-                userInput.font = request.POST.getlist("input" + str(i + 1) + "[]")[2]
-                userInput.font_size = request.POST.getlist("input" + str(i + 1) + "[]")[3]
-                userInput.font_color = request.POST.getlist("input" + str(i + 1) + "[]")[4]
-                userInput.save()
-        for j in range(int(text_num), 6):
-            if request.POST.get("UserInput" + str(j + 1)) is not None:  # for문 6번 돌릴 것
-                input = request.POST.get("UserInput" + str(j + 1))
-                print(input)
-                if input != "":
-                    text = DiaryText()
-                    text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
-                    text.content = input
-                    text.coordinateX = request.POST.getlist("input" + str(j + 1) + "[]")[0]
-                    text.coordinateY = request.POST.getlist("input" + str(j + 1) + "[]")[1]
-                    text.font = request.POST.getlist("input" + str(j + 1) + "[]")[2]
-                    text.font_size = request.POST.getlist("input" + str(j + 1) + "[]")[3]
-                    text.font_color = request.POST.getlist("input" + str(j + 1) + "[]")[4]
-                    text.save()  # DiaryText DB 저장
+      diary_text = DiaryText.objects.filter(diary=diary)
+      diary_text = list(diary_text)
+      text_num = request.POST.get("text_num")
+      print("text_num:"+text_num)
+      for i in range(int(text_num)):
+        input = request.POST.get("UserInput"+str(i+1))
+        if input!="":
+          print(diary_text[i].id)
+          userInput = diary_text[i]
+          userInput.content = input
+          userInput.coordinateX = request.POST.getlist("input"+str(i+1)+"[]")[0]
+          userInput.coordinateY = request.POST.getlist("input"+str(i+1)+"[]")[1]
+          userInput.font = request.POST.getlist("input"+str(i+1)+"[]")[2]
+          userInput.font_size = request.POST.getlist("input"+str(i+1)+"[]")[3]
+          userInput.font_color = request.POST.getlist("input"+str(i+1)+"[]")[4]
+          userInput.save()
+      for j in range(int(text_num), 6):
+          if request.POST.get("UserInput"+str(j+1)) is not None: # for문 6번 돌릴 것
+            input = request.POST.get("UserInput"+str(j+1))
+            print(input)
+            if input!="":
+              text = DiaryText()
+              text.diary = diary  # 외래키 (생성한 Diary 기본키 참조)
+              text.content = input
+              text.coordinateX = request.POST.getlist("input"+str(j+1)+"[]")[0]
+              text.coordinateY = request.POST.getlist("input"+str(j+1)+"[]")[1]
+              text.font = request.POST.getlist("input"+str(j+1)+"[]")[2]
+              text.font_size = request.POST.getlist("input"+str(j+1)+"[]")[3]
+              text.font_color = request.POST.getlist("input"+str(j+1)+"[]")[4]
+              text.save()  # DiaryText DB 저장
 
-        diary_remove = DiaryRemove.objects.filter(diary=diary)
-        diary_remove = list(diary_remove)
-        image_num2 = request.POST.get("image_num2")
-        for i in range(int(image_num2)):
-            image = diary_remove[i]
-            image.width = request.POST.getlist("attr" + str(i + 1) + "[]")[0]
-            image.height = request.POST.getlist("attr" + str(i + 1) + "[]")[1]
-            image.imageX = request.POST.getlist("attr" + str(i + 1) + "[]")[2]
-            image.imageY = request.POST.getlist("attr" + str(i + 1) + "[]")[3]
-            image.degree = request.POST.getlist("attr" + str(i + 1) + "[]")[4]
-            image.save()
+      diary_remove = DiaryRemove.objects.filter(diary=diary)
+      diary_remove = list(diary_remove)
+      image_num2 = request.POST.get("image_num2")
+      for i in range(int(image_num2)):
+        image = diary_remove[i]
+        image.width=request.POST.getlist("attr" + str(i + 1) + "[]")[0]
+        image.height=request.POST.getlist("attr" + str(i + 1) + "[]")[1]
+        image.imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2]
+        image.imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3]
+        image.degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4]
+        image.save()
 
-        diary_image = DiaryImage.objects.filter(diary=diary)
-        diary_image = list(diary_image)
-        image_num1 = request.POST.get("image_num1")
-        num2 = 0
-        # print(image_num1, image_num2)
-        for i in range(int(image_num2), int(image_num2) + int(image_num1)):
-            image = diary_image[num2]
-            image.width = request.POST.getlist("attr" + str(i + 1) + "[]")[0]
-            image.height = request.POST.getlist("attr" + str(i + 1) + "[]")[1]
-            image.imageX = request.POST.getlist("attr" + str(i + 1) + "[]")[2]
-            image.imageY = request.POST.getlist("attr" + str(i + 1) + "[]")[3]
-            image.degree = request.POST.getlist("attr" + str(i + 1) + "[]")[4]
-            image.save()
-            num2 += 1
-
-        img_cnt = request.POST.get("img_count")
-        if img_cnt:
-            for i in range(int(image_num2) + int(image_num1), int(img_cnt)):
-                name = "img" + str(i + 1)
-                removes = request.POST.get("remove_list")
-                remove_list = removes.split('/')
-                names = request.POST.get("name_list")
-                name_list = names.split('/')
-                print(name_list)
-                if request.FILES.get(name) is not None:
-                    if name not in remove_list:
-                        diaryImage = DiaryImage(
-                            diary=diary,
-                            image=request.FILES[name],
-                            width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                            height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                            imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                            imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-                            degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
-                        )
-                        diaryImage.save()
-                    else:
-                        imgIdx = remove_list.index(name)
-                        diaryRemove = DiaryRemove(
-                            diary=diary,
-                            path='rmImages/' + name_list[imgIdx],
-                            width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
-                            height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
-                            imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
-                            imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
-                            degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
-                        )
-                        diaryRemove.save()
-
-        diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
-        diary_hashtag = list(diary_hashtag)
-        for hashtag in diary_hashtag:
-            hashtag.delete()
-
-        hash_cnt = request.POST.get("hashtag_num")
-        if hash_cnt:
-            for k in range(int(hash_cnt)):
-                hash_name = "hashtag" + str(k + 1)
-                if request.POST.get(hash_name) is not None:
-                    diaryHashtag = DiaryHashtag(
+      diary_image = DiaryImage.objects.filter(diary=diary)
+      diary_image = list(diary_image)
+      image_num1 = request.POST.get("image_num1")
+      num2 = 0
+      # print(image_num1, image_num2)
+      for i in range(int(image_num2), int(image_num2)+int(image_num1)):
+        image = diary_image[num2]
+        image.width=request.POST.getlist("attr" + str(i + 1) + "[]")[0]
+        image.height=request.POST.getlist("attr" + str(i + 1) + "[]")[1]
+        image.imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2]
+        image.imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3]
+        image.degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4]
+        image.save()
+        num2+=1
+      
+      img_cnt = request.POST.get("img_count")
+      if img_cnt:
+          for i in range(int(image_num2)+int(image_num1), int(img_cnt)):
+              name = "img" + str(i + 1)
+              removes = request.POST.get("remove_list")
+              remove_list = removes.split('/')
+              names = request.POST.get("name_list")
+              name_list = names.split('/')
+              print(name_list)
+              if request.FILES.get(name) is not None:
+                  if name not in remove_list:
+                    diaryImage = DiaryImage(
                         diary=diary,
-                        hashtag=request.POST.get(hash_name),
+                        image=request.FILES[name],
+                        width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                        height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                        imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                        imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                        degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
                     )
-                    diaryHashtag.save()
+                    diaryImage.save()
+                  else:
+                      imgIdx = remove_list.index(name)
+                      diaryRemove = DiaryRemove(
+                        diary = diary,
+                        path = 'rmImages/'+name_list[imgIdx],
+                        width=request.POST.getlist("attr" + str(i + 1) + "[]")[0],
+                        height=request.POST.getlist("attr" + str(i + 1) + "[]")[1],
+                        imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2],
+                        imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3],
+                        degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4],
+                      )
+                      diaryRemove.save()
 
-        diary_sticker = DiarySticker.objects.filter(diary=diary)
-        diary_sticker = list(diary_sticker)
-        sticker_num = request.POST.get("sticker_num")
-        for i in range(int(sticker_num)):
-            sticker = diary_sticker[i]
-            sticker.width = request.POST.getlist("aticker" + str(i + 1) + "[]")[0]
-            sticker.height = request.POST.getlist("aticker" + str(i + 1) + "[]")[1]
-            sticker.imageX = request.POST.getlist("aticker" + str(i + 1) + "[]")[2]
-            sticker.imageY = request.POST.getlist("aticker" + str(i + 1) + "[]")[3]
-            sticker.save()
+      diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
+      diary_hashtag = list(diary_hashtag)
+      for hashtag in diary_hashtag:
+        hashtag.delete()
 
-        sti_cnt = request.POST.get("stiNum")
-        if sti_cnt:
-            for r in range(int(sticker_num), int(sti_cnt)):
-                name = "sti" + str(r + 1)
-                diarySticker = DiarySticker(
-                    diary=diary,
-                    url=request.POST.get(name),
-                    width=request.POST.getlist("aticker" + str(r + 1) + "[]")[0],
-                    height=request.POST.getlist("aticker" + str(r + 1) + "[]")[1],
-                    imageX=request.POST.getlist("aticker" + str(r + 1) + "[]")[2],
-                    imageY=request.POST.getlist("aticker" + str(r + 1) + "[]")[3],
-                )
-                diarySticker.save()
+      hash_cnt = request.POST.get("hashtag_num")
+      if hash_cnt:
+        for k in range(int(hash_cnt)):
+          hash_name = "hashtag"+str(k+1)
+          if request.POST.get(hash_name) is not None:
+              diaryHashtag = DiaryHashtag(
+                  diary = diary,
+                  hashtag = request.POST.get(hash_name),
+              )
+              diaryHashtag.save()
 
-        return redirect("diary:detail", user_id=request.session.get("user"), diary_id=diary.id)
+      diary_sticker = DiarySticker.objects.filter(diary=diary)
+      diary_sticker = list(diary_sticker)
+      sticker_num = request.POST.get("sticker_num")
+      for i in range(int(sticker_num)):
+        sticker = diary_sticker[i]
+        sticker.width=request.POST.getlist("aticker" + str(i) + "[]")[0]
+        sticker.height=request.POST.getlist("aticker" + str(i) + "[]")[1]
+        sticker.imageX=request.POST.getlist("aticker" + str(i) + "[]")[2]
+        sticker.imageY=request.POST.getlist("aticker" + str(i) + "[]")[3]
+        sticker.save()
+      
+      sti_cnt = request.POST.get("stiNum")
+      if sti_cnt:
+          for r in range(int(sticker_num), int(sti_cnt)):
+              name = "sti" + str(r + 1)
+              diarySticker = DiarySticker(
+                  diary=diary,
+                  url=request.POST.get(name),
+                  width=request.POST.getlist("aticker" + str(r + 1) + "[]")[0],
+                  height=request.POST.getlist("aticker" + str(r + 1) + "[]")[1],
+                  imageX=request.POST.getlist("aticker" + str(r + 1) + "[]")[2],
+                  imageY=request.POST.getlist("aticker" + str(r + 1) + "[]")[3],
+              )
+              diarySticker.save()
 
+      return redirect("diary:detail", user_id=request.session.get("user"), diary_id=diary.id)
+      
 
     else:
-        diary = Diary.objects.get(id=diary_id)
-        diary_text = DiaryText.objects.filter(diary=diary)
-        diary_images = DiaryImage.objects.filter(diary=diary)
-        diary_remove = DiaryRemove.objects.filter(diary=diary)
-        diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
-        diary_sticker = DiarySticker.objects.filter(diary=diary)
+      diary = Diary.objects.get(id=diary_id)
+      diary_text = DiaryText.objects.filter(diary=diary)
+      diary_images = DiaryImage.objects.filter(diary=diary)
+      diary_remove = DiaryRemove.objects.filter(diary=diary)
+      diary_hashtag = DiaryHashtag.objects.filter(diary=diary)
+      diary_sticker = DiarySticker.objects.filter(diary=diary)
 
-        content = {
-            "diary": diary,
-            "diaryText": diary_text,
-            "diaryImage": diary_images,
-            "diaryRemove": diary_remove,
-            "diaryHashtag": diary_hashtag,
-            "diarySticker": diary_sticker,
-        }
 
-        return render(request, "diary/diary_edit.html", content)
+      content = {
+          "diary": diary,
+          "diaryText": diary_text,
+          "diaryImage": diary_images,
+          "diaryRemove": diary_remove,
+          "diaryHashtag":diary_hashtag,
+          "diarySticker":diary_sticker,
+      }
+
+      return render(request, "diary/diary_edit.html", content)
 
 
 def diary_list(request):
@@ -346,30 +348,32 @@ def diary_list(request):
 
     return render(request, "diary/diary_list.html", context)
 
-
 def handwriting(request):
     return render(request, "diary/handwriting.html")
-
 
 ############################################################################################################
 '''
 @csrf_exempt
 def handwriting(request):
+
     if request.method == "POST":
       hand_writing = HandWriting()
       hand_writing.user_id = request.session.get("user")
       hand_writing.image = request.FILES.get("chooseFile")
       hand_writing.save()
+
       data_file = HandWriting.objects.filter(user_id=request.session.get("user"))
     #   print(data_file[len(data_file)-1].image)
+
       handwriting_function.create_handwriting_dataset(data_file[len(data_file)-1].image)
+
+
     return render(request, "diary/handwriting.html")
 '''
 ############################################################################################################
 
 # 배경제거
 from PIL import ImageFile
-
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from rembg.bg import remove
@@ -381,7 +385,6 @@ import json
 
 from django.http.response import JsonResponse
 import urllib.request
-
 
 @csrf_exempt
 def bgr_rm(request):
@@ -396,7 +399,7 @@ def bgr_rm(request):
     # url = data['image']
     # urllib.request.urlretrieve(url, 'diary/static/backimages/test.jpg')
     # urllib.request.urlretrieve(data['image'], 'diary/static/backimages/test.jpg')
-    path = 'media/rmImages/' + image
+    path = 'media/rmImages/'+image
 
     f = np.fromfile(path)
     print(f)
@@ -413,10 +416,12 @@ def bgr_rm(request):
     return JsonResponse(data)
 
 
+
 @csrf_exempt
 def hashtag(request):
     data = json.loads(request.body)
     # text = data['text']
+
 
     data_text = data['text']
     text = ''
@@ -426,6 +431,7 @@ def hashtag(request):
 
     print(text)
     print([text])
+
 
     for id, s in enumerate(hashtag_function.tfidfScorer([text])):
         s = sorted(s, key=lambda x: x[1], reverse=True)
@@ -442,7 +448,7 @@ def hashtag(request):
 
         context = []
         for k in keyword:
-            context.append({"keyword": k})
+            context.append({"keyword":k})
         print(context)
 
     return JsonResponse(context, safe=False)
