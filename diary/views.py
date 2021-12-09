@@ -229,14 +229,17 @@ def edit(request, user_id, diary_id): #, diary_id
       diary_image = DiaryImage.objects.filter(diary=diary)
       diary_image = list(diary_image)
       image_num1 = request.POST.get("image_num1")
+      num2 = 0
+      # print(image_num1, image_num2)
       for i in range(int(image_num2), int(image_num2)+int(image_num1)):
-        image = diary_image[i]
+        image = diary_image[num2]
         image.width=request.POST.getlist("attr" + str(i + 1) + "[]")[0]
         image.height=request.POST.getlist("attr" + str(i + 1) + "[]")[1]
         image.imageX=request.POST.getlist("attr" + str(i + 1) + "[]")[2]
         image.imageY=request.POST.getlist("attr" + str(i + 1) + "[]")[3]
         image.degree=request.POST.getlist("attr" + str(i + 1) + "[]")[4]
         image.save()
+        num2+=1
       
       img_cnt = request.POST.get("img_count")
       if img_cnt:
