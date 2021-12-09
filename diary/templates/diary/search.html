@@ -74,7 +74,10 @@
 <div id="content" style="display: none;">
     {% for text in search %}
     <div style="float: left; width: 20%; padding:10px;">
-    {{text.diary}}
+        <a href="/diary/detail/1/{{text.id}}" >
+            {{text.diary}}
+
+        <a>
     </div>
     <div style="float: left; width: 75%; padding:10px;">
     {{text.content}}
@@ -96,7 +99,6 @@
 <script type="text/javascript" src="/static/js/barScript.js"></script>
 
 <script>
-
     if(document.getElementById("search_key").value != ""){
         const search_key = document.getElementById('search_key').value;
         document.getElementById("result").innerText = '"'+search_key+'"'+'에 대한 검색 결과입니다.';

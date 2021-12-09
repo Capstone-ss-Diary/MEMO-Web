@@ -152,6 +152,7 @@ def detail(request, user_id, diary_id):
 
 def search(request):
     # date_list = Diary.objects.filter(diary=id)
+
     qs = DiaryText.objects.all()
     q = request.GET.get('q', '')  # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
     print('검색어: ', q)
