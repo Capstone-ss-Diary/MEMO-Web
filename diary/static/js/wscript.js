@@ -656,7 +656,7 @@ function sticker_hashtag() {
 }
 
 let APIKEY = "eytNBijnHtf5mtZBfok9hNEB2FD011el";
-let picnum = 30;
+let picnum = 50;
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 });
