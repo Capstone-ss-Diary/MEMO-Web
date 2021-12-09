@@ -74,7 +74,7 @@
 <div id="content" style="display: none;">
     {% for text in search %}
     <div style="float: left; width: 20%; padding:10px;">
-        <a href="/diary/detail/1/{{text.id}}" >
+        <a href="/diary/detail/{{user}}/{{text.diary_id}}" >
             {{text.diary}}
             {{text.id}}
             일기 보기 ღ'ᴗ'ღ
