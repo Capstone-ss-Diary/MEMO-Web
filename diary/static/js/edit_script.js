@@ -112,6 +112,8 @@ function drawingSti() {
   var canvasImgX = document.getElementById("canvasStiX");
   var canvasImgY = document.getElementById("canvasStiY");
 
+  // console.log(canvasImg.childElementCount);
+
   // 업로드 한 이미지기 1개 이상이면 출력
   if (canvasImg.childElementCount > 0) {
     var images = canvasImg.childNodes; // 업로드한 이미지 모두 불러오기
@@ -133,14 +135,6 @@ function drawingSti() {
   }
 }
 
-function backchange(back_color) {
-
-  totalCanvas();
-  document.getElementById("paper").style.backgroundColor = back_color;
-  document.getElementById("back_color").value = back_color;
-
-}
-
 function totalCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
@@ -148,6 +142,13 @@ function totalCanvas() {
   writingText(); // 일기작성 상태 불러오기
   drawingImg(); // 사진업로드 상태 불러오기
   drawingSti(); // 스티커 업로드 상태 불러오기
+}
+
+function backchange(back_color) {
+
+  totalCanvas();
+  document.getElementById("paper").style.backgroundColor = back_color;
+  document.getElementById("back_color").value = back_color;
 }
 
 
@@ -193,10 +194,114 @@ if (text_num > 0) {
   }
 }
 
+var imgNum = 0; // 업로드한 이미지 개수
+var image_num = document.getElementById("images").childElementCount + document.getElementById("remove_images").childElementCount; // 이미지 개수
+console.log(image_num);
+if(image_num>0){
+  if(document.getElementById("remove_images").childElementCount>0){
+    imgNum += 1;
+    document.getElementById("imgNum").value = parseInt(imgNum); // 업로드 이미지 수 업뎃
+
+    var images = document.getElementById("remove_images").children;
+    var img_xs = document.getElementById("remove_x").childNodes;
+    var img_ys = document.getElementById("remove_y").childNodes;
+    var degrees = document.getElementById("remove_degree").childNodes;
+
+    for(var j=0; j<document.getElementById("remove_images").childElementCount; j++){
+      var image = images.item(j);
+      var img_x = img_xs.item(j).value;
+      var img_y = img_ys.item(j).value;
+      var degree = degrees.item(j).value;
+
+      image.style.display = "none";
+      document.getElementById("canvasImg").appendChild(image);
+      document.getElementById("canvasImgW").innerHTML += `<input name="attr${String(imgNum)}[]" value="${image.width}" style="display: none;" />`;
+      document.getElementById("canvasImgH").innerHTML += `<input name="attr${String(imgNum)}[]" value="${image.height}" style="display: none;" />`;
+      document.getElementById("canvasImgX").innerHTML += `<input name="attr${String(imgNum)}[]" value="${img_x}" style="display: none;" />`;
+      document.getElementById("canvasImgY").innerHTML += `<input name="attr${String(imgNum)}[]" value="${img_y}" style="display: none;" />`;
+      document.getElementById("degree").innerHTML += `<input name="attr${String(imgNum)}[]" value="${degree}" style="display: none;" />`;
+
+      var title = image.src.split('/');
+      console.log(title);
+      document.getElementById("selectImg").innerHTML += `<option selected id="img${String(imgNum)}O">${title[title.length-1]}</option>`;
+
+      // 다음 label 
+      document.getElementById(`label${String(imgNum)}`).style.display = "none";
+      document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
+    }
+  }
+
+  if(document.getElementById("images").childElementCount>0){
+    imgNum += 1;
+    document.getElementById("imgNum").value = parseInt(imgNum); // 업로드 이미지 수 업뎃
+
+    var images = document.getElementById("images").children;
+    var img_xs = document.getElementById("image_x").childNodes;
+    var img_ys = document.getElementById("image_y").childNodes;
+    var degrees = document.getElementById("degree").childNodes;
+
+    for(var j=0; j<document.getElementById("images").childElementCount; j++){
+      var image = images.item(j);
+      var img_x = img_xs.item(j).value;
+      var img_y = img_ys.item(j).value;
+      var degree = degrees.item(j).value;
+
+      image.style.display = "none";
+      document.getElementById("canvasImg").appendChild(image);
+      document.getElementById("canvasImgW").innerHTML += `<input name="attr${String(imgNum)}[]" value="${image.width}" style="display: none;" />`;
+      document.getElementById("canvasImgH").innerHTML += `<input name="attr${String(imgNum)}[]" value="${image.height}" style="display: none;" />`;
+      document.getElementById("canvasImgX").innerHTML += `<input name="attr${String(imgNum)}[]" value="${img_x}" style="display: none;" />`;
+      document.getElementById("canvasImgY").innerHTML += `<input name="attr${String(imgNum)}[]" value="${img_y}" style="display: none;" />`;
+      document.getElementById("degree").innerHTML += `<input name="attr${String(imgNum)}[]" value="${degree}" style="display: none;" />`;
+
+      var title = image.src.split('/');
+      console.log(title);
+      document.getElementById("selectImg").innerHTML += `<option selected id="img${String(imgNum)}O">${title[title.length-1]}</option>`;
+
+      // 다음 label 
+      document.getElementById(`label${String(imgNum)}`).style.display = "none";
+      document.getElementById(`label${String(imgNum + 1)}`).style.display = "block";
+    }
+  }
+}
+
+var stiNum = 0;
+var sticker_select_num = 0;
+var sticker_num = document.getElementById("stickers").childElementCount;
+if(sticker_num>0){
+  stiNum += 1;
+  document.getElementById("stiNum").value = parseInt(stiNum); // 업로드 이미지 수 업뎃
+
+  var stickers = document.getElementById("stickers").children;
+  var sti_xs = document.getElementById("sticker_x").childNodes;
+  var sti_ys = document.getElementById("sticker_y").childNodes;
+
+  for(var j=0; j<sticker_num; j++){
+    var sticker = stickers.item(j);
+    var sti_x = sti_xs.item(j).value;
+    var sti_y = sti_ys.item(j).value;
+
+    console.log(sti_x);
+
+    sticker.style.display = "none";
+    document.getElementById("canvasSti").appendChild(sticker);
+    document.getElementById("sticker_url").innerHTML += `<input id="sticker${String(stiNum)}" name="sti${String(stiNum)}" value="${sticker.src}">`;
+    document.getElementById("canvasStiW").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sticker.width}" style="display: none;" />`;
+    document.getElementById("canvasStiH").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sticker.height}" style="display: none;" />`;
+    document.getElementById("canvasStiX").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sti_x}" style="display: none;" />`;
+    document.getElementById("canvasStiY").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sti_y}" style="display: none;" />`;
+
+    sticker_select_num = parseInt(sticker_select_num) + 1;
+
+    document.getElementById("sticker_select").innerHTML += `<option selected id="gif${String(sticker_select_num)}">${String(imgNum)}</option>`;
 
 
-// totalCanvas();
+  }
+
+}
+
 backchange(document.getElementById("bc").value);
+
 
 var hashtag_num = document.getElementById("hashtags").childElementCount;
 if (hashtag_num > 0) {
@@ -322,7 +427,6 @@ function loadFile(input) { // 이미지 불러오면 미리보기 이미지 업�
   else alert("잘못된 확장자입니다.\n이미지 파일을 넣어주세요 (jpeg/jpg/png)");
 }
 
-var imgNum = 0; // 업로드한 이미지 개수
 var removes = "";
 var rmImages = "";
 
@@ -770,8 +874,8 @@ function init() {
   });
 }
 
-var stiNum = 0;
-var sticker_select_num = 0;
+
+
 function sticker_on_canvas(sticker) {
   stiNum += 1;
   document.getElementById("stiNum").value = parseInt(stiNum); // 업로드 이미지 수 업뎃
@@ -865,3 +969,4 @@ canvas.onclick = function (event) {
 
   totalCanvas(); // 다시 canvas 그리기
 }
+
