@@ -7,7 +7,7 @@ from accounts.models import User
 class Diary(models.Model):
     id = models.BigAutoField(primary_key=True, null=False)  # 식별자: 다이어리 id
     user_id = models.IntegerField(null=True)
-    created_date = models.DateTimeField(default=timezone.now)
+    created_date = models.CharField(max_length=100, null=True)
     published_date = models.DateTimeField(blank=True, null=True)
     backColor = models.CharField(max_length=100, null=True)
 

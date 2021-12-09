@@ -77,13 +77,17 @@
         style="font-family: 'Jua', sans-serif; font-size:20px">#{{hashtag.hashtag}}</a>&nbsp;&nbsp;{% endfor %}</div>
   </div>
 
-  <div style="position: absolute; display: flex; justify-content: center; margin-top: 10px; left: 50%; transform: translateX(-50%);">
+  <div
+    style="position: absolute; display: flex; justify-content: center; margin-top: 10px; left: 50%; transform: translateX(-50%);">
     <img id="diary_canvas" src='' />
   </div>
 
   <div id="hand-writings">
     {% for text in diaryText %}<div class="hand-writing" id="">{{text.content}}</div>{% endfor %}
   </div>
+
+  <div id="hand-writings"></div>
+
 
   <div style="position: relative; display: flex; justify-content: center; margin-top: 625px;">
     <button id="edit" type="button" onclick="Edit()"

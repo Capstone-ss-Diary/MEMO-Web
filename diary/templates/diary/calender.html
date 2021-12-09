@@ -42,7 +42,7 @@
             <ion-icon name="home-outline" class="nav__icon"></ion-icon>
             <span class="nav_name">캘린더</span>
           </a>
-          <a href="/diary/handwriting" class="nav__link">
+          <a href="http://localhost:8001/handwriting/" class="nav__link">
             <ion-icon name="pencil-outline" class="nav__icon"></ion-icon>
             <span class="nav_name">손글씨 등록</span>
           </a>
@@ -205,6 +205,7 @@
 
   <div style="display: none;">
     <div id="date">{% for diary in date_list %}<input value="{{ diary.created_date }}">{% endfor %}</div>
+    <div id="diary_id">{% for diary in date_list %}<input value="{{ diary.id }}">{% endfor %}</div>
   </div>
 
 </body>

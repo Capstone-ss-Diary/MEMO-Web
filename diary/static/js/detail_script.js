@@ -1,6 +1,7 @@
 var canvas = document.getElementById("paper");
 var ctx = canvas.getContext("2d");
 
+
 var text_num = document.getElementById("content").childElementCount;
 
 if (text_num > 0) {
@@ -11,6 +12,7 @@ if (text_num > 0) {
   var coordinate_x = document.getElementById("text_x").childNodes;
   var coordinate_y = document.getElementById("text_y").childNodes;
 
+
   for (var j = 0; j < text_num; j++) {
     var text = content.item(j).value;
     var font = text_font.item(j).value;
@@ -19,47 +21,51 @@ if (text_num > 0) {
     var text_x = coordinate_x.item(j).value;
     var text_y = coordinate_y.item(j).value;
 
-    text_x = parseInt(text_x);
-    text_y = parseInt(text_y);
+    console.log(font);
+    if (font != "hand-writing") {
 
-    ctx.font = font_size + "px " + font;
-    ctx.fillStyle = font_color;
+      text_x = parseInt(text_x);
+      text_y = parseInt(text_y);
 
-    var line = "";
-    var fontSize = parseFloat(ctx.font);
-    var currentY = text_y;
+      ctx.font = font_size + "px " + font;
+      ctx.fillStyle = font_color;
 
-    ctx.textBaseline = "top"
+      var line = "";
+      var fontSize = parseFloat(ctx.font);
+      var currentY = text_y;
 
-    for (var i = 0; i < text.length; i++) {
+      ctx.textBaseline = "top"
 
-      var tempLine = line + text[i];
-      var tempWidth = text_x + ctx.measureText(tempLine).width;
+      for (var i = 0; i < text.length; i++) {
 
-      if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
-      else {
-        ctx.fillText(line, text_x, currentY);
-        if (text[i] != "\n") line = text[i];
-        else line = "";
-        currentY += fontSize * (1.2);
+        var tempLine = line + text[i];
+        var tempWidth = text_x + ctx.measureText(tempLine).width;
+
+        if (tempWidth < canvas.width && text[i] != "\n") { line = tempLine; }
+        else {
+          ctx.fillText(line, text_x, currentY);
+          if (text[i] != "\n") line = text[i];
+          else line = "";
+          currentY += fontSize * (1.2);
+        }
+
       }
 
+      ctx.fillText(line, text_x, currentY);
     }
-
-    ctx.fillText(line, text_x, currentY);
   }
 }
 
 var ele = document.getElementById('hand-writings');
-for(var i=0; i<ele.childElementCount; i++) {
+for (var i = 0; i < ele.childElementCount; i++) {
   var hand_input = document.getElementsByClassName("hand-writing").item(i)
-  hand_input.id = `hand-writing${i+1}`
-  if (document.getElementById('font').childNodes.item(i).value != "hand-writing") hand_input.style.display="none";
+  hand_input.id = `hand-writing${i + 1}`
+  if (document.getElementById('font').childNodes.item(i).value != "hand-writing") hand_input.style.display = "none";
   hand_input.style.fontSize = document.getElementById('font_size').childNodes.item(i).value;
   hand_input.style.color = document.getElementById('font_color').childNodes.item(i).value
-  hand_input.style.left = parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(328);
-  hand_input.style.top = parseFloat(document.getElementById('text_y').childNodes.item(i).value)+parseFloat(24);
-  console.log(parseFloat(document.getElementById('text_x').childNodes.item(i).value)+parseFloat(100))
+  hand_input.style.left = parseFloat(document.getElementById('text_x').childNodes.item(i).value) + parseFloat(328);
+  hand_input.style.top = parseFloat(document.getElementById('text_y').childNodes.item(i).value) + parseFloat(24);
+  console.log(parseFloat(document.getElementById('text_x').childNodes.item(i).value) + parseFloat(100))
 }
 
 var image_num = document.getElementById("images").childElementCount;
@@ -138,27 +144,29 @@ if (sticker_num > 0) {
 
 
 
-setTimeout(function () {
-  var encode_data = canvas.toDataURL('image/png');
+var encode_data = canvas.toDataURL('image/png');
 
-  encode_data = encode_data.split(',')[1];
+encode_data = encode_data.split(',')[1];
 
-  var decode_data = atob(encode_data);
-  var data = [];
+var decode_data = atob(encode_data);
+var data = [];
 
-  for (var i = 0; i < decode_data.length; i++) {
-    data.push(decode_data.charCodeAt(i));
-  }
+for (var i = 0; i < decode_data.length; i++) {
+  data.push(decode_data.charCodeAt(i));
+}
 
-  var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
-  var url = window.URL.createObjectURL(blob);
+var blob = new Blob([new Uint8Array(data)], { type: 'image/png' });
+var url = window.URL.createObjectURL(blob);
 
-  var bc = document.getElementById("bc").value;
+var bc = document.getElementById("bc").value;
 
-  document.getElementById("diary_canvas").src = url;
-  document.getElementById("diary_canvas").style.backgroundColor = bc;
+document.getElementById("diary_canvas").src = url;
+document.getElementById("diary_canvas").style.backgroundColor = bc;
 
-  document.getElementById("edit").style.display = "block";
-  document.getElementById("check").style.display = "block";
+document.getElementById("edit").style.display = "block";
+document.getElementById("check").style.display = "block";
 
-}, 1000);
+function Edit() {
+  var url = String(window.location.href).split('/');
+  location.href = `/diary/edit/${url[5]}/${url[6]}/`;
+}
