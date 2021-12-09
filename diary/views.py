@@ -35,14 +35,17 @@ def calender(request, user_id):
     return render(request, "diary/calender.html", date)
 
 
-def decorate(request, user_id):
+def decorate(request, user_id, current_date):
     if request.method == "GET":  # select 값
         return render(request, "diary/decorate.html")
 
     elif request.method == "POST":  # text 값
+        date = str(timezone.datetime.now())
+        date = date.split(" ")
+
         diary = Diary()
         diary.user_id = request.session.get("user")
-        diary.created_date = timezone.datetime.now()
+        diary.created_date = current_date
         diary.published_date = timezone.datetime.now()
         diary.backColor = request.POST.get("back_color")
         diary.save()  # Diary DB 저장
