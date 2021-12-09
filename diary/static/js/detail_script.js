@@ -134,6 +134,7 @@ if (sticker_num > 0) {
 
     var sti = stickers.item(i);
 
+
     // var x = parseInt(sticker_x.item(i).value) + (sti.width / 2);
     // var y = parseInt(sticker_y.item(i).value) + (sti.height / 2);
 

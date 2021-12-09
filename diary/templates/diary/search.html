@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,9 +44,6 @@
   </div>
 
 
-
-
-
      {% block content %}
     <div style="text-align:center">
         <h1>Search Diary</h1>
@@ -56,34 +52,42 @@
             Search Word:
             <input type="text" id="search_key" name="q" value="{{ q }}" style="padding:8px; border:0; width:15%;" >
             <input id = "search_button" type="submit"  value="검색"/>
+            <br><br>
+            <div id='result'></div>
           </form>
 
 
-       <div id="content" style="display: none;">
-<!--            {% for text in search %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>-->
-            {% for text in search %}{{text.diary}}{{text.content}}<br>{% endfor %}</div>
-        </div>
+<!--       <div id="content" style="display: none;">-->
+<!--&lt;!&ndash;            {% for text in search %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>&ndash;&gt;-->
+<!--            {% for text in search %}-->
+<!--           <div style="border:1px;">{{text.diary}}</div>-->
+<!--           <div>{{text.content}}</div>-->
+
+<!--           <br><br>{% endfor %}</div>-->
+
+<!--        </div>-->
 
     <br>
 
-<!--    <form action="." method="post"> {% csrf_token %}-->
-<!--        {{ form.as_table }} &lt;!&ndash; form을 테이블 형식으로 표시, 여기서 form은 views에서 넘겨준 PostSearchForm 객체임&ndash;&gt;-->
-<!--        <input id = "searching" type = "text" placeholder = "검색어 입력">-->
-<!--        <button id = "search"> 검색 </button>-->
-<!--    &lt;!&ndash;    <input type="submit" value="Submit" class="btn btn-primary btn-sm">&ndash;&gt;-->
-<!--    </form>-->
 
-    <br/><br/>
 
-    {% if object_list %}
-        {% for post in object_list %}
-            <h2><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h2>
-            {{ post.modify_date|date:"N d, Y" }}
-            <p>{{ post.description }}</p>
-        {% endfor %}
-    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
-        <b><i>Search Word({{ search_term }}) Not Found</i></b>
-    {% endif %}
+<div id="content" style="display: none;">
+    {% for text in search %}
+    <div style="float: left; width: 20%; padding:10px;">
+        <a href="/diary/detail/1/{{text.id}}" >
+            {{text.diary}}
+            {{text.id}}
+            일기 보기 ღ'ᴗ'ღ
+
+        <a>
+    </div>
+    <div style="float: left; width: 75%; padding:10px;">
+    {{text.content}}
+    </div>
+<br><br>{% endfor %}</div>
+
+
+
     {% endblock %}
 
 
@@ -98,6 +102,8 @@
 
 <script>
     if(document.getElementById("search_key").value != ""){
+        const search_key = document.getElementById('search_key').value;
+        document.getElementById("result").innerText = '"'+search_key+'"'+'에 대한 검색 결과입니다.';
         document.getElementById("content").style.display = "block";
     }
 </script>
