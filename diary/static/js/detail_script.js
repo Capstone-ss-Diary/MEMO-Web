@@ -124,6 +124,7 @@ if (remove_num > 0) {
 
 var sticker_num = document.getElementById("stickers").childElementCount;
 
+
 if (sticker_num > 0) {
   var stickers = document.getElementById("stickers").children;
   var sticker_x = document.getElementById("sticker_x").childNodes;
@@ -139,6 +140,7 @@ if (sticker_num > 0) {
     ctx.drawImage(sti, sticker_x.item(i).value, sticker_y.item(i).value, sti.width, sti.height);
 
   }
+
 }
 
 
@@ -164,6 +166,8 @@ document.getElementById("diary_canvas").style.backgroundColor = bc;
 
 document.getElementById("edit").style.display = "block";
 document.getElementById("check").style.display = "block";
+
+
 
 function Edit() {
   var url = String(window.location.href).split('/');
