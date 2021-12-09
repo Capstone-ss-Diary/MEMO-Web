@@ -157,7 +157,8 @@ var hash_num = 1;
 
 // 텍스트 불러오기
 var text_num = document.getElementById("content").childElementCount;
-console.log(text_num)
+document.getElementById("text_num").value = parseInt(text_num);
+console.log(document.getElementById("text_num").value);
 
 if (text_num > 0) {
   var content = document.getElementById("content").childNodes;
@@ -196,7 +197,8 @@ if (text_num > 0) {
 
 var imgNum = 0; // 업로드한 이미지 개수
 var image_num = document.getElementById("images").childElementCount + document.getElementById("remove_images").childElementCount; // 이미지 개수
-console.log(image_num);
+document.getElementById("image_num1").value = document.getElementById("images").childElementCount;
+document.getElementById("image_num2").value = document.getElementById("remove_images").childElementCount;
 if(image_num>0){
   if(document.getElementById("remove_images").childElementCount>0){
     imgNum += 1;
@@ -238,7 +240,7 @@ if(image_num>0){
     var images = document.getElementById("images").children;
     var img_xs = document.getElementById("image_x").childNodes;
     var img_ys = document.getElementById("image_y").childNodes;
-    var degrees = document.getElementById("degree").childNodes;
+    var degrees = document.getElementById("degrees").childNodes;
 
     for(var j=0; j<document.getElementById("images").childElementCount; j++){
       var image = images.item(j);
@@ -268,6 +270,7 @@ if(image_num>0){
 var stiNum = 0;
 var sticker_select_num = 0;
 var sticker_num = document.getElementById("stickers").childElementCount;
+document.getElementById("sticker_num").value = sticker_num;
 if(sticker_num>0){
   stiNum += 1;
   document.getElementById("stiNum").value = parseInt(stiNum); // 업로드 이미지 수 업뎃
@@ -306,7 +309,7 @@ backchange(document.getElementById("bc").value);
 var hashtag_num = document.getElementById("hashtags").childElementCount;
 if (hashtag_num > 0) {
   var hashtag = document.getElementById("hashtags").childNodes;
-  for (var j = 0; j < text_num; j++) {
+  for (var j = 0; j < hashtag_num; j++) {
     var input = hashtag.item(j).value;
     var tag = document.getElementById("hashtagForm");
     tag.innerHTML += `<a id="hash${hash_num}" style="font-size: 22px;">#${input}</a><button type="button" value="${hash_num}" onclick="hashtag_delete(this)">X</button><br id="br${hash_num}">`;

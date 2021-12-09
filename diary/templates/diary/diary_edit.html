@@ -38,6 +38,8 @@
 <body>
 
   <div style="display: none;">
+
+
     <input id="bc" value="{{ diary.backColor }}">
 
     <div id="content">{% for text in diaryText %}<textarea type="text">{{text.content}}</textarea>{% endfor %}</div>
@@ -54,7 +56,7 @@
     </div>
     <div id="image_x">{% for image in diaryImage %}<input value="{{image.imageX}}">{% endfor %}</div>
     <div id="image_y">{% for image in diaryImage %}<input value="{{image.imageY}}">{% endfor %}</div>
-    <div id="degree">{% for image in diaryImage %}<input value="{{image.degree}}">{% endfor %}</div>
+    <div id="degrees">{% for image in diaryImage %}<input value="{{image.degree}}">{% endfor %}</div>
 
     <div id="remove_images">
       {% for remove in diaryRemove %}
@@ -98,10 +100,17 @@
         <div class="hand-writing" id="hand-writing4"></div>
         <div class="hand-writing" id="hand-writing5"></div>
         <div class="select">
-          <button type="submit" onclick="alert('저장되었습니다');">저장</button>
+          <button type="submit" onclick="alert('수정되었습니다');">수정</button>
           <button type="button">취소</button>
           <input type="hidden" name="selectEdit" id="selectEdit" value="write">
         </div>
+      </div>
+
+      <div style="display: none;">
+        <input id="text_num" name="text_num">
+        <input id="image_num1" name="image_num1">
+        <input id="image_num2" name="image_num2">
+        <input id="sticker_num" name="sticker_num">
       </div>
 
       <div class="cont_area">
