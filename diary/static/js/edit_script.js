@@ -284,15 +284,15 @@ if(sticker_num>0){
     var sti_x = sti_xs.item(j).value;
     var sti_y = sti_ys.item(j).value;
 
-    console.log(sti_x);
+    console.log(`sticker${String(stiNum)}`);
 
     sticker.style.display = "none";
     document.getElementById("canvasSti").appendChild(sticker);
     document.getElementById("sticker_url").innerHTML += `<input id="sticker${String(stiNum)}" name="sti${String(stiNum)}" value="${sticker.src}">`;
-    document.getElementById("canvasStiW").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sticker.width}" style="display: none;" />`;
-    document.getElementById("canvasStiH").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sticker.height}" style="display: none;" />`;
-    document.getElementById("canvasStiX").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sti_x}" style="display: none;" />`;
-    document.getElementById("canvasStiY").innerHTML += `<input name="aticker${String(imgNum)}[]" value="${sti_y}" style="display: none;" />`;
+    document.getElementById("canvasStiW").innerHTML += `<input name="aticker${String(stiNum)}[]" value="${sticker.width}" style="display: none;" />`;
+    document.getElementById("canvasStiH").innerHTML += `<input name="aticker${String(stiNum)}[]" value="${sticker.height}" style="display: none;" />`;
+    document.getElementById("canvasStiX").innerHTML += `<input name="aticker${String(stiNum)}[]" value="${sti_x}" style="display: none;" />`;
+    document.getElementById("canvasStiY").innerHTML += `<input name="aticker${String(stiNum)}[]" value="${sti_y}" style="display: none;" />`;
 
     sticker_select_num = parseInt(sticker_select_num) + 1;
 

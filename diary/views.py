@@ -297,10 +297,10 @@ def edit(request, user_id, diary_id): #, diary_id
       sticker_num = request.POST.get("sticker_num")
       for i in range(int(sticker_num)):
         sticker = diary_sticker[i]
-        sticker.width=request.POST.getlist("aticker" + str(i) + "[]")[0]
-        sticker.height=request.POST.getlist("aticker" + str(i) + "[]")[1]
-        sticker.imageX=request.POST.getlist("aticker" + str(i) + "[]")[2]
-        sticker.imageY=request.POST.getlist("aticker" + str(i) + "[]")[3]
+        sticker.width=request.POST.getlist("aticker" + str(i+1) + "[]")[0]
+        sticker.height=request.POST.getlist("aticker" + str(i+1) + "[]")[1]
+        sticker.imageX=request.POST.getlist("aticker" + str(i+1) + "[]")[2]
+        sticker.imageY=request.POST.getlist("aticker" + str(i+1) + "[]")[3]
         sticker.save()
       
       sti_cnt = request.POST.get("stiNum")
