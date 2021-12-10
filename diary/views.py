@@ -171,6 +171,7 @@ def search(request):
     return render(request, 'diary/search.html', {
         'search': qs,
         'q': q,
+        'user':request.session.get("user"),
     })
 
 
