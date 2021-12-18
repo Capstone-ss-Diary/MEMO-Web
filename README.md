@@ -69,5 +69,17 @@
   
 ![image](https://user-images.githubusercontent.com/55437339/146636703-6cb18053-6f7d-46a7-89e0-b276469f0e91.png)  
 (일기생성 페이지: 스티커) 드롭 박스에 생성된 해시태그의 목록이 반영. 해시태그를 선택하면 해당된 해시태그의 스티커가 추천. 스티커를 클릭하면 다이어리 공간에 출력.
+  
+![image](https://user-images.githubusercontent.com/55437339/146639239-916eaa31-7845-44b8-9d1e-d7a2ddcf4b5f.png)  
+(손글씨 등록 페이지) 왼쪽 사이드바의 펜 아이콘을 클릭했을 때의 페이지. 상단 버튼을 클릭해서 손글씨 작성 파일 다운로드. 손글씨로 작성해넣은 파일을 jpg 형식으로 파일 업로드하면 사용자 손글씨 등록 가능.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146639340-480d63ec-c239-449e-acfd-82218682f5ec.png)  
+(일기 검색 페이지) 왼쪽 사이드바의 돋보기 아이폰을 클릭했을 때의 페이지. 검색어가 포함된 일기 글들을 불러옴.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146639427-661fca4e-406c-4ccf-917f-18f799780cb7.png)  
+(일기 확인 페이지) 캘린더 또는 일기 검색 또는 일기 생성 직후의 페이지. 작성한 일기 결과 확인 가능.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146639452-e0054efe-e0d4-4009-b671-2c026f27a4bd.png)  
+(일기 수정 페이지)
 
 
