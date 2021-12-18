@@ -38,3 +38,36 @@
   2. python manage.py migrate
   3. python manage.py runserver 8001 (https://localhost:8000 으로 접속)
 
+
+## 서비스 메뉴얼
+![image](https://user-images.githubusercontent.com/55437339/146636192-9b44e4ee-45c0-438a-bace-dc5590949755.png)  
+(시작 페이지)  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636233-331fd941-494a-46a8-a201-4fb057edec14.png)  
+(로그인 페이지)  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636275-329490a3-c92a-43b4-82ec-17d941c73966.png)  
+(회원가입 페이지) 중복 아이디, 메일 사용 불가
+  
+![image](https://user-images.githubusercontent.com/55437339/146636294-fb66ef18-d66b-4ddd-9ea8-365d821d62ca.png)  
+(캘린더 페이지) 정상 로그인 되었을 때, 또는 왼쪽 사이드바의 홈 아이콘을 클릭했을 때의 페이지. 날짜를 클릭했을 때 해당하는 일기가 존재하면 일기 확인 화면으로, 없으면 일기 생성 화면으로 이동  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636409-ab56b40c-19ee-4d4f-b295-67d13cad7ca4.png)  
+(일기생성 페이지: 일기작성) 오른쪽 텍스트 박스에 텍스트를 입력하면 오른쪽 다이어리 공간에 입력값 출력. 텍스트 박스를 추가하거나 삭제할 수 있고, 6개 제한. 드롭 박스에서 텍스트 박스를 선택하면 해당 텍스트 박스의 폰트 설정 가능. 입력값이 출력된 후 다이어리 공간을 클릭하면 해당 위치로 텍스트 위치 이동.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636497-1bb7e27d-25c8-4da3-a683-aa3c428718af.png)  
+(일기생성 페이지: 배경선택) 색상 팔레트에서 색상을 클릭하면 해당 색상이 오른쪽 다이어리 공간에 적용.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636558-e02b8563-d6d5-44ba-bdc2-99016b5d6e52.png)  
+(일기생성 페이지: 사진업로드) 불러오기 버튼으로 사진을 불러온 후, 업로드 버튼을 클릭하면 다이어리 공간에 사진 출력. 드롭 박스에서 업로드 된 사진 중 선택하여 해당 사진의 크기, 기울기 조정 가능. x 버튼을 누르면 해당 사진 삭제.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636620-31097d83-895a-4eb3-8bd8-7faaa9316ce0.png)  
+(일기생성 페이지: 사진업로드(배경제거)) 사진을 불러온 후, 배경제거 버튼을 클릭하여 해당 사진의 배경을 제거. 후에 업로드 버튼을 클릭하면 다이어리 공간에 배경이 제거된 사진 출력.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636676-baac5cbb-204a-4c07-aa83-ac4fdbd72646.png)  
+(일기생성 페이지: 해시태그 생성) 해시태그 직접 만들기 버튼을 클릭하면 수동으로 해시태그 작성 가능. 해시태그 자동 생성하기 버튼을 클릭하면 텍스트에 작성한 입력 값을 분석하여 자동으로 해시태그 생성. 해시태그 12개 제한. 해시태그를 자동으로 생성하기 위해서 텍스트 값을 구체적 입력 필요.  
+  
+![image](https://user-images.githubusercontent.com/55437339/146636703-6cb18053-6f7d-46a7-89e0-b276469f0e91.png)  
+(일기생성 페이지: 스티커) 드롭 박스에 생성된 해시태그의 목록이 반영. 해시태그를 선택하면 해당된 해시태그의 스티커가 추천. 스티커를 클릭하면 다이어리 공간에 출력.
+
+
