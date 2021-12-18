@@ -14,7 +14,7 @@
   2. cd MEMO-Web
 - 가상환경을 설치하고 활성화합니다.
   1. pip install virtualenv
-  2. virtualenv venv –python=python3.8 (python 3.8 버전이 설치 필요)
+  2. virtualenv venv –python=python3.8 (python 3.8 버전 설치 필요)
   3. venv\Scripts\activate
 - 모듈을 설치합니다.
   1. pip install -r requirements.txt (requirements.txt는 프로젝트 내에 존재)
@@ -22,3 +22,19 @@
   1. python manage.py makemigrations
   2. python manage.py migrate
   3. python manage.py runserver
+- handwriting-sever 프로젝트를 local에서 clone 합니다. (https://github.com/Capstone-ss-Diary/handwriting-server.git)
+  1. git clone https://github.com/Capstone-ss-Diary/handwriting-server.git
+  2. cd handwriting-server
+- 가상환경을 설치하고 활성화합니다.
+  1. virtualenv venv –python=python3.7 (python 3.7 버전 설치 필요)
+  2. venv\Scripts\activate
+- 모듈을 설치합니다.
+  1. pip install -r requirements.txt
+- 손글씨 모델을 적용합니다.
+  1. https://drive.google.com/file/d/1MzJ4TEXIhlecu1GikULkefH79CTRFx45/view 에서 파일 다운로드
+  2. 압축파일 안에 있는 unet.model-1300 파일 세 개 모두 handwriting-server\runmodel\source\experiment\checkpoint\experiment_0_batch_16 폴더 안에 넣어주기
+- 모델을 migrations하고 서버를 실행합니다.
+  1. python manage.py makemigrations
+  2. python manage.py migrate
+  3. python manage.py runserver 8001 (https://localhost:8000 으로 접속)
+
